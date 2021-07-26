@@ -1,9 +1,30 @@
-import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
+import {
+  ConnectedSocket,
+  MessageBody,
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
+} from '@nestjs/websockets';
+import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway()
 export class HospitelGateway {
-  @SubscribeMessage('message')
-  handleMessage(client: any, payload: any): string {
-    return 'Hello world!';
+  @WebSocketServer()
+  server: Server;
+
+  @SubscribeMessage('hospitel:subscribe')
+  handleHospitelSubscribe(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() hospitelCode: string,
+  ) {
+    return;
+  }
+
+  @SubscribeMessage('hospitel:unsubscribe')
+  handleHospitelUnsubscribe(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() hospitelCode: string,
+  ) {
+    return;
   }
 }
