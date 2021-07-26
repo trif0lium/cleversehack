@@ -16,6 +16,12 @@ export class Hospitel {
   address: string;
 
   @Column()
+  latitude: number;
+
+  @Column()
+  longitude: number;
+
+  @Column()
   maxCapacity: number;
 
   @Column()
