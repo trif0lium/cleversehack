@@ -32,4 +32,7 @@ export class Hospitel {
 
   @Column({ nullable: true })
   googleMapsURL?: string;
+
+  @Column('simple-array')
+  tags: string[] = [];
 }
