@@ -3,9 +3,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HospitelModule } from './hospitel/hospitel.module';
 import { HospitelGateway } from './hospitel.gateway';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [HospitelModule],
+  imports: [
+    ConfigModule.forRoot({ envFilePath: '.env.development' }),
+    HospitelModule,
+  ],
   controllers: [AppController],
   providers: [AppService, HospitelGateway],
 })
