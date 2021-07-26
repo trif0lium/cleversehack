@@ -22,5 +22,14 @@ export class Hospitel {
   currentCapacity: number;
 
   @Column({ nullable: true })
-  hospital: string;
+  hospital?: string;
+
+  @Column({ nullable: true })
+  phoneNumber?: string;
+
+  @Column({ nullable: true })
+  website?: string;
+
+  @Column({ nullable: true })
+  googleMapsURL?: string;
 }
