@@ -7,7 +7,9 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: '.env.development' }),
+    ConfigModule.forRoot({
+      envFilePath: process.env.NODE_ENV === 'development' && '.env.development',
+    }),
     HospitelModule,
   ],
   controllers: [AppController],
