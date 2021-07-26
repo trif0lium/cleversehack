@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { Hospitel } from './datamodel/hospitel.datamodel';
+import { HospitelService } from './hospitel/hospitel.service';
 
 @Module({
   imports: [
@@ -31,6 +32,6 @@ import { Hospitel } from './datamodel/hospitel.datamodel';
     HospitelModule,
   ],
   controllers: [AppController],
-  providers: [AppService, HospitelGateway],
+  providers: [AppService, HospitelService, HospitelGateway],
 })
 export class AppModule {}
