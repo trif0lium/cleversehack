@@ -6,6 +6,7 @@ import { HospitelGateway } from './hospitel.gateway';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { Hospitel } from './datamodel/hospitel.datamodel';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
-        entities: [],
+        entities: [Hospitel],
         synchronize: true,
         namingStrategy: new SnakeNamingStrategy(),
       }),
