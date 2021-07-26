@@ -6,9 +6,12 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { HospitelService } from './hospitel/hospitel.service';
 
 @WebSocketGateway()
 export class HospitelGateway {
+  constructor(private readonly hospitelService: HospitelService) {}
+
   @WebSocketServer()
   server: Server;
 
