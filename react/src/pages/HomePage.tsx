@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { useHistory } from "react-router-dom";
 import { ContentWrap } from "../components/styles/ContentStyles";
-import { ReactComponent as LogoIcon } from "../assets/LogoIcon.svg";
+import { FaCommentMedical } from "react-icons/fa";
 
 const Home = () => {
   const history = useHistory();
@@ -16,7 +16,8 @@ const Home = () => {
       }}
     >
       <h2 className="text-white">One Stop Covid-19</h2>
-      <div className="boxWrap flex items-center justify-center">
+      <div className="boxWrap flex flex-col items-center justify-center">
+        <FaCommentMedical className="h-48 w-56 text-white" />
         <div
           className="start-button flex items-center justify-center"
           onClick={() => {
