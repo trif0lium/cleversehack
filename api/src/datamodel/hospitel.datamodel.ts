@@ -8,4 +8,19 @@ export class Hospitel {
 
   @Column({ unique: true })
   code: string = nanoid();
+
+  @Column({ unique: true })
+  name: string;
+
+  @Column()
+  address: string;
+
+  @Column()
+  maxCapacity: number;
+
+  @Column()
+  currentCapacity: number;
+
+  @Column({ nullable: true })
+  hospital: string;
 }
