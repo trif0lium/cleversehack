@@ -5,7 +5,6 @@ import {
   Route,
   BrowserRouter,
 } from "react-router-dom";
-import logo from "./logo.svg";
 import "./App.css";
 import Home from "./pages/HomePage";
 import GlobalStyles from "./components/styles/GlobalStyles";

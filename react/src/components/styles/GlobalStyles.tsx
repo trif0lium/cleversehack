@@ -1,5 +1,12 @@
 import { createGlobalStyle } from "styled-components";
 
+const media = {
+  desktop: `@media(min-width: 1024px)`,
+  tabletHorizontal: `@media(min-width: 768px)`,
+  tablet: `@media(min-width: 640px)`,
+  mobile: `@media(max-width: 475px)`,
+};
+
 const GlobalStyles = createGlobalStyle`
 @font-face {
   font-family: 'Prompt';
@@ -18,6 +25,51 @@ const GlobalStyles = createGlobalStyle`
     background-repeat: no-repeat;
     background-attachment: fixed; 
     background-color: #1A7676;
+  }
+
+  h1 {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 10;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    color: #0C2641;
+  }
+  
+  .navbar {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  .search {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    max-width: 90%;
+    width: 80%;
+    z-index: 10;
+  }
+  
+  .search input {
+    padding: 0.5rem;
+    font-size: 1.25rem;
+    width: 300px;
+    height: 40px;
+    ${media.desktop} {
+      width: 500px;
+    }
+    ${media.mobile} {
+      width: auto;
+    }
+  }
+  
+  .locate {
+    position: absolute;
+    right: 1rem;
+    background: none;
+    border: none;
+    z-index: 10;
   }
 `;
 
