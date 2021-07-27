@@ -21,6 +21,10 @@ export class HospitelService {
     return this.hospitelRepository.find({});
   }
 
+  findByCode(code: string): Promise<Hospitel | null> {
+    return this.hospitelRepository.findOne({ code });
+  }
+
   async increaseCurrentCapacity(hospitelCode: string, n: number) {
     const hospitel = await this.hospitelRepository.findOneOrFail({
       code: hospitelCode,
