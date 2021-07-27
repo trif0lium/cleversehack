@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import { Hospitel } from 'src/datamodel/hospitel.datamodel';
 import { HospitelService } from './hospitel.service';
 
@@ -9,5 +9,14 @@ export class HospitelController {
   @Get()
   list(): Promise<Hospitel[]> {
     return this.hospitelService.findAll();
+  }
+
+  @Get(':code')
+  async get(@Param('code') code: string): Promise<Hospitel | null> {
+    const hospitel = await this.hospitelService.findByCode(code);
+    if (!hospitel) {
+      throw new NotFoundException();
+    }
+    return hospitel;
   }
 }
