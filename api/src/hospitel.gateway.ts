@@ -35,7 +35,8 @@ export class HospitelGateway implements OnGatewayInit {
           hospitelCode: hospitel.code,
           currentCapacity: hospitel.currentCapacity,
           maxCapacity: hospitel.maxCapacity,
-        }),
+          timestamp: Date.now(),
+        } as CapacityUpdate),
       );
     }
     return;
