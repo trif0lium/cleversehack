@@ -35,5 +35,12 @@ export class HospitelService {
       { id: hospitel.id },
       { currentCapacity: hospitel.currentCapacity + n, maxCapacity },
     );
+
+    this.capacityUpdate$.next({
+      hospitelCode: hospitel.code,
+      maxCapacity: maxCapacity,
+      currentCapacity: hospitel.currentCapacity + n,
+      timestamp: Date.now(),
+    });
   }
 }
