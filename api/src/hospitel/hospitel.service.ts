@@ -6,11 +6,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class HospitelService {
-  capacityUpdate$: Subject<{
-    hospitelCode: string;
-    currentCapacity: number;
-    maxCapacity: number;
-  }> = new Subject();
+  capacityUpdate$: Subject<CapacityUpdate> = new Subject();
 
   constructor(
     @InjectRepository(Hospitel)
