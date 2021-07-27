@@ -3,3 +3,5 @@ service: cleversehack-api
 instance_class: B2
 manual_scaling:
   instances: 1
+env_variables:
+  DATABASE_CONNECTION_NAME: {{ DATABASE_CONNECTION_NAME }}
