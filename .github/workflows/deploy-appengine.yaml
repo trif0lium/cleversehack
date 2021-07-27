@@ -17,7 +17,7 @@ jobs:
         cd api
         yarn
         yarn build
-        sd '{{ DATABASE_CONNECTION_NAME }}' '${{ secrets.DATABASE_CONNECTION_NAME }}' app.yml
+        sd -s '{{ DATABASE_CONNECTION_NAME }}' '${{ secrets.DATABASE_CONNECTION_NAME }}' app.yml
     - uses: google-github-actions/deploy-appengine@v0.2.0
       with:
         deliverables: api/app.yml
