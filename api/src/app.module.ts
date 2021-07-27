@@ -8,24 +8,20 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { Hospitel } from './datamodel/hospitel.datamodel';
 import { HospitelService } from './hospitel/hospitel.service';
+import { applicationConfig } from './application-config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: process.env.NODE_ENV === 'development' && '.env.development',
+      isGlobal: true,
+      load: [applicationConfig],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('POSTGRES_HOST'),
-        port: +configService.get<number>('POSTGRES_PORT'),
-        username: configService.get('POSTGRES_USER'),
-        password: configService.get('POSTGRES_PASSWORD'),
-        database: configService.get('POSTGRES_DB'),
+        ...configService.get('database'),
         entities: [Hospitel],
-        synchronize: true,
-        namingStrategy: new SnakeNamingStrategy(),
       }),
       inject: [ConfigService],
     }),
