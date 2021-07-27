@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { nanoid } from 'nanoid';
+import { customAlphabet, urlAlphabet } from 'nanoid';
 
 @Entity()
 export class Hospitel {
@@ -13,7 +13,7 @@ export class Hospitel {
   id: number;
 
   @Column({ unique: true })
-  code: string = nanoid();
+  code: string = customAlphabet(urlAlphabet, 16)();
 
   @Column({ unique: true })
   name: string;
