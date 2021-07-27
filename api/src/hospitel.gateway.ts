@@ -23,10 +23,17 @@ export class HospitelGateway implements OnGatewayInit {
   }
 
   @SubscribeMessage('hospitel:subscribe')
-  handleHospitelSubscribe(
+  async handleHospitelSubscribe(
     @ConnectedSocket() client: Socket,
     @MessageBody() hospitelCode: string,
   ) {
+    const hospitel = await this.hospitelService.findByCode(hospitelCode);
+    if (hospitel) {
+      client.join(`hospitel:${hospitel.code}`);
+      this.server
+        .to(client.id)
+        .emit(JSON.stringify(this.hospitelService.capacityUpdate$.getValue()));
+    }
     return;
   }
 
