@@ -1,204 +1,43 @@
-import React, { useCallback, useRef, useState } from "react";
-import {
-  GoogleMap,
-  useLoadScript,
-  Marker,
-  InfoWindow,
-} from "@react-google-maps/api";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
-import "@reach/combobox/styles.css";
-import mapStyles from "../components/styles/MapStyles";
-import { FaCompass, FaSearch } from "react-icons/fa";
-import { MdMyLocation } from "react-icons/md";
+import React, { useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import { GrFormAdd } from "react-icons/gr";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useHistory } from "react-router-dom";
-
-const mapContainerStyle = {
-  height: "100vh",
-  width: "100vw",
-};
-const options = {
-  styles: mapStyles,
-  disableDefaultUI: true,
-  zoomControl: true,
-};
-const center = {
-  lat: 13.736717,
-  lng: 100.523186,
-};
+import { SearchLocationMenu } from "../components/search-location/search-location";
+import { SearchLocationContent } from "../components/search-location/SearchLocationContent";
+import { SearchLocationMenuTab } from "../components/search-location/SearchLocationMenuTab";
 
 const SearchLocation = () => {
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyBoONR0q9T6-FkrslzfPXrQ4lqtZ7aI0a4",
-    // googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries: ["places"],
-  });
-  const [markers, setMarkers] = useState([]);
-  const [selected, setSelected] = useState(center);
-  const [isGeoLocLoading, setIsGeoLocLoading] = useState(false);
+  const [menu, setMenu] = useState<SearchLocationMenu>(SearchLocationMenu.MAP);
 
   const history = useHistory();
 
-  const onMapClick = useCallback((e) => {
-    //close drawer
-    // setMarkers((current) => [
-    //   ...current,
-    //   {
-    //     lat: e.latLng.lat(),
-    //     lng: e.latLng.lng(),
-    //     time: new Date(),
-    //   },
-    // ]);
-  }, []);
-
-  const mapRef = useRef<any>();
-  const onMapLoad = useCallback((map) => {
-    mapRef.current = map;
-  }, []);
-
-  const panTo = useCallback(({ lat, lng }) => {
-    if (mapRef.current) {
-      mapRef.current.panTo({ lat, lng });
-      mapRef.current.setZoom(14);
-    }
-  }, []);
-
-  const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete({
-    requestOptions: {
-      location: { lat: () => 13.736717, lng: () => 100.523186 },
-      radius: 100 * 1000,
-    },
-  });
-
-  // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
-
-  const handleInput = (e: any) => {
-    setValue(e.target.value);
-  };
-
-  const handleSelect = async (address: any) => {
-    setValue(address, false);
-    clearSuggestions();
-
-    try {
-      const results = await getGeocode({ address });
-      const { lat, lng } = await getLatLng(results[0]);
-      panTo({ lat, lng });
-    } catch (error) {
-      console.log("😱 Error: ", error);
-    }
-  };
-
-  if (loadError) return <h3>"Error"</h3>;
-  if (!isLoaded) return <h3>"Loading..."</h3>;
-
   return (
-    <div>
-      <div className="navbar flex bg-white shadow-lg">
-        <div className="flex p-2" onClick={() => history.push("/menu")}>
-          <IoMdArrowRoundBack className="h-6 w-6" />
-          <h3 className="mx-2">กลับสู่เมนูหลัก</h3>
+    <>
+      <div className="navbar-tab shadow-lg">
+        <div className="navbar flex bg-white justify-between">
+          <div
+            className="back-button flex p-2 text-tertiary text-sm"
+            onClick={() => history.push("/menu")}
+          >
+            <IoMdArrowRoundBack className="h-5 w-5 mr-2" />
+            กลับสู่หน้าหลัก
+          </div>
+          <div className="flex text-tertiary items-center">
+            <button className="option-button flex text-tertiary items-center mr-2 pr-1">
+              <GrFormAdd className="h-5 w-5 mr-1" /> เพิ่ม
+            </button>
+            <button className="option-button flex text-tertiary items-center mr-3 pr-1">
+              <FaSearch className="h-3 w-3 mr-2 ml-1" /> ค้นหา
+            </button>
+          </div>
         </div>
-
-        <div className="search mt-1 flex items-center justify-end mr-8">
-          <FaSearch className="h-5 w-5" />
-          <Combobox onSelect={handleSelect}>
-            <ComboboxInput
-              value={value}
-              onChange={handleInput}
-              // disabled={!ready}
-              placeholder="ค้นหา..."
-            />
-            <ComboboxPopover>
-              <ComboboxList>
-                {status === "OK" &&
-                  data.map(({ id, description }) => (
-                    <ComboboxOption key={id} value={description} />
-                  ))}
-              </ComboboxList>
-            </ComboboxPopover>
-          </Combobox>
+        <div className="flex bg-base justify-center">
+          <SearchLocationMenuTab menu={menu} setMenu={setMenu} />
         </div>
       </div>
-      <button
-        className="locate flex"
-        onClick={() => {
-          setIsGeoLocLoading(true);
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              panTo({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              });
-              setIsGeoLocLoading(false);
-            },
-            () => null
-          );
-        }}
-      >
-        {isGeoLocLoading && <h3 className="m-4">กำลังค้นหา...</h3>}
-        <MdMyLocation className="h-8 w-8 my-4 text-white bg-primary shadow-lg p-1 rounded" />
-      </button>
-
-      <GoogleMap
-        id="map"
-        mapContainerStyle={mapContainerStyle}
-        zoom={8}
-        center={center}
-        options={options}
-        onClick={onMapClick}
-        onLoad={onMapLoad}
-      >
-        {/* {markers.map((marker) => (
-          <Marker
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
-            onClick={() => {
-              setSelected(marker);
-            }}
-            icon={{
-              url: `/bear.svg`,
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(30, 30),
-            }}
-          />
-        ))} */}
-
-        {selected ? (
-          <InfoWindow
-            position={{ lat: selected.lat, lng: selected.lng }}
-            onCloseClick={() => {
-              setSelected(center);
-            }}
-          >
-            <div>
-              <h2>
-                <span role="img" aria-label="bear">
-                  🐻
-                </span>
-              </h2>
-            </div>
-          </InfoWindow>
-        ) : null}
-      </GoogleMap>
-    </div>
+      <SearchLocationContent menu={menu} />
+    </>
   );
 };
 

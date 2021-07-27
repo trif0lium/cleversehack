@@ -90,8 +90,27 @@ const GlobalStyles = createGlobalStyle`
     border: none;
     z-index: 10;
   }
-  .modal {
 
+  .back-button {
+    border-radius: 4px;
+    &:hover {
+      transform: scale(1.02);
+      background-color: #F3F3F3;
+    }
+  }
+  .option-button {
+    border-radius: 4px;
+    &:hover {
+      transform: scale(1.02);
+      background-color: #F3F3F3;
+    }
+  }
+  .menu-button {
+    width: 100%;
+    &:hover {
+    font-weight: bold;
+    background-color: white;
+    }
   }
 `;
 
