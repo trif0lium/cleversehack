@@ -37,6 +37,24 @@ const GlobalStyles = createGlobalStyle`
     font-weight: bold;
     color: #0C2641;
   }
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0C2641;
+  }
+  h4 {
+    font-size: 18px;
+    font-weight: bold;  
+    color: #1A7676;
+  }
+  h5 {
+    font-size: 14px;
+    color: #576675;
+  }
   
   .navbar {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
@@ -55,12 +73,13 @@ const GlobalStyles = createGlobalStyle`
     padding: 0.5rem;
     font-size: 1.25rem;
     width: 300px;
-    height: 40px;
+    height: 35px;
     ${media.desktop} {
       width: 500px;
     }
-    ${media.mobile} {
+    @media(max-width: 640px) {
       width: auto;
+      max-width: 150px;
     }
   }
   
@@ -70,6 +89,9 @@ const GlobalStyles = createGlobalStyle`
     background: none;
     border: none;
     z-index: 10;
+  }
+  .modal {
+
   }
 `;
 

@@ -45,6 +45,7 @@ const SearchLocation = () => {
   });
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(center);
+  const [isGeoLocLoading, setIsGeoLocLoading] = useState(false);
 
   const history = useHistory();
 
@@ -110,18 +111,19 @@ const SearchLocation = () => {
   return (
     <div>
       <div className="navbar flex bg-white shadow-lg">
-        <div className="p-3" onClick={() => history.push("/menu")}>
+        <div className="flex p-2" onClick={() => history.push("/menu")}>
           <IoMdArrowRoundBack className="h-6 w-6" />
+          <h3 className="mx-2">กลับสู่เมนูหลัก</h3>
         </div>
 
         <div className="search mt-1 flex items-center justify-end mr-8">
-          <FaSearch className="h-6 w-6" />
+          <FaSearch className="h-5 w-5" />
           <Combobox onSelect={handleSelect}>
             <ComboboxInput
               value={value}
               onChange={handleInput}
               // disabled={!ready}
-              placeholder="ค้นหาจากพื้นที่..."
+              placeholder="ค้นหา..."
             />
             <ComboboxPopover>
               <ComboboxList>
@@ -135,21 +137,25 @@ const SearchLocation = () => {
         </div>
       </div>
       <button
-        className="locate"
+        className="locate flex"
         onClick={() => {
+          setIsGeoLocLoading(true);
           navigator.geolocation.getCurrentPosition(
             (position) => {
               panTo({
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
               });
+              setIsGeoLocLoading(false);
             },
             () => null
           );
         }}
       >
+        {isGeoLocLoading && <h3 className="m-4">กำลังค้นหา...</h3>}
         <MdMyLocation className="h-8 w-8 my-4 text-white bg-primary shadow-lg p-1 rounded" />
       </button>
+
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}

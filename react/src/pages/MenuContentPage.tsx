@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { MenuIcon } from "../components/const";
 import MenuCard from "../components/menu/MenuCard";
 import { ContentWrap } from "../components/styles/ContentStyles";
 
@@ -21,6 +22,7 @@ const MenuContent = () => {
           topic="ค้นหาสถานที่ดูแลผู้ติดเชื้อ"
           description="สำรวจสถานที่ดูแล เช่น โรงพยาบาลสนาม หรือ Hospitel
         ผู้ติดเชื้อบนแผนที่หรือรายการที่มี"
+          icon={MenuIcon.HOSPITEL}
           onClick={() => {
             history.push(`/search-location`);
           }}
@@ -28,6 +30,7 @@ const MenuContent = () => {
         <MenuCard
           topic="ค้นหาสถานที่ตรวจ Covid-19"
           description="ค้นหาและเแลกเปลี่ยนข้อมูลจุดตรวจโควิด-19 ที่ wheretotestcovid19.com"
+          icon={MenuIcon.WHERE_TO_TEST}
           onClick={() => {
             history.push(`/where-to-test-covid-19`);
           }}
@@ -35,6 +38,7 @@ const MenuContent = () => {
         <MenuCard
           topic="ตรวจสอบอาการเบื้องต้น"
           description="ทำแบบสอบถามเพื่อกรองอาการป่วยเบื้องต้น"
+          icon={MenuIcon.SELF_ASSESSMENT}
           onClick={() => {
             history.push(`/search-location`);
           }}

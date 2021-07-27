@@ -12,25 +12,6 @@ export const ContentWrap = styled.div`
   justify-content: center;
   align-items: center;
 
-  h2 {
-    font-size: 20px;
-    font-weight: bold;
-  }
-  h3 {
-    font-size: 18px;
-    font-weight: bold;
-    color: #0C2641;
-  }
-  h4 {
-    font-size: 18px;
-    font-weight: bold;  
-    color: #1A7676;
-  }
-  h5 {
-    font-size: 14px;
-    color: #576675;
-  }
-  
   .boxWrap {
     width: 90%;
     ${media.desktop} {
@@ -56,6 +37,7 @@ export const ContentWrap = styled.div`
       height: 120px;
       background-color: white;
       margin-top: 20px;
+      padding: 0px 20px 0px 0px;
 	    transition: all 0.2s ease-in-out;
 	    border-radius: 20px 20px 20px 20px;
 	    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
@@ -70,8 +52,9 @@ export const ContentWrap = styled.div`
       .icon {
         min-width: 120px;
         height: 100%;
-        background-color: gray;
-        margin-left: 20px;
+        margin: 10px;
+        padding: 20px;
+        color: #0C2641;
       }
       }
     }
