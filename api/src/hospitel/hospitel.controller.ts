@@ -1,5 +1,13 @@
-import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { Hospitel } from 'src/datamodel/hospitel.datamodel';
+import { CreateHospitelDTO } from './hospitel.dto';
 import { HospitelService } from './hospitel.service';
 
 @Controller('hospitel')
@@ -18,5 +26,10 @@ export class HospitelController {
       throw new NotFoundException();
     }
     return hospitel;
+  }
+
+  @Post()
+  create(@Body() data: CreateHospitelDTO): Promise<Hospitel> {
+    return this.hospitelService.create(data);
   }
 }
