@@ -27,6 +27,7 @@ export const applicationConfig = (): ApplicationConfig => {
   return {
     database: {
       type: 'postgres',
+      host: `/cloudsql/${process.env.DATABASE_CONNECTION_NAME}`,
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
