@@ -6,3 +6,4 @@ manual_scaling:
   instances: 1
 env_variables:
   DATABASE_CONNECTION_NAME: {{ DATABASE_CONNECTION_NAME }}
+  NODE_ENV: production
