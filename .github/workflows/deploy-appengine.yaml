@@ -1,0 +1,17 @@
+name: Deploy to App Engine
+steps:
+  - uses: actions/checkout@v2
+  - uses: actions/setup-node@v1
+    with:
+      node-version: "14"
+  - run: |
+      cd api
+      yarn
+      yarn build
+  - uses: google-github-actions/deploy-appengine@v0.2.0
+    with:
+      deliverables: app.yaml
+      project_id: ${{ secrets.GCP_PROJECT }}
+      credentials: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+      promote: true
+      version: v1
