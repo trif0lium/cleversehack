@@ -1,3 +1,13 @@
+export class Coordinate {
+  latitude: number;
+  longitude: number;
+}
+
+export class GetHospitelDTO {
+  from: Coordinate;
+  radius: number;
+}
+
 export class CreateHospitelDTO {
   name: string;
   address: string;
