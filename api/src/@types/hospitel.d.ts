@@ -1,4 +1,4 @@
-export interface CapacityUpdate {
+interface CapacityUpdate {
   hospitelCode: string;
   maxCapacity: number;
   currentCapacity: number;
