@@ -7,15 +7,15 @@ import {
   Post,
 } from '@nestjs/common';
 import { Hospitel } from 'src/datamodel/hospitel.datamodel';
-import { CreateHospitelDTO, GetHospitelDTO } from './hospitel.dto';
+import { CreateHospitelDTO } from './hospitel.dto';
 import { HospitelService } from './hospitel.service';
 
 @Controller('hospitel')
 export class HospitelController {
   constructor(private readonly hospitelService: HospitelService) {}
 
-  @Post()
-  list(@Body() data: GetHospitelDTO): Promise<Hospitel[]> {
+  @Get()
+  list(): Promise<Hospitel[]> {
     return this.hospitelService.findAll();
   }
 
