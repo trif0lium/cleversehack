@@ -6,7 +6,7 @@ export interface ApplicationConfig {
 }
 
 export const applicationConfig = (): ApplicationConfig => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV !== 'production') {
     return {
       database: {
         type: 'postgres',
