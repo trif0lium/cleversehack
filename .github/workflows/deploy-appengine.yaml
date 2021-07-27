@@ -8,6 +8,7 @@ steps:
   - uses: actions/setup-node@v1
     with:
       node-version: "14"
+  - run: brew install sd
   - run: |
       cd api
       yarn
