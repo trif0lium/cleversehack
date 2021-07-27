@@ -7,6 +7,11 @@ import {
 } from 'typeorm';
 import { customAlphabet, urlAlphabet } from 'nanoid';
 
+enum FacilityType {
+  HOSPITEL = 'HOSPITEL',
+  HOSPITAL = 'HOSPITAL',
+}
+
 @Entity()
 export class Hospitel {
   @PrimaryGeneratedColumn()
@@ -47,6 +52,9 @@ export class Hospitel {
 
   @Column('simple-array')
   tags: string[] = [];
+
+  @Column('enum', { enum: FacilityType })
+  type: FacilityType;
 
   @CreateDateColumn()
   createdAt: Date;
