@@ -2,13 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HospitelModule } from './hospitel/hospitel.module';
-import { HospitelGateway } from './hospitel.gateway';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { Hospitel } from './datamodel/hospitel.datamodel';
-import { HospitelService } from './hospitel/hospitel.service';
-import { applicationConfig } from './application-config';
+import { ApplicationConfig, applicationConfig } from './application-config';
 
 @Module({
   imports: [
@@ -19,7 +16,7 @@ import { applicationConfig } from './application-config';
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService<ApplicationConfig>) => ({
         ...configService.get('database'),
         entities: [Hospitel],
       }),
