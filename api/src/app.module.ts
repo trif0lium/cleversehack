@@ -32,6 +32,6 @@ import { HospitelService } from './hospitel/hospitel.service';
     HospitelModule,
   ],
   controllers: [AppController],
-  providers: [AppService, HospitelService, HospitelGateway],
+  providers: [AppService],
 })
 export class AppModule {}
