@@ -1,10 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Subject } from 'rxjs';
 import { Hospitel } from 'src/datamodel/hospitel.datamodel';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class HospitelService {
+  capacityUpdate$: Subject<{
+    hospitelCode: string;
+    currentCapacity: number;
+    maxCapacity: number;
+  }> = new Subject();
+
   constructor(
     @InjectRepository(Hospitel)
     private hospitelRepository: Repository<Hospitel>,
