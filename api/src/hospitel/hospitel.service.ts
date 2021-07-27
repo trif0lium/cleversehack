@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Subject } from 'rxjs';
 import { Hospitel } from 'src/datamodel/hospitel.datamodel';
 import { Repository } from 'typeorm';
+import { CreateHospitelDTO } from './hospitel.dto';
 
 @Injectable()
 export class HospitelService {
@@ -19,6 +20,10 @@ export class HospitelService {
 
   findByCode(code: string): Promise<Hospitel | null> {
     return this.hospitelRepository.findOne({ code });
+  }
+
+  create(data: CreateHospitelDTO): Promise<Hospitel> {
+    return this.hospitelRepository.save(Object.assign(new Hospitel(), data));
   }
 
   async increaseCurrentCapacity(hospitelCode: string, n: number) {
