@@ -30,9 +30,13 @@ export class HospitelGateway implements OnGatewayInit {
     const hospitel = await this.hospitelService.findByCode(hospitelCode);
     if (hospitel) {
       client.join(`hospitel:${hospitel.code}`);
-      this.server
-        .to(client.id)
-        .emit(JSON.stringify(this.hospitelService.capacityUpdate$.getValue()));
+      this.server.to(client.id).emit(
+        JSON.stringify({
+          hospitelCode: hospitel.code,
+          currentCapacity: hospitel.currentCapacity,
+          maxCapacity: hospitel.maxCapacity,
+        }),
+      );
     }
     return;
   }
