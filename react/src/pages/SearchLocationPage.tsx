@@ -49,7 +49,10 @@ const SearchLocation = () => {
           <SearchLocationMenuTab menu={menu} setMenu={setMenu} />
         </div>
       </div>
-      <SearchLocationContent menu={menu} />
+      <SearchLocationContent
+        menu={menu}
+        isVisibleSearchBar={isVisibleSearchBar}
+      />
     </>
   );
 };

@@ -37,7 +37,13 @@ const center = {
   lng: 100.523186,
 };
 
-export const SearchLocationMap = () => {
+interface SearchLocationMapProps {
+  isVisibleSearchBar: boolean;
+}
+
+export const SearchLocationMap = ({
+  isVisibleSearchBar,
+}: SearchLocationMapProps) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyBoONR0q9T6-FkrslzfPXrQ4lqtZ7aI0a4",
     // googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -111,34 +117,36 @@ export const SearchLocationMap = () => {
           myLocation={selectedMyLocation}
         />
       )}
-      <button
-        className="locate flex"
-        onClick={() => {
-          setIsGeoLocLoading(true);
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              panTo({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              });
-              setIsGeoLocLoading(false);
-              setSelectedMyLocation({
-                id: "my_current_location",
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              });
+      {!isVisibleSearchBar && (
+        <button
+          className="locate flex"
+          onClick={() => {
+            setIsGeoLocLoading(true);
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                panTo({
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+                });
+                setIsGeoLocLoading(false);
+                setSelectedMyLocation({
+                  id: "my_current_location",
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+                });
 
-              history.push(`/search-location`);
-            },
-            () => null
-          );
-        }}
-      >
-        <MdMyLocation className="h-8 w-8 my-4 text-white bg-primary shadow-lg p-1 rounded" />
-        {isGeoLocLoading && (
-          <p className="m-4 text-lg text-secondary">กำลังค้นหา...</p>
-        )}
-      </button>
+                history.push(`/search-location`);
+              },
+              () => null
+            );
+          }}
+        >
+          {isGeoLocLoading && (
+            <p className="m-4 text-lg text-secondary">กำลังค้นหา...</p>
+          )}
+          <MdMyLocation className="h-8 w-8 my-4 text-white bg-primary shadow-lg p-1 rounded" />
+        </button>
+      )}
 
       <GoogleMap
         id="map"

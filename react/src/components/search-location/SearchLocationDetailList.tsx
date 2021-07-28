@@ -1,5 +1,10 @@
 import React, { useState } from "react";
+import { DetailList } from "../styles/DetailListStyles";
 
 export const SearchLocationDetailList = () => {
-  return <div className="bg-white w-full h-full"></div>;
+  return (
+    <DetailList>
+      <div className="location-detail-list"></div>
+    </DetailList>
+  );
 };

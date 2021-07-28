@@ -124,9 +124,13 @@ const GlobalStyles = createGlobalStyle`
     border-width: 1px;
   }
   .search-button {
+    border: 1px solid #1A7676;
+    color: #1A7676;
     &:hover {
       transform: scale(1.02);
-      background-color: #576675;
+      background-color: #1A7676;
+      color: white;
+      font-weight: bold;
     }
   }
   

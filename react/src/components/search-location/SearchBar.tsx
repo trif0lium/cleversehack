@@ -54,7 +54,7 @@ export const SearchBar = () => {
         </div>
       </div>
       <div className="flex flex-col m-3 w-auto sm:w-40">
-        <button className="search-button flex bg-primary w-full h-10 rounded p-3 items-center justify-center text-white font-bold">
+        <button className="search-button flex w-full h-10 rounded p-3 items-center justify-center text-white font-bold">
           ค้นหา
         </button>
         <button className="mx-3 my-1 mt-2 text-tertiary text-xs underline">
