@@ -18,7 +18,16 @@ class DataStore {
   async init() {
     this.websocket.on("connect", () => {
       this.setWebsocketReady(this.websocket.connected);
-      if (this.websocket.connected) this.subscribeCapacityUpdate();
+      if (this.websocket.connected) {
+        this.subscribeCapacityUpdate();
+        this.websocket.on("hospitel:capacity-update", (data) => {
+          this.setCurrentCapacity(
+            data.hospitelCode,
+            data.currentCapacity,
+            data.maxCapacity
+          );
+        });
+      }
     });
 
     try {
