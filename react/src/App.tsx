@@ -10,6 +10,7 @@ import Home from "./pages/HomePage";
 import GlobalStyles from "./components/styles/GlobalStyles";
 import MenuContent from "./pages/MenuContentPage";
 import SearchLocation from "./pages/SearchLocationPage";
+import SearchLocationDetail from "./pages/SearchLocationDetailPage";
 
 const App = (): ReactElement => (
   <>
@@ -24,6 +25,9 @@ const App = (): ReactElement => (
         </Route>
         <Route path="/search-location">
           <SearchLocation />
+        </Route>
+        <Route exact path="/search-location/:locationId">
+          <SearchLocationDetail />
         </Route>
         <Route
           path="/where-to-test-covid-19"

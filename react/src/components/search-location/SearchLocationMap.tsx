@@ -11,8 +11,9 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import mapStyles from "../styles/MapStyles";
 import { MdMyLocation } from "react-icons/md";
+import { FaHospitalAlt, FaClinicMedical } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
-import { FacilityType, LocationType, MOCK_DATA } from "../const";
+import { FacilityType, LocationType, Tag, MOCK_DATA } from "../const";
 
 type MyLocation = {
   id: string;
@@ -48,14 +49,15 @@ export const SearchLocationMap = () => {
 
   const history = useHistory();
 
-  const onMapClick = useCallback((e) => {
-    //TOOD: set close drawer
-    setSelectedLocation(undefined);
-  }, []);
-
   const mapRef = useRef<any>();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
+  }, []);
+
+  const onMapClick = useCallback((e) => {
+    //TOOD: set close drawer
+    setSelectedLocation(undefined);
+    history.push(`/search-location`);
   }, []);
 
   const panTo = useCallback(({ lat, lng }) => {
@@ -65,33 +67,17 @@ export const SearchLocationMap = () => {
     }
   }, []);
 
-  // const {
-  //   ready,
-  //   value,
-  //   suggestions: { status, data },
-  //   setValue,
-  //   clearSuggestions,
-  // } = usePlacesAutocomplete({
-  //   requestOptions: {
-  //     location: { lat: () => 13.736717, lng: () => 100.523186 },
-  //     radius: 100 * 1000,
-  //   },
-  // });
-
   // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
 
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition(
-  //     (position) => {
-  //       panTo({
-  //         lat: position.coords.latitude,
-  //         lng: position.coords.longitude,
-  //       });
-  //       setIsGeoLocLoading(false);
-  //     },
-  //     () => null
-  //   );
-  // }, []);
+  useEffect(() => {
+    if (selectedLocation) {
+      mapRef.current.panTo({
+        lat: selectedLocation.latitude,
+        lng: selectedLocation.longitude,
+      });
+      mapRef.current.setZoom(16);
+    }
+  }, [selectedLocation]);
 
   const handleSelect = async (address: any) => {
     // setValue(address, false);
@@ -127,6 +113,8 @@ export const SearchLocationMap = () => {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
               });
+              setSelectedLocation(undefined);
+              history.push(`/search-location`);
             },
             () => null
           );
@@ -150,18 +138,20 @@ export const SearchLocationMap = () => {
         {MOCK_DATA.map((location) => (
           <Marker
             visible={true}
+            clickable={true}
             onMouseOver={() => {}}
             key={location.id}
             position={{ lat: location.latitude, lng: location.longitude }}
             onClick={() => {
               setSelectedLocation(location);
+              history.push(`/search-location/${location.id}`);
             }}
             icon={{
               url:
                 location.type === FacilityType.HOSPITAL
                   ? "/hospital.svg"
                   : "/medic.svg",
-              scaledSize: new window.google.maps.Size(25, 25),
+              scaledSize: new window.google.maps.Size(30, 30),
             }}
           />
         ))}
@@ -179,19 +169,41 @@ export const SearchLocationMap = () => {
         {selectedLocation ? (
           <InfoWindow
             position={{
-              lat: selectedLocation.latitude,
+              lat: selectedLocation.latitude + 0.0008,
               lng: selectedLocation.longitude,
             }}
             onCloseClick={() => {
               setSelectedLocation(undefined);
             }}
           >
-            <div>
-              <h2>
-                <span role="img" aria-label="bear">
-                  🐻
-                </span>
-              </h2>
+            <div className="flex justify-center items-center my-1">
+              <div className="flex flex-col mx-2">
+                <div className="flex justify-center items-center mb-2">
+                  {selectedLocation.type === FacilityType.HOSPITAL ? (
+                    <FaHospitalAlt className="mr-2 w-5 h-5" />
+                  ) : (
+                    <FaClinicMedical className="mr-2 w-5 h-5" />
+                  )}
+                  <h3>{selectedLocation.name}</h3>
+                </div>
+                <div>
+                  {selectedLocation.tags.map((tag) => (
+                    <span
+                      className={`tag ${
+                        tag === Tag.R
+                          ? `bg-red-500`
+                          : tag === Tag.Y
+                          ? `bg-yellow-400`
+                          : `bg-green-600`
+                      }`}
+                    ></span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex w-16 h-12 bg-red-500 rounded justify-center items-center text-white text-lg font-bold">
+                1/30
+              </div>
             </div>
           </InfoWindow>
         ) : null}

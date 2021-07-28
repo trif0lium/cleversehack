@@ -50,7 +50,7 @@ export const MOCK_DATA: LocationType[] = [
     phoneNumber: "02 951 1170",
     website: "bamras.ddc.moph.go.th",
     googleMapsURL: "",
-    tags: [Tag.G],
+    tags: [Tag.R, Tag.Y],
     type: FacilityType.HOSPITAL,
     // createdAt: ,
     // updatedAt:
@@ -70,7 +70,7 @@ export const MOCK_DATA: LocationType[] = [
     phoneNumber: "02 217 3000",
     website: "https://www.facebook.com/siamatsiambangkok/",
     googleMapsURL: "",
-    tags: [Tag.G],
+    tags: [Tag.G, Tag.Y],
     type: FacilityType.HOSPITEL,
     // createdAt: ,
     // updatedAt:

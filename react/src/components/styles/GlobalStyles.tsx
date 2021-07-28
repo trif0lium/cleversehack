@@ -54,7 +54,29 @@ const GlobalStyles = createGlobalStyle`
     font-size: 14px;
     color: #576675;
   }
+  .gm-style-iw-t {  
+    .gm-style .gm-style-iw-c {
+        transform: translate(-50%,-100%);
+        border-radius: 8px;
+        box-shadow: 0 2px 2px 1px rgba(0,0,0,0.3);
+    }
+    .gm-style-iw-d  {
+        background-color: white;
+        padding: 0px;
+     }
+     .gm-ui-hover-effect {
+       visibility: hidden;
+     }
+     .tag {
+      display: inline-block;
+      margin-right: 4px;
+      border-radius: 10px;
+      width: 12px;
+      height: 12px;
+     }
+}
   
+ 
   .navbar {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
   }
