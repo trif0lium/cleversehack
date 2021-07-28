@@ -1,6 +1,7 @@
 import csv from "csv-parser";
 import fs from "fs";
 import arg from "arg";
+import { isEmpty } from "lodash";
 
 const args = arg({ "--csv-file": String });
 if (!args["--csv-file"])
@@ -36,7 +37,7 @@ interface Output {
 
 fs.createReadStream(args["--csv-file"]!)
   .pipe(csv())
-  .on("data", (data) => results.push(data))
+  .on("data", (data) => !isEmpty(data.name) && results.push(data))
   .on("end", () => {
     console.log(results);
   });
