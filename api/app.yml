@@ -2,6 +2,7 @@ runtime: nodejs14
 service: cleversehack-api
 instance_class: B2
 entrypoint: npm run start:prod
+env: flex
 manual_scaling:
   instances: 1
 env_variables:
