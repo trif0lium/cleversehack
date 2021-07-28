@@ -82,7 +82,7 @@ fs.createReadStream(args["--csv-file"]!)
           result.R === "TRUE" && "R",
           result.Y === "TRUE" && "Y",
           result.G === "TRUE" && "G",
-        ].filter((a) => a),
+        ].filter((a) => a) as string[],
       };
     });
     console.log(out);
