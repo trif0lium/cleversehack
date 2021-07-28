@@ -1,10 +1,26 @@
 import { action, makeAutoObservable } from "mobx";
 import axios from "axios";
 import { io, Socket } from "socket.io-client";
+import { FacilityType, Tag } from "../components/const";
 
 const API_URL = "cleversehack-api-dot-everyday-development.et.r.appspot.com";
 
-interface _Hospitel extends Hospitel {
+interface Hospitel {
+  code: string;
+  tags: Tag[];
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  maxCapacity: number;
+  currentCapacity: number;
+  additionalDetail?: string;
+  hospital: string;
+  phoneNumber?: string;
+  website?: string;
+  googleMapsURL?: string;
+  type: FacilityType;
+  updatedAt: string;
   timestamp: number;
 }
 
@@ -12,7 +28,7 @@ class DataStore {
   websocket: Socket = io(`wss://${API_URL}`, { transports: ["websocket"] });
   websocketReady: boolean = false;
 
-  hospitelList: _Hospitel[] = [];
+  hospitelList: Hospitel[] = [];
   hospitelListLoading: boolean = true;
 
   constructor() {

@@ -32,7 +32,7 @@ const App = () => {
           <Route path="/search-location">
             <SearchLocation />
           </Route>
-          <Route exact path="/search-location/:locationId">
+          <Route exact path="/search-location/:locationCode">
             <SearchLocationDetail />
           </Route>
           <Route

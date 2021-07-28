@@ -52,6 +52,7 @@ const SearchLocation = () => {
       <SearchLocationContent
         menu={menu}
         isVisibleSearchBar={isVisibleSearchBar}
+        setIsVisibleSearchBar={setIsVisibleSearchBar}
       />
     </>
   );

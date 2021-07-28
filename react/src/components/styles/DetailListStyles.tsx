@@ -10,5 +10,12 @@ export const DetailList = styled.div`
     background-color: white;
     height: 100vh;
     width: 100%;
+
+    .detail-card {
+      &:hover {
+        transform: scale(1.02);
+        background-color: #f3f3f3;
+      }
+    }
   }
 `;

@@ -7,6 +7,7 @@ import {
   FaEdit,
 } from "react-icons/fa";
 import { IoIosGlobe } from "react-icons/io";
+import { locationStore } from "../../store/locationStore";
 import {
   FacilityType,
   LocationType,
@@ -24,8 +25,9 @@ interface SearchLocationDetailDrawerProps {
 
 export const SearchLocationDetailDrawer = ({
   selectedLocation,
-  myLocation,
 }: SearchLocationDetailDrawerProps) => {
+  const { myLocation, setDistance } = locationStore;
+
   const haversine_distance = useMemo(() => {
     if (myLocation) {
       var R = 3958.8; // Radius of the Earth in miles
@@ -47,9 +49,11 @@ export const SearchLocationDetailDrawer = ({
                 Math.sin(difflon / 2)
           )
         );
+      setDistance(d.toFixed(3));
       return d.toFixed(3);
     }
   }, [selectedLocation, myLocation]);
+
   return (
     <div className="search-drawer w-auto flex-shrink flex-wrap">
       <div

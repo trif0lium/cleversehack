@@ -5,10 +5,7 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
+import { getGeocode, getLatLng } from "use-places-autocomplete";
 import mapStyles from "../styles/MapStyles";
 import { MdMyLocation } from "react-icons/md";
 import { FaHospitalAlt, FaClinicMedical } from "react-icons/fa";
@@ -17,11 +14,12 @@ import {
   FacilityType,
   LocationType,
   MyLocationType,
-  Tag,
   MOCK_DATA,
   TAG_COLOR_MAPPER,
 } from "../const";
 import { SearchLocationDetailDrawer } from "./SearchLocationDetailDrawer";
+import { dataStore } from "../../store/dataStore";
+import { locationStore } from "../../store/locationStore";
 
 const mapContainerStyle = {
   height: "calc(100vh - 60px)",
@@ -39,10 +37,12 @@ const center = {
 
 interface SearchLocationMapProps {
   isVisibleSearchBar: boolean;
+  setIsVisibleSearchBar: (isVisibleSearchBar: boolean) => void;
 }
 
 export const SearchLocationMap = ({
   isVisibleSearchBar,
+  setIsVisibleSearchBar,
 }: SearchLocationMapProps) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyBoONR0q9T6-FkrslzfPXrQ4lqtZ7aI0a4",
@@ -59,6 +59,10 @@ export const SearchLocationMap = ({
   const [isInfoWindowVisible, setIsInfoWindowVisible] = useState(false);
   const [isGeoLocLoading, setIsGeoLocLoading] = useState(false);
 
+  const { setMyLocation } = locationStore;
+  const { hospitelList, hospitelListLoading } = dataStore;
+  console.log("data:", hospitelList);
+
   const history = useHistory();
 
   const mapRef = useRef<any>();
@@ -71,6 +75,7 @@ export const SearchLocationMap = ({
     setSelectedLocation(undefined);
     setIsInfoWindowVisible(false);
     setIsSearchLocationDetailDrawerVisible(false);
+    setIsVisibleSearchBar(false);
     history.push(`/search-location`);
   }, []);
 
@@ -93,29 +98,13 @@ export const SearchLocationMap = ({
     }
   }, [selectedLocation]);
 
-  const handleSelect = async (address: any) => {
-    // setValue(address, false);
-    // clearSuggestions();
-
-    try {
-      const results = await getGeocode({ address });
-      const { lat, lng } = await getLatLng(results[0]);
-      panTo({ lat, lng });
-    } catch (error) {
-      console.log("😱 Error: ", error);
-    }
-  };
-
   if (loadError) return <h3>"Error"</h3>;
   if (!isLoaded) return <h3>"Loading..."</h3>;
 
   return (
     <div>
       {isSearchLocationDetailDrawerVisible && selectedLocation && (
-        <SearchLocationDetailDrawer
-          selectedLocation={selectedLocation}
-          myLocation={selectedMyLocation}
-        />
+        <SearchLocationDetailDrawer selectedLocation={selectedLocation} />
       )}
       {!isVisibleSearchBar && (
         <button
@@ -130,11 +119,15 @@ export const SearchLocationMap = ({
                 });
                 setIsGeoLocLoading(false);
                 setSelectedMyLocation({
-                  id: "my_current_location",
+                  code: "my_current_location",
                   lat: position.coords.latitude,
                   lng: position.coords.longitude,
                 });
-
+                setMyLocation({
+                  code: "my_current_location",
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+                });
                 history.push(`/search-location`);
               },
               () => null
@@ -162,11 +155,12 @@ export const SearchLocationMap = ({
             visible={true}
             clickable={true}
             onMouseOver={() => {}}
-            key={location.id}
+            key={location.code}
             position={{ lat: location.latitude, lng: location.longitude }}
             onClick={() => {
               setSelectedLocation(location);
               setIsInfoWindowVisible(true);
+              history.push(`/search-location/${location.code}`);
             }}
             icon={{
               url:
@@ -179,7 +173,7 @@ export const SearchLocationMap = ({
         ))}
         {selectedMyLocation && (
           <Marker
-            key={selectedMyLocation.id}
+            key={selectedMyLocation.code}
             position={{
               lat: selectedMyLocation.lat,
               lng: selectedMyLocation.lng,
@@ -202,7 +196,6 @@ export const SearchLocationMap = ({
               className="flex justify-center items-center my-1"
               onClick={() => {
                 setIsSearchLocationDetailDrawerVisible(true);
-                history.push(`/search-location/${selectedLocation.id}`);
               }}
             >
               <div className="flex flex-col mx-2">

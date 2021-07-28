@@ -22,14 +22,14 @@ export const TAG_COLOR_MAPPER = {
 };
 
 export type MyLocationType = {
-  id: string;
+  code: string;
   lat: number;
   lng: number;
 };
 
 export type LocationType = {
-  id: number;
   code: string;
+  tags: Tag[];
   name: string;
   address: string;
   latitude: number;
@@ -37,14 +37,13 @@ export type LocationType = {
   maxCapacity: number;
   currentCapacity: number;
   additionalDetail?: string;
-  hospital?: string;
+  hospital: string;
   phoneNumber?: string;
   website?: string;
   googleMapsURL?: string;
-  tags: Tag[];
   type: FacilityType;
-  createdAt?: Date;
-  updatedAt?: Date;
+  updatedAt: string;
+  timestamp: number;
 };
 
 export enum MenuIcon {
@@ -55,7 +54,6 @@ export enum MenuIcon {
 
 export const MOCK_DATA: LocationType[] = [
   {
-    id: 1,
     code: "hos-pi-tal",
     name: "รพ.สนาม สถาบันบำราศนราดูร",
     address: "หมู่ที่ 4 ตําบล 38, ถ. ติวานนท์ อำเภอเมืองนนทบุรี นนทบุรี 11000",
@@ -64,17 +62,16 @@ export const MOCK_DATA: LocationType[] = [
     maxCapacity: 60,
     currentCapacity: 60,
     // additionalDetail?: string,
-    // hospital?: string,
+    hospital: "-",
     phoneNumber: "02 951 1170",
     website: "bamras.ddc.moph.go.th",
     googleMapsURL: "",
     tags: [Tag.R, Tag.Y],
     type: FacilityType.HOSPITAL,
-    // createdAt: ,
-    // updatedAt:
+    updatedAt: "string",
+    timestamp: 12,
   },
   {
-    id: 2,
     code: "hos-pi-tel",
     name: "รร. สยาม แอ็ท สยาม",
     address:
@@ -90,7 +87,7 @@ export const MOCK_DATA: LocationType[] = [
     googleMapsURL: "",
     tags: [Tag.G, Tag.Y],
     type: FacilityType.HOSPITEL,
-    // createdAt: ,
-    // updatedAt:
+    updatedAt: "string",
+    timestamp: 12,
   },
 ];
