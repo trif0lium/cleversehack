@@ -1,5 +1,9 @@
 import csv from "csv-parser";
 import fs from "fs";
+import arg from "arg";
+
+const args = arg({ "--csv-file": String });
+
 const results: Input[] = [];
 
 interface Input {
@@ -28,7 +32,7 @@ interface Output {
   tags: string[];
 }
 
-fs.createReadStream("data.csv")
+fs.createReadStream(args["--csv-file"])
   .pipe(csv())
   .on("data", (data) => results.push(data))
   .on("end", () => {
