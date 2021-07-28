@@ -201,8 +201,8 @@ export const SearchLocationMap = () => {
                 </div>
               </div>
 
-              <div className="flex w-16 h-12 bg-red-500 rounded justify-center items-center text-white text-lg font-bold">
-                1/30
+              <div className="flex w-auto px-2 h-12 bg-red-500 rounded justify-center items-center text-white text-lg font-bold">
+                {`${selectedLocation.currentCapacity}/${selectedLocation.maxCapacity}`}
               </div>
             </div>
           </InfoWindow>
