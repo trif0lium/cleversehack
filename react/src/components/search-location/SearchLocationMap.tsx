@@ -9,19 +9,17 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
-import "@reach/combobox/styles.css";
 import mapStyles from "../styles/MapStyles";
-import { FaCompass, FaSearch } from "react-icons/fa";
 import { MdMyLocation } from "react-icons/md";
-import { IoMdArrowRoundBack } from "react-icons/io";
+import { FaHospitalAlt, FaClinicMedical } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
+import { FacilityType, LocationType, Tag, MOCK_DATA } from "../const";
+
+type MyLocation = {
+  id: string;
+  lat: number;
+  lng: number;
+};
 
 const mapContainerStyle = {
   height: "calc(100vh - 60px)",
@@ -45,17 +43,21 @@ export const SearchLocationMap = () => {
   });
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(center);
+  const [selectedLocation, setSelectedLocation] = useState<LocationType>();
+  const [selectedMyLocation, setSelectedMyLocation] = useState<MyLocation>();
   const [isGeoLocLoading, setIsGeoLocLoading] = useState(false);
 
   const history = useHistory();
 
-  const onMapClick = useCallback((e) => {
-    //TOOD: set close drawer
-  }, []);
-
   const mapRef = useRef<any>();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
+  }, []);
+
+  const onMapClick = useCallback((e) => {
+    //TOOD: set close drawer
+    setSelectedLocation(undefined);
+    history.push(`/search-location`);
   }, []);
 
   const panTo = useCallback(({ lat, lng }) => {
@@ -65,41 +67,21 @@ export const SearchLocationMap = () => {
     }
   }, []);
 
-  const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete({
-    requestOptions: {
-      location: { lat: () => 13.736717, lng: () => 100.523186 },
-      radius: 100 * 1000,
-    },
-  });
-
   // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
 
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition(
-  //     (position) => {
-  //       panTo({
-  //         lat: position.coords.latitude,
-  //         lng: position.coords.longitude,
-  //       });
-  //       setIsGeoLocLoading(false);
-  //     },
-  //     () => null
-  //   );
-  // }, []);
-
-  const handleInput = (e: any) => {
-    setValue(e.target.value);
-  };
+  useEffect(() => {
+    if (selectedLocation) {
+      mapRef.current.panTo({
+        lat: selectedLocation.latitude,
+        lng: selectedLocation.longitude,
+      });
+      mapRef.current.setZoom(16);
+    }
+  }, [selectedLocation]);
 
   const handleSelect = async (address: any) => {
-    setValue(address, false);
-    clearSuggestions();
+    // setValue(address, false);
+    // clearSuggestions();
 
     try {
       const results = await getGeocode({ address });
@@ -115,32 +97,6 @@ export const SearchLocationMap = () => {
 
   return (
     <div>
-      {/* <div className="navbar flex bg-white shadow-lg">
-        <div className="flex p-2" onClick={() => history.push("/menu")}>
-          <IoMdArrowRoundBack className="h-6 w-6" />
-          <h3 className="mx-2">กลับสู่เมนูหลัก</h3>
-        </div>
-
-        <div className="search mt-1 flex items-center justify-end mr-8">
-          <FaSearch className="h-5 w-5" />
-          <Combobox onSelect={handleSelect}>
-            <ComboboxInput
-              value={value}
-              onChange={handleInput}
-              // disabled={!ready}
-              placeholder="ค้นหา..."
-            />
-            <ComboboxPopover>
-              <ComboboxList>
-                {status === "OK" &&
-                  data.map(({ id, description }) => (
-                    <ComboboxOption key={id} value={description} />
-                  ))}
-              </ComboboxList>
-            </ComboboxPopover>
-          </Combobox>
-        </div>
-      </div> */}
       <button
         className="locate flex"
         onClick={() => {
@@ -152,6 +108,13 @@ export const SearchLocationMap = () => {
                 lng: position.coords.longitude,
               });
               setIsGeoLocLoading(false);
+              setSelectedMyLocation({
+                id: "my_current_location",
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              });
+              setSelectedLocation(undefined);
+              history.push(`/search-location`);
             },
             () => null
           );
@@ -172,35 +135,75 @@ export const SearchLocationMap = () => {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {/* {markers.map((marker) => (
+        {MOCK_DATA.map((location) => (
           <Marker
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
+            visible={true}
+            clickable={true}
+            onMouseOver={() => {}}
+            key={location.id}
+            position={{ lat: location.latitude, lng: location.longitude }}
             onClick={() => {
-              setSelected(marker);
+              setSelectedLocation(location);
+              history.push(`/search-location/${location.id}`);
             }}
             icon={{
-              url: `/bear.svg`,
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
+              url:
+                location.type === FacilityType.HOSPITAL
+                  ? "/hospital.svg"
+                  : "/medic.svg",
               scaledSize: new window.google.maps.Size(30, 30),
             }}
           />
-        ))} */}
+        ))}
+        {selectedMyLocation && (
+          <Marker
+            key={selectedMyLocation.id}
+            position={{
+              lat: selectedMyLocation.lat,
+              lng: selectedMyLocation.lng,
+            }}
+            animation={google.maps.Animation.BOUNCE}
+          />
+        )}
 
-        {selected ? (
+        {selectedLocation ? (
           <InfoWindow
-            position={{ lat: selected.lat, lng: selected.lng }}
+            position={{
+              lat: selectedLocation.latitude + 0.0008,
+              lng: selectedLocation.longitude,
+            }}
             onCloseClick={() => {
-              setSelected(center);
+              setSelectedLocation(undefined);
             }}
           >
-            <div>
-              <h2>
-                <span role="img" aria-label="bear">
-                  🐻
-                </span>
-              </h2>
+            <div className="flex justify-center items-center my-1">
+              <div className="flex flex-col mx-2">
+                <div className="flex justify-center items-center mb-2">
+                  {selectedLocation.type === FacilityType.HOSPITAL ? (
+                    <FaHospitalAlt className="mr-2 w-5 h-5" />
+                  ) : (
+                    <FaClinicMedical className="mr-2 w-5 h-5" />
+                  )}
+                  <h3>{selectedLocation.name}</h3>
+                </div>
+                <div>
+                  {selectedLocation.tags.map((tag) => (
+                    <span
+                      className={`tag ${
+                        tag === Tag.R
+                          ? `bg-red-500`
+                          : tag === Tag.Y
+                          ? `bg-yellow-400`
+                          : `bg-green-600`
+                      }`}
+                    ></span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex w-auto px-2 h-12 bg-red-500 rounded justify-center items-center text-white text-lg font-bold">
+                {`${selectedLocation.currentCapacity}/${selectedLocation.maxCapacity}`}
+              </div>
             </div>
           </InfoWindow>
         ) : null}
