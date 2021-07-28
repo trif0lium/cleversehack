@@ -11,3 +11,5 @@ env_variables:
   POSTGRES_DB: {{ POSTGRES_DB }}
 network:
   session_affinity: true
+beta_settings:
+  cloud_sql_instances: {{ DATABASE_CONNECTION_NAME }}
