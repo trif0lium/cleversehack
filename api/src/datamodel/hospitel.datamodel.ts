@@ -38,10 +38,10 @@ export class Hospitel {
   @Column('double precision')
   longitude: number;
 
-  @Column()
+  @Column('int')
   maxCapacity: number;
 
-  @Column()
+  @Column('int')
   currentCapacity: number;
 
   @Column({ nullable: true })
