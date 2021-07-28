@@ -53,9 +53,12 @@ export const SearchBar = () => {
           </Form>
         </div>
       </div>
-      <div className="m-3 sm:my-6 w-auto sm:w-36">
-        <button className="flex bg-primary w-full h-10 rounded p-3 items-center justify-center text-white font-bold">
+      <div className="flex flex-col m-3 w-auto sm:w-40">
+        <button className="search-button flex bg-primary w-full h-10 rounded p-3 items-center justify-center text-white font-bold">
           ค้นหา
+        </button>
+        <button className="mx-3 my-1 mt-2 text-tertiary text-xs underline">
+          เคลียร์ตัวเลือกการค้นหา
         </button>
       </div>
     </div>

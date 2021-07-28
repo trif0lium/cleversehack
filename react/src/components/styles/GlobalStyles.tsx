@@ -94,6 +94,12 @@ const GlobalStyles = createGlobalStyle`
   .search-text {
     border-width: 1px;
   }
+  .search-button {
+    &:hover {
+      transform: scale(1.02);
+      background-color: #576675;
+    }
+  }
   
   .locate {
     position: absolute;
