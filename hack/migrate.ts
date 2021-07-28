@@ -1,6 +1,8 @@
 import csv from "csv-parser";
 import fs from "fs";
 import arg from "arg";
+import axios from "axios";
+import pLimit from "p-limit";
 import {
   forEach,
   isEmpty,
@@ -15,6 +17,8 @@ const args = arg({ "--csv-file": String });
 if (!args["--csv-file"])
   throw new Error("missing required argument: --csv-file");
 
+const API_URL =
+  "https://cleversehack-api-dot-everyday-development.et.r.appspot.com";
 const results: Input[] = [];
 
 interface Input {
@@ -85,5 +89,11 @@ fs.createReadStream(args["--csv-file"]!)
         ].filter((a) => a) as string[],
       };
     });
+
+    const limit = pLimit(5);
+    const requests = out.map((data) => {
+      return limit(() => axios.post(`${API_URL}/hospitel`, data));
+    });
+
     console.log(out);
   });
