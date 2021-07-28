@@ -1,10 +1,11 @@
 import { action, makeAutoObservable } from "mobx";
 import axios from "axios";
+import { io, Socket } from "socket.io-client";
 
-const API_URL =
-  "https://cleversehack-api-dot-everyday-development.et.r.appspot.com";
+const API_URL = "cleversehack-api-dot-everyday-development.et.r.appspot.com";
 
 class DataStore {
+  websocket: Socket = io(`wss://${API_URL}`, { transports: ["websocket"] });
   hospitelList: Hospitel[] = [];
 
   constructor() {
@@ -13,7 +14,9 @@ class DataStore {
 
   async init() {
     try {
-      const { data } = await axios.get<Hospitel[]>(`${API_URL}/hospitel`);
+      const { data } = await axios.get<Hospitel[]>(
+        `https://${API_URL}/hospitel`
+      );
       this.setHospitelList(data);
     } catch (_) {}
   }
