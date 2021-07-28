@@ -32,10 +32,10 @@ export class Hospitel {
   @Column()
   address: string;
 
-  @Column()
+  @Column('double precision')
   latitude: number;
 
-  @Column()
+  @Column('double precision')
   longitude: number;
 
   @Column()
