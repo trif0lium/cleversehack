@@ -23,6 +23,8 @@ export class CreateHospitelDTO {
 }
 
 export class UpdateHospitelCapacityDTO {
-  direction: 'INC' | 'DEC';
-  n: number;
+  direction: 'INC' | 'DEC' | 'SET';
+  n?: number;
+  currentCapacity?: number;
+  maxCapacity?: number;
 }
