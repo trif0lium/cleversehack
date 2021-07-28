@@ -9,19 +9,16 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
-import "@reach/combobox/styles.css";
 import mapStyles from "../styles/MapStyles";
-import { FaCompass, FaSearch } from "react-icons/fa";
 import { MdMyLocation } from "react-icons/md";
-import { IoMdArrowRoundBack } from "react-icons/io";
 import { useHistory } from "react-router-dom";
+import { FacilityType, LocationType, MOCK_DATA } from "../const";
+
+type MyLocation = {
+  id: string;
+  lat: number;
+  lng: number;
+};
 
 const mapContainerStyle = {
   height: "calc(100vh - 60px)",
@@ -45,12 +42,15 @@ export const SearchLocationMap = () => {
   });
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(center);
+  const [selectedLocation, setSelectedLocation] = useState<LocationType>();
+  const [selectedMyLocation, setSelectedMyLocation] = useState<MyLocation>();
   const [isGeoLocLoading, setIsGeoLocLoading] = useState(false);
 
   const history = useHistory();
 
   const onMapClick = useCallback((e) => {
     //TOOD: set close drawer
+    setSelectedLocation(undefined);
   }, []);
 
   const mapRef = useRef<any>();
@@ -65,18 +65,18 @@ export const SearchLocationMap = () => {
     }
   }, []);
 
-  const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete({
-    requestOptions: {
-      location: { lat: () => 13.736717, lng: () => 100.523186 },
-      radius: 100 * 1000,
-    },
-  });
+  // const {
+  //   ready,
+  //   value,
+  //   suggestions: { status, data },
+  //   setValue,
+  //   clearSuggestions,
+  // } = usePlacesAutocomplete({
+  //   requestOptions: {
+  //     location: { lat: () => 13.736717, lng: () => 100.523186 },
+  //     radius: 100 * 1000,
+  //   },
+  // });
 
   // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
 
@@ -93,13 +93,9 @@ export const SearchLocationMap = () => {
   //   );
   // }, []);
 
-  const handleInput = (e: any) => {
-    setValue(e.target.value);
-  };
-
   const handleSelect = async (address: any) => {
-    setValue(address, false);
-    clearSuggestions();
+    // setValue(address, false);
+    // clearSuggestions();
 
     try {
       const results = await getGeocode({ address });
@@ -115,32 +111,6 @@ export const SearchLocationMap = () => {
 
   return (
     <div>
-      {/* <div className="navbar flex bg-white shadow-lg">
-        <div className="flex p-2" onClick={() => history.push("/menu")}>
-          <IoMdArrowRoundBack className="h-6 w-6" />
-          <h3 className="mx-2">กลับสู่เมนูหลัก</h3>
-        </div>
-
-        <div className="search mt-1 flex items-center justify-end mr-8">
-          <FaSearch className="h-5 w-5" />
-          <Combobox onSelect={handleSelect}>
-            <ComboboxInput
-              value={value}
-              onChange={handleInput}
-              // disabled={!ready}
-              placeholder="ค้นหา..."
-            />
-            <ComboboxPopover>
-              <ComboboxList>
-                {status === "OK" &&
-                  data.map(({ id, description }) => (
-                    <ComboboxOption key={id} value={description} />
-                  ))}
-              </ComboboxList>
-            </ComboboxPopover>
-          </Combobox>
-        </div>
-      </div> */}
       <button
         className="locate flex"
         onClick={() => {
@@ -152,6 +122,11 @@ export const SearchLocationMap = () => {
                 lng: position.coords.longitude,
               });
               setIsGeoLocLoading(false);
+              setSelectedMyLocation({
+                id: "my_current_location",
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              });
             },
             () => null
           );
@@ -172,27 +147,43 @@ export const SearchLocationMap = () => {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {/* {markers.map((marker) => (
+        {MOCK_DATA.map((location) => (
           <Marker
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
+            visible={true}
+            onMouseOver={() => {}}
+            key={location.id}
+            position={{ lat: location.latitude, lng: location.longitude }}
             onClick={() => {
-              setSelected(marker);
+              setSelectedLocation(location);
             }}
             icon={{
-              url: `/bear.svg`,
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(30, 30),
+              url:
+                location.type === FacilityType.HOSPITAL
+                  ? "/hospital.svg"
+                  : "/medic.svg",
+              scaledSize: new window.google.maps.Size(25, 25),
             }}
           />
-        ))} */}
+        ))}
+        {selectedMyLocation && (
+          <Marker
+            key={selectedMyLocation.id}
+            position={{
+              lat: selectedMyLocation.lat,
+              lng: selectedMyLocation.lng,
+            }}
+            animation={google.maps.Animation.BOUNCE}
+          />
+        )}
 
-        {selected ? (
+        {selectedLocation ? (
           <InfoWindow
-            position={{ lat: selected.lat, lng: selected.lng }}
+            position={{
+              lat: selectedLocation.latitude,
+              lng: selectedLocation.longitude,
+            }}
             onCloseClick={() => {
-              setSelected(center);
+              setSelectedLocation(undefined);
             }}
           >
             <div>

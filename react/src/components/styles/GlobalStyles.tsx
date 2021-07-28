@@ -26,7 +26,6 @@ const GlobalStyles = createGlobalStyle`
     background-attachment: fixed; 
     background-color: #1A7676;
   }
-
   h1 {
     position: absolute;
     top: 1rem;
@@ -118,6 +117,8 @@ const GlobalStyles = createGlobalStyle`
 
     }
   }
+
+  
   .option-button {
     border-radius: 4px;
     &:hover {
