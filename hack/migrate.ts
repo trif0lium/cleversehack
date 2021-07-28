@@ -85,5 +85,5 @@ fs.createReadStream(args["--csv-file"]!)
         ],
       };
     });
-    console.log(_results);
+    console.log(out);
   });
