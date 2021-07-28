@@ -9,6 +9,7 @@ class DataStore {
   websocketReady: boolean = false;
 
   hospitelList: Hospitel[] = [];
+  hospitelListLoading: boolean = true;
 
   constructor() {
     makeAutoObservable(this);
@@ -17,14 +18,23 @@ class DataStore {
   async init() {
     this.websocket.on("connection", () => {
       this.setWebsocketReady(this.websocket.connected);
+      if (this.websocket.connected) this.subscribeCapacityUpdate();
     });
 
     try {
+      this.setHospitelListLoading(true);
       const { data } = await axios.get<Hospitel[]>(
         `https://${API_URL}/hospitel`
       );
       this.setHospitelList(data);
+      this.setHospitelListLoading(false);
+      this.subscribeCapacityUpdate();
     } catch (_) {}
+  }
+
+  @action
+  setHospitelListLoading(loading: boolean) {
+    this.hospitelListLoading = loading;
   }
 
   @action
@@ -35,6 +45,14 @@ class DataStore {
   @action
   setWebsocketReady(ready: boolean) {
     this.websocketReady = ready;
+  }
+
+  subscribeCapacityUpdate() {
+    if (this.websocketReady && !this.hospitelListLoading) {
+      this.hospitelList.forEach((h) => {
+        this.websocket.emit("hospitel:subscribe", h.code);
+      });
+    }
   }
 
   @action
