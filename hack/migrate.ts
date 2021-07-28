@@ -1,7 +1,7 @@
 import csv from "csv-parser";
 import fs from "fs";
 import arg from "arg";
-import { forEach, isEmpty, isString, trim } from "lodash";
+import { forEach, isEmpty, isString, mapValues, trim } from "lodash";
 
 const args = arg({ "--csv-file": String });
 if (!args["--csv-file"])
@@ -40,7 +40,7 @@ fs.createReadStream(args["--csv-file"]!)
   .on("data", (data) => !isEmpty(data.name) && results.push(data))
   .on("end", () => {
     const _results = results.map((result) => {
-      const _result = forEach(result, (value, _) => {
+      const _result = mapValues(result, (value) => {
         if (isString(value)) value = trim(value);
       });
 
