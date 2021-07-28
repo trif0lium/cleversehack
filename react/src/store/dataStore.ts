@@ -36,6 +36,23 @@ class DataStore {
   setWebsocketReady(ready: boolean) {
     this.websocketReady = ready;
   }
+
+  @action
+  setCurrentCapacity(
+    hospitelCode: string,
+    currentCapacity: number,
+    maxCapacity: number
+  ) {
+    const hospitel = this.hospitelList.find((h) => h.code === hospitelCode);
+    if (
+      hospitel &&
+      (hospitel.currentCapacity !== currentCapacity ||
+        hospitel.maxCapacity !== maxCapacity)
+    ) {
+      hospitel.currentCapacity = currentCapacity;
+      hospitel.maxCapacity = maxCapacity;
+    }
+  }
 }
 
 export const dataStore = new DataStore();
