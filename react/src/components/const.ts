@@ -9,6 +9,24 @@ export enum Tag {
   R = "R",
 }
 
+export const TAG_MAPPER = {
+  [Tag.R]: "ผู้ป่วยสีแดง",
+  [Tag.Y]: "ผู้ป่วยสีเหลือง",
+  [Tag.G]: "ผู้ป่วยสีเขียว",
+};
+
+export const TAG_COLOR_MAPPER = {
+  [Tag.R]: "bg-red-500",
+  [Tag.Y]: "bg-yellow-400",
+  [Tag.G]: "bg-green-600",
+};
+
+export type MyLocationType = {
+  id: string;
+  lat: number;
+  lng: number;
+};
+
 export type LocationType = {
   id: number;
   code: string;

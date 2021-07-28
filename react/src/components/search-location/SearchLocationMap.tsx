@@ -13,13 +13,15 @@ import mapStyles from "../styles/MapStyles";
 import { MdMyLocation } from "react-icons/md";
 import { FaHospitalAlt, FaClinicMedical } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
-import { FacilityType, LocationType, Tag, MOCK_DATA } from "../const";
-
-type MyLocation = {
-  id: string;
-  lat: number;
-  lng: number;
-};
+import {
+  FacilityType,
+  LocationType,
+  MyLocationType,
+  Tag,
+  MOCK_DATA,
+  TAG_COLOR_MAPPER,
+} from "../const";
+import { SearchLocationDetailDrawer } from "./SearchLocationDetailDrawer";
 
 const mapContainerStyle = {
   height: "calc(100vh - 60px)",
@@ -41,10 +43,14 @@ export const SearchLocationMap = () => {
     // googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries: ["places"],
   });
-  const [markers, setMarkers] = useState([]);
-  const [selected, setSelected] = useState(center);
   const [selectedLocation, setSelectedLocation] = useState<LocationType>();
-  const [selectedMyLocation, setSelectedMyLocation] = useState<MyLocation>();
+  const [selectedMyLocation, setSelectedMyLocation] =
+    useState<MyLocationType>();
+  const [
+    isSearchLocationDetailDrawerVisible,
+    setIsSearchLocationDetailDrawerVisible,
+  ] = useState(false);
+  const [isInfoWindowVisible, setIsInfoWindowVisible] = useState(false);
   const [isGeoLocLoading, setIsGeoLocLoading] = useState(false);
 
   const history = useHistory();
@@ -57,6 +63,8 @@ export const SearchLocationMap = () => {
   const onMapClick = useCallback((e) => {
     //TOOD: set close drawer
     setSelectedLocation(undefined);
+    setIsInfoWindowVisible(false);
+    setIsSearchLocationDetailDrawerVisible(false);
     history.push(`/search-location`);
   }, []);
 
@@ -97,6 +105,12 @@ export const SearchLocationMap = () => {
 
   return (
     <div>
+      {isSearchLocationDetailDrawerVisible && selectedLocation && (
+        <SearchLocationDetailDrawer
+          selectedLocation={selectedLocation}
+          myLocation={selectedMyLocation}
+        />
+      )}
       <button
         className="locate flex"
         onClick={() => {
@@ -113,7 +127,7 @@ export const SearchLocationMap = () => {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
               });
-              setSelectedLocation(undefined);
+
               history.push(`/search-location`);
             },
             () => null
@@ -144,7 +158,7 @@ export const SearchLocationMap = () => {
             position={{ lat: location.latitude, lng: location.longitude }}
             onClick={() => {
               setSelectedLocation(location);
-              history.push(`/search-location/${location.id}`);
+              setIsInfoWindowVisible(true);
             }}
             icon={{
               url:
@@ -166,7 +180,7 @@ export const SearchLocationMap = () => {
           />
         )}
 
-        {selectedLocation ? (
+        {selectedLocation && isInfoWindowVisible ? (
           <InfoWindow
             position={{
               lat: selectedLocation.latitude + 0.0008,
@@ -176,7 +190,13 @@ export const SearchLocationMap = () => {
               setSelectedLocation(undefined);
             }}
           >
-            <div className="flex justify-center items-center my-1">
+            <div
+              className="flex justify-center items-center my-1"
+              onClick={() => {
+                setIsSearchLocationDetailDrawerVisible(true);
+                history.push(`/search-location/${selectedLocation.id}`);
+              }}
+            >
               <div className="flex flex-col mx-2">
                 <div className="flex justify-center items-center mb-2">
                   {selectedLocation.type === FacilityType.HOSPITAL ? (
@@ -188,15 +208,7 @@ export const SearchLocationMap = () => {
                 </div>
                 <div>
                   {selectedLocation.tags.map((tag) => (
-                    <span
-                      className={`tag ${
-                        tag === Tag.R
-                          ? `bg-red-500`
-                          : tag === Tag.Y
-                          ? `bg-yellow-400`
-                          : `bg-green-600`
-                      }`}
-                    ></span>
+                    <span className={`tag ${TAG_COLOR_MAPPER[tag]}`}></span>
                   ))}
                 </div>
               </div>

@@ -54,6 +54,7 @@ const GlobalStyles = createGlobalStyle`
     font-size: 14px;
     color: #576675;
   }
+
   .gm-style-iw-t {  
     .gm-style .gm-style-iw-c {
         transform: translate(-50%,-100%);
@@ -67,15 +68,22 @@ const GlobalStyles = createGlobalStyle`
      .gm-ui-hover-effect {
        visibility: hidden;
      }
-     .tag {
+     
+}
+
+  .tag {
       display: inline-block;
       margin-right: 4px;
       border-radius: 10px;
       width: 12px;
       height: 12px;
      }
-}
-  
+
+     .tag-drawer {
+      display: inline-block;
+      margin-right: 4px;
+      border-radius: 10px;
+     }
  
   .navbar {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
@@ -122,15 +130,6 @@ const GlobalStyles = createGlobalStyle`
     }
   }
   
-  .locate {
-    position: absolute;
-    left: 1rem;
-    bottom: 1rem;
-    background: none;
-    border: none;
-    z-index: 10;
-  }
-
   .back-button {
     border-radius: 4px;
     &:hover {
@@ -140,7 +139,6 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
-  
   .option-button {
     border-radius: 4px;
     &:hover {
@@ -158,6 +156,53 @@ const GlobalStyles = createGlobalStyle`
     font-weight: bold;
     background-color: white;
     }
+  }
+  
+  .locate {
+    position: absolute;
+    right: 1rem;
+    top: 4rem;
+    background: none;
+    border: none;
+    z-index: 10;
+  }
+
+  .search-drawer {
+    width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  }  
+  
+  .search-drawer-content {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    border-radius: 10px 10px 0px 0px;
+    z-index: 1; 
+    position: absolute; 
+    bottom: -5px; 
+    transition: 'max-width 0.5s, opacity 0.2s'
+    box-shadow: 8px 4px 8px 8px rgba(0, 0, 0, 0), 8px 6px 10px 8px rgba(0, 0, 0, 0.1);
+  }
+  .location-description {
+    overflow-wrap: break-word;
+    word-break: break-all; 
+  }
+  .drawer-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #1A7676;
+    color: #1A7676;
+    &:hover {
+      transform: scale(1.02);
+      background-color: #1A7676;
+      color: white;
+      font-weight: bold;
+    }
+
   }
 `;
 
