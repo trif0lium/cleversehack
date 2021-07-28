@@ -1,7 +1,15 @@
 import csv from "csv-parser";
 import fs from "fs";
 import arg from "arg";
-import { forEach, isEmpty, isString, mapValues, trim } from "lodash";
+import {
+  forEach,
+  isEmpty,
+  isString,
+  mapValues,
+  trim,
+  trimEnd,
+  trimStart,
+} from "lodash";
 
 const args = arg({ "--csv-file": String });
 if (!args["--csv-file"])
@@ -52,6 +60,30 @@ fs.createReadStream(args["--csv-file"]!)
       });
 
       return _result;
+    });
+
+    const out: Output[] = _results.map((result) => {
+      const location = result.location as string;
+      const [latitude, longitude] = trimEnd(trimStart(location, "("), ")")
+        .split(",")
+        .map((a) => Number(trim(a)));
+
+      return {
+        name: result.name,
+        maxCapacity: Number(result.maxCapacity),
+        currentCapacity: randomInt(0, Number(result.maxCapacity)),
+        hospital: result.hospital,
+        latitude,
+        longitude,
+        address: result.address,
+        phoneNumber: result.phoneNumber,
+        website: result.website,
+        tags: [
+          result.R === "TRUE" && "R",
+          result.Y === "TRUE" && "Y",
+          result.G === "TRUE" && "G",
+        ],
+      };
     });
     console.log(_results);
   });
