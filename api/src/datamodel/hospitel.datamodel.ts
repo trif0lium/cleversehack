@@ -45,6 +45,9 @@ export class Hospitel {
   currentCapacity: number;
 
   @Column({ nullable: true })
+  additionalDetail?: string;
+
+  @Column({ nullable: true })
   hospital?: string;
 
   @Column({ nullable: true })
