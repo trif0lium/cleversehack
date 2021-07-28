@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 const media = {
   desktop: `@media(min-width: 1024px)`,
-  tabletHorizontal: `@media(min-width: 768px)`,
+  tabletHorizontal: `@media(min-width: 720px)`,
   tablet: `@media(min-width: 640px)`,
   mobile: `@media(max-width: 475px)`,
 };
@@ -82,10 +82,23 @@ const GlobalStyles = createGlobalStyle`
       max-width: 150px;
     }
   }
+
+  .search-bar {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 0px 0px 10px 10px;
+    z-index: 1; 
+    position: absolute; 
+    top: 36px; 
+    left: 0px;
+  }
+  .search-text {
+    border-width: 1px;
+  }
   
   .locate {
     position: absolute;
-    right: 1rem;
+    left: 1rem;
+    bottom: 1rem;
     background: none;
     border: none;
     z-index: 10;
@@ -95,16 +108,21 @@ const GlobalStyles = createGlobalStyle`
     border-radius: 4px;
     &:hover {
       transform: scale(1.02);
-      background-color: #F3F3F3;
+      font-weight: bold;
+
     }
   }
   .option-button {
     border-radius: 4px;
     &:hover {
       transform: scale(1.02);
-      background-color: #F3F3F3;
+      font-weight: bold;
+      .icon {
+        transform: scale(1.2);
+      }
     }
   }
+
   .menu-button {
     width: 100%;
     &:hover {

@@ -14,7 +14,7 @@ export const SearchLocationMenuTab = ({
     <>
       {Object.values(SearchLocationMenu).map((key) => (
         <div
-          className={`flex w-full h-7 shadow-xl ${
+          className={`flex w-full h-7 shadow-lg ${
             menu == key
               ? `bg-white border-b-2 border-primary text-primary`
               : `text-tertiary shadow-inner`

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   GoogleMap,
   useLoadScript,
@@ -50,15 +50,7 @@ export const SearchLocationMap = () => {
   const history = useHistory();
 
   const onMapClick = useCallback((e) => {
-    //close drawer
-    // setMarkers((current) => [
-    //   ...current,
-    //   {
-    //     lat: e.latLng.lat(),
-    //     lng: e.latLng.lng(),
-    //     time: new Date(),
-    //   },
-    // ]);
+    //TOOD: set close drawer
   }, []);
 
   const mapRef = useRef<any>();
@@ -87,6 +79,19 @@ export const SearchLocationMap = () => {
   });
 
   // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
+
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //       panTo({
+  //         lat: position.coords.latitude,
+  //         lng: position.coords.longitude,
+  //       });
+  //       setIsGeoLocLoading(false);
+  //     },
+  //     () => null
+  //   );
+  // }, []);
 
   const handleInput = (e: any) => {
     setValue(e.target.value);
@@ -152,8 +157,10 @@ export const SearchLocationMap = () => {
           );
         }}
       >
-        {isGeoLocLoading && <h3 className="m-4">กำลังค้นหา...</h3>}
         <MdMyLocation className="h-8 w-8 my-4 text-white bg-primary shadow-lg p-1 rounded" />
+        {isGeoLocLoading && (
+          <p className="m-4 text-lg text-secondary">กำลังค้นหา...</p>
+        )}
       </button>
 
       <GoogleMap
