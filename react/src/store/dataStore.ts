@@ -4,11 +4,15 @@ import { io, Socket } from "socket.io-client";
 
 const API_URL = "cleversehack-api-dot-everyday-development.et.r.appspot.com";
 
+interface _Hospitel extends Hospitel {
+  timestamp: number;
+}
+
 class DataStore {
   websocket: Socket = io(`wss://${API_URL}`, { transports: ["websocket"] });
   websocketReady: boolean = false;
 
-  hospitelList: Hospitel[] = [];
+  hospitelList: _Hospitel[] = [];
   hospitelListLoading: boolean = true;
 
   constructor() {
@@ -24,7 +28,8 @@ class DataStore {
           this.setCurrentCapacity(
             data.hospitelCode,
             data.currentCapacity,
-            data.maxCapacity
+            data.maxCapacity,
+            data.timestamp
           );
         });
       }
@@ -48,7 +53,11 @@ class DataStore {
 
   @action
   setHospitelList(list: Hospitel[]) {
-    this.hospitelList = list;
+    const _list = list.map((l) => {
+      return { ...l, timestamp: Date.now() };
+    });
+
+    this.hospitelList = _list;
   }
 
   @action
@@ -68,16 +77,19 @@ class DataStore {
   setCurrentCapacity(
     hospitelCode: string,
     currentCapacity: number,
-    maxCapacity: number
+    maxCapacity: number,
+    timestamp: number
   ) {
     const hospitel = this.hospitelList.find((h) => h.code === hospitelCode);
     if (
       hospitel &&
       (hospitel.currentCapacity !== currentCapacity ||
-        hospitel.maxCapacity !== maxCapacity)
+        hospitel.maxCapacity !== maxCapacity) &&
+      hospitel.timestamp < timestamp
     ) {
       hospitel.currentCapacity = currentCapacity;
       hospitel.maxCapacity = maxCapacity;
+      hospitel.timestamp = timestamp;
     }
   }
 }
