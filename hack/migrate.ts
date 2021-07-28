@@ -44,6 +44,7 @@ interface Output {
   address: string;
   phoneNumber?: string;
   website?: string;
+  type: "HOSPITEL" | "HOSPITAL";
   tags: string[];
 }
 
@@ -82,6 +83,7 @@ fs.createReadStream(args["--csv-file"]!)
         address: result.address as string,
         phoneNumber: result.phoneNumber as string,
         website: result.website as string,
+        type: "HOSPITEL",
         tags: [
           result.R === "TRUE" && "R",
           result.Y === "TRUE" && "Y",
