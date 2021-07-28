@@ -18,13 +18,13 @@ const SearchLocation = () => {
     <>
       <div className="navbar-tab ">
         <div className="navbar flex bg-white shadow-lg justify-between">
-          <div
+          <button
             className="back-button flex p-2 text-tertiary text-sm"
             onClick={() => history.push("/menu")}
           >
             <IoMdArrowRoundBack className="option-button-icon h-5 w-5 mr-2" />
             <p className="truncate">กลับสู่หน้าหลัก</p>
-          </div>
+          </button>
           <div className="flex text-tertiary items-center">
             <button className="option-button flex text-tertiary items-center mr-2 pr-1">
               <MdAdd className="icon h-5 w-5 mr-1" /> เพิ่ม

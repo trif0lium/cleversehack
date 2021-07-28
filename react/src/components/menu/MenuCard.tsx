@@ -15,7 +15,7 @@ interface MenuCardProps {
 
 const MenuCard = ({ topic, description, icon, onClick }: MenuCardProps) => {
   return (
-    <div className="cont flex flex-row items-center" onClick={onClick}>
+    <button className="cont flex flex-row items-center" onClick={onClick}>
       <div className="icon">
         {icon === MenuIcon.HOSPITEL ? (
           <FaHospitalAlt className="w-20 h-20" />
@@ -25,11 +25,11 @@ const MenuCard = ({ topic, description, icon, onClick }: MenuCardProps) => {
           <FaFileMedicalAlt className="w-20 h-20" />
         )}
       </div>
-      <div className="h-auto w-auto">
+      <div className="h-auto w-full text-left">
         <h3>{topic}</h3>
         <h5 className="hidden xs:block">{description}</h5>
       </div>
-    </div>
+    </button>
   );
 };
 export default MenuCard;
