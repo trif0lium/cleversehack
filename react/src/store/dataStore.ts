@@ -1,9 +1,9 @@
 import { makeAutoObservable } from "mobx";
 
-class MessageStore {
+class DataStore {
   constructor() {
     makeAutoObservable(this);
   }
 }
 
-export const messageStore = new MessageStore();
+export const dataStore = new DataStore();
