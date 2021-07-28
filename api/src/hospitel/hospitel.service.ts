@@ -26,6 +26,34 @@ export class HospitelService {
     return this.hospitelRepository.save(Object.assign(new Hospitel(), data));
   }
 
+  async setCurrentCapacity(
+    hospitelCode: string,
+    currentCapacity: number,
+    maxCapacity?: number,
+  ) {
+    const hospitel = await this.hospitelRepository.findOneOrFail({
+      code: hospitelCode,
+    });
+
+    let _maxCapacity = hospitel.maxCapacity;
+
+    if (maxCapacity) {
+      _maxCapacity =
+        currentCapacity > maxCapacity ? currentCapacity : maxCapacity;
+    }
+
+    await this.hospitelRepository.update(
+      { id: hospitel.id },
+      { currentCapacity: currentCapacity, maxCapacity: _maxCapacity },
+    );
+
+    this.capacityUpdate$.next({
+      hospitelCode: hospitel.code,
+      maxCapacity: _maxCapacity,
+      currentCapacity: currentCapacity,
+      timestamp: Date.now(),
+    });
+  }
   async increaseCurrentCapacity(hospitelCode: string, _n: number) {
     const n = Number(_n);
     const hospitel = await this.hospitelRepository.findOneOrFail({
