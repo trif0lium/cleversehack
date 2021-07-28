@@ -12,6 +12,12 @@ enum FacilityType {
   HOSPITAL = 'HOSPITAL',
 }
 
+enum Tag {
+  G = 'G',
+  Y = 'Y',
+  R = 'R',
+}
+
 @Entity()
 export class Hospitel {
   @PrimaryGeneratedColumn()
@@ -50,8 +56,8 @@ export class Hospitel {
   @Column({ nullable: true })
   googleMapsURL?: string;
 
-  @Column('simple-array')
-  tags: string[] = [];
+  @Column('enum', { array: true, enum: Tag, default: [] })
+  tags: Tag[] = [];
 
   @Column('enum', { enum: FacilityType })
   type: FacilityType;
