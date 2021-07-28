@@ -42,6 +42,7 @@ fs.createReadStream(args["--csv-file"]!)
     const _results = results.map((result) => {
       const _result = mapValues(result, (value) => {
         if (isString(value)) value = trim(value);
+        return value;
       });
 
       return _result;
