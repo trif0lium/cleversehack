@@ -16,7 +16,7 @@ class DataStore {
   }
 
   async init() {
-    this.websocket.on("connection", () => {
+    this.websocket.on("connect", () => {
       this.setWebsocketReady(this.websocket.connected);
       if (this.websocket.connected) this.subscribeCapacityUpdate();
     });
