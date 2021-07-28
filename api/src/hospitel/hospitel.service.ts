@@ -26,7 +26,8 @@ export class HospitelService {
     return this.hospitelRepository.save(Object.assign(new Hospitel(), data));
   }
 
-  async increaseCurrentCapacity(hospitelCode: string, n: number) {
+  async increaseCurrentCapacity(hospitelCode: string, _n: number) {
+    const n = Number(_n);
     const hospitel = await this.hospitelRepository.findOneOrFail({
       code: hospitelCode,
     });
@@ -49,7 +50,8 @@ export class HospitelService {
     });
   }
 
-  async decreaseCurrentCapacity(hospitelCode: string, n: number) {
+  async decreaseCurrentCapacity(hospitelCode: string, _n: number) {
+    const n = Number(_n);
     const hospitel = await this.hospitelRepository.findOneOrFail({
       code: hospitelCode,
     });
