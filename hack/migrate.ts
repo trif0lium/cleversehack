@@ -35,6 +35,12 @@ interface Output {
   tags: string[];
 }
 
+function randomInt(inclusiveMin: number, exclusiveMax: number): number {
+  const min = Math.ceil(inclusiveMin);
+  const max = Math.floor(exclusiveMax);
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
 fs.createReadStream(args["--csv-file"]!)
   .pipe(csv())
   .on("data", (data) => !isEmpty(data.name) && results.push(data))
