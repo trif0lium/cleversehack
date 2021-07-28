@@ -48,4 +48,27 @@ export class HospitelService {
       timestamp: Date.now(),
     });
   }
+
+  async decreaseCurrentCapacity(hospitelCode: string, n: number) {
+    const hospitel = await this.hospitelRepository.findOneOrFail({
+      code: hospitelCode,
+    });
+
+    let currentCapacity = hospitel.currentCapacity - n;
+    if (currentCapacity < 0) {
+      currentCapacity = 0;
+    }
+
+    await this.hospitelRepository.update(
+      { id: hospitel.id },
+      { currentCapacity: currentCapacity },
+    );
+
+    this.capacityUpdate$.next({
+      hospitelCode: hospitel.code,
+      maxCapacity: hospitel.maxCapacity,
+      currentCapacity,
+      timestamp: Date.now(),
+    });
+  }
 }
