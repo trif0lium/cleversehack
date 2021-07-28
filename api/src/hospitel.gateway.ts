@@ -18,7 +18,9 @@ export class HospitelGateway implements OnGatewayInit {
 
   afterInit(server: Server) {
     this.hospitelService.capacityUpdate$.subscribe((data) => {
-      server.to(`hospitel:${data.hospitelCode}`).emit(data);
+      server
+        .to(`hospitel:${data.hospitelCode}`)
+        .emit('hospitel:capacity-update', data);
     });
   }
 
@@ -30,7 +32,7 @@ export class HospitelGateway implements OnGatewayInit {
     const hospitel = await this.hospitelService.findByCode(hospitelCode);
     if (hospitel) {
       client.join(`hospitel:${hospitel.code}`);
-      this.server.to(client.id).emit({
+      this.server.to(client.id).emit('hospitel:capacity-update', {
         hospitelCode: hospitel.code,
         currentCapacity: hospitel.currentCapacity,
         maxCapacity: hospitel.maxCapacity,
@@ -45,6 +47,9 @@ export class HospitelGateway implements OnGatewayInit {
     @ConnectedSocket() client: Socket,
     @MessageBody() hospitelCode: string,
   ) {
+    try {
+      client.leave(`hospitel:${hospitelCode}`);
+    } catch (_) {}
     return;
   }
 }
