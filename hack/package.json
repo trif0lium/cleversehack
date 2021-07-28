@@ -5,7 +5,8 @@
   "license": "MIT",
   "dependencies": {
     "arg": "^5.0.0",
-    "csv-parser": "^3.0.0"
+    "csv-parser": "^3.0.0",
+    "typescript": "^4.3.5"
   },
   "devDependencies": {
     "@types/node": "^16.4.4"
