@@ -39,11 +39,19 @@ export class HospitelController {
     @Param('code') code: string,
     @Body() data: UpdateHospitelCapacityDTO,
   ): Promise<{ ok: boolean }> {
-    if (data.direction === 'INC') {
+    if (data.direction === 'SET' && data.currentCapacity) {
+      await this.hospitelService.setCurrentCapacity(
+        code,
+        data.currentCapacity,
+        data.maxCapacity,
+      );
+    }
+
+    if (data.direction === 'INC' && data.n) {
       await this.hospitelService.increaseCurrentCapacity(code, data.n);
     }
 
-    if (data.direction === 'DEC') {
+    if (data.direction === 'DEC' && data.n) {
       await this.hospitelService.decreaseCurrentCapacity(code, data.n);
     }
 
