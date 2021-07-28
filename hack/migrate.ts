@@ -69,15 +69,15 @@ fs.createReadStream(args["--csv-file"]!)
         .map((a) => Number(trim(a)));
 
       return {
-        name: result.name,
+        name: result.name as string,
         maxCapacity: Number(result.maxCapacity),
         currentCapacity: randomInt(0, Number(result.maxCapacity)),
-        hospital: result.hospital,
+        hospital: result.hospital as string,
         latitude,
         longitude,
-        address: result.address,
-        phoneNumber: result.phoneNumber,
-        website: result.website,
+        address: result.address as string,
+        phoneNumber: result.phoneNumber as string,
+        website: result.website as string,
         tags: [
           result.R === "TRUE" && "R",
           result.Y === "TRUE" && "Y",
