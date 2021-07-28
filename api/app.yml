@@ -1,4 +1,4 @@
-runtime: nodejs14
+runtime: nodejs
 service: cleversehack-api
 instance_class: B2
 entrypoint: npm run start:prod
