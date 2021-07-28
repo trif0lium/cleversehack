@@ -3,6 +3,8 @@ import fs from "fs";
 import arg from "arg";
 
 const args = arg({ "--csv-file": String });
+if (!args["--csv-file"])
+  throw new Error("missing required argument: --csv-file");
 
 const results: Input[] = [];
 
@@ -32,7 +34,7 @@ interface Output {
   tags: string[];
 }
 
-fs.createReadStream(args["--csv-file"])
+fs.createReadStream(args["--csv-file"]!)
   .pipe(csv())
   .on("data", (data) => results.push(data))
   .on("end", () => {
