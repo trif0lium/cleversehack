@@ -15,6 +15,19 @@ interface Input {
   R: boolean;
 }
 
+interface Output {
+  name: string;
+  maxCapacity: number;
+  currentCapacity: number;
+  hospital: string;
+  latitude: number;
+  longitude: number;
+  address: string;
+  phoneNumber?: string;
+  website?: string;
+  tags: string[];
+}
+
 fs.createReadStream("data.csv")
   .pipe(csv())
   .on("data", (data) => results.push(data))
