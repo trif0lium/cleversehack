@@ -19,5 +19,5 @@ export class CreateHospitelDTO {
   phoneNumber?: string;
   website?: string;
   googleMapsURL?: string;
-  tags?: string;
+  tags?: string[];
 }
