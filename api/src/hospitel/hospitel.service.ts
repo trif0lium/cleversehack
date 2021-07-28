@@ -49,8 +49,8 @@ export class HospitelService {
 
     this.capacityUpdate$.next({
       hospitelCode: hospitel.code,
-      maxCapacity: _maxCapacity,
-      currentCapacity: currentCapacity,
+      maxCapacity: Number(_maxCapacity),
+      currentCapacity: Number(currentCapacity),
       timestamp: Date.now(),
     });
   }
