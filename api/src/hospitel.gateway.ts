@@ -9,7 +9,7 @@ import {
 import { Server, Socket } from 'socket.io';
 import { HospitelService } from './hospitel/hospitel.service';
 
-@WebSocketGateway()
+@WebSocketGateway(null, { transports: ['websocket'] })
 export class HospitelGateway implements OnGatewayInit {
   constructor(private readonly hospitelService: HospitelService) {}
 
