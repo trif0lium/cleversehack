@@ -56,7 +56,7 @@ function randomInt(inclusiveMin: number, exclusiveMax: number): number {
 fs.createReadStream(args["--csv-file"]!)
   .pipe(csv())
   .on("data", (data) => !isEmpty(data.name) && results.push(data))
-  .on("end", () => {
+  .on("end", async () => {
     const _results = results.map((result) => {
       const _result = mapValues(result, (value) => {
         if (isString(value)) value = trim(value);
@@ -94,6 +94,8 @@ fs.createReadStream(args["--csv-file"]!)
     const requests = out.map((data) => {
       return limit(() => axios.post(`${API_URL}/hospitel`, data));
     });
+
+    await Promise.all(requests);
 
     console.log(out);
   });
