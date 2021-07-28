@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "arg": "^5.0.0",
     "csv-parser": "^3.0.0"
   },
   "devDependencies": {
