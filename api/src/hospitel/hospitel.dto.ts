@@ -21,3 +21,8 @@ export class CreateHospitelDTO {
   googleMapsURL?: string;
   tags?: string[];
 }
+
+export class UpdateHospitelCapacityDTO {
+  direction: 'INC' | 'DEC';
+  n: number;
+}
