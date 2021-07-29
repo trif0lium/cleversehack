@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { dataStore } from '../store/dataStore';
 import { isEmpty, orderBy } from 'lodash';
 import { usePosition } from 'use-position';
-import { getDistance } from 'geolib';
+import { convertDistance, getDistance } from 'geolib';
 import { searchStore } from '../store/searchStore';
 
 export function useHospitelList() {
@@ -19,9 +19,17 @@ export function useHospitelList() {
   const hospitelList = useMemo(() => {
     let list = _hospitelList.map((h) => {
       if (latitude && longitude) {
-        h.relativeDistance = getDistance(
-          { latitude: Number(latitude), longitude: Number(longitude) },
-          { latitude: h.latitude, longitude: h.longitude },
+        h.relativeDistance = Number(
+          convertDistance(
+            getDistance(
+              { latitude: Number(latitude), longitude: Number(longitude) },
+              { latitude: h.latitude, longitude: h.longitude },
+            ),
+            'km',
+          ).toLocaleString('en-US', {
+            maximumFractionDigits: 2,
+            minimumFractionDigits: 2,
+          }),
         );
       } else {
         h.relativeDistance = undefined;
