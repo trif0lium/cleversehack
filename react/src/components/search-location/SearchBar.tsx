@@ -14,8 +14,10 @@ import { searchStore } from '../../store/searchStore';
 
 const _SearchBar = () => {
   useEffect(() => {
-    searchStore.setSort({ field: 'relativeDistance', direction: 'asc' });
-    searchStore.setFilters([]);
+    if (!searchStore.sort)
+      searchStore.setSort({ field: 'relativeDistance', direction: 'asc' });
+
+    if (searchStore.filters.length === 0) searchStore.setFilters([]);
   }, []);
 
   const filterOptions = useMemo(() => {
