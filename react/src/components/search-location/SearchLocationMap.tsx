@@ -21,6 +21,8 @@ import { SearchLocationDetailDrawer } from "./SearchLocationDetailDrawer";
 import { dataStore } from "../../store/dataStore";
 import { locationStore } from "../../store/locationStore";
 import { SearchBarSelectOption } from "./search-location";
+import { useHospitelList } from "../../hooks/useHospitelList";
+import { observer } from "mobx-react-lite";
 
 const mapContainerStyle = {
   height: "calc(100vh - 60px)",
@@ -44,7 +46,7 @@ interface SearchLocationMapProps {
   setIsVisibleSearchBar: (isVisibleSearchBar: boolean) => void;
 }
 
-export const SearchLocationMap = ({
+const _SearchLocationMap = ({
   searchTerm,
   sortBy,
   options,
@@ -57,8 +59,10 @@ export const SearchLocationMap = ({
     libraries: ["places"],
   });
   const [selectedLocation, setSelectedLocation] = useState<LocationType>();
-  const [selectedMyLocation, setSelectedMyLocation] =
-    useState<MyLocationType>();
+  const [
+    selectedMyLocation,
+    setSelectedMyLocation,
+  ] = useState<MyLocationType>();
   const [
     isSearchLocationDetailDrawerVisible,
     setIsSearchLocationDetailDrawerVisible,
@@ -67,9 +71,8 @@ export const SearchLocationMap = ({
   const [isGeoLocLoading, setIsGeoLocLoading] = useState(false);
 
   const { setMyLocation } = locationStore;
-  const { hospitelList, hospitelListLoading } = dataStore;
-  console.log("data:", hospitelList);
 
+  const { hospitelList } = useHospitelList();
   const history = useHistory();
 
   const mapRef = useRef<any>();
@@ -153,11 +156,10 @@ export const SearchLocationMap = ({
         mapContainerStyle={mapContainerStyle}
         zoom={8}
         center={center}
-        options={options}
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {MOCK_DATA.map((location) => (
+        {hospitelList.map((location) => (
           <Marker
             visible={true}
             clickable={true}
@@ -231,3 +233,5 @@ export const SearchLocationMap = ({
     </div>
   );
 };
+
+export const SearchLocationMap = observer(_SearchLocationMap);
