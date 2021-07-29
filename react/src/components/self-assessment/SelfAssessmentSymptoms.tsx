@@ -71,7 +71,9 @@ export const SelfAssessmentSymptoms = ({
         <div className="grid grid-cols-2">
           <button
             className={`sa-button flex w-auto mr-1 h-auto rounded-md  mb-3 border-2 ${
-              isClicked ? `border-primary text-primary` : `text-tertiary`
+              isClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() => (isClicked ? setIsClick(false) : setIsClick(true))}
           >
@@ -84,7 +86,9 @@ export const SelfAssessmentSymptoms = ({
           </button>
           <button
             className={`sa-button flex w-auto h-auto ml-1 rounded-md  mb-3 border-2 ${
-              isOneClicked ? `border-primary text-primary` : `text-tertiary`
+              isOneClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isOneClicked ? setIsOneClick(false) : setIsOneClick(true)
@@ -99,7 +103,9 @@ export const SelfAssessmentSymptoms = ({
           </button>
           <button
             className={`sa-button flex w-auto h-auto rounded-md mr-1 mb-3 border-2 ${
-              isTwoClicked ? `border-primary text-primary` : `text-tertiary`
+              isTwoClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isTwoClicked ? setIsTwoClick(false) : setIsTwoClick(true)
@@ -114,7 +120,9 @@ export const SelfAssessmentSymptoms = ({
           </button>
           <button
             className={`sa-button flex w-auto h-auto rounded-md ml-1 mb-3 border-2 ${
-              isThreeClicked ? `border-primary text-primary` : `text-tertiary`
+              isThreeClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isThreeClicked ? setIsThreeClick(false) : setIsThreeClick(true)
@@ -129,7 +137,9 @@ export const SelfAssessmentSymptoms = ({
           </button>
           <button
             className={`sa-button flex w-auto h-auto rounded-md mr-1 mb-3 border-2 ${
-              isFourClicked ? `border-primary text-primary` : `text-tertiary`
+              isFourClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isFourClicked ? setIsFourClick(false) : setIsFourClick(true)
@@ -146,7 +156,9 @@ export const SelfAssessmentSymptoms = ({
           </button>
           <button
             className={`sa-button items-center flex w-auto h-auto ml-1 rounded-md mb-3 border-2 ${
-              isFiveClicked ? `border-primary text-primary` : `text-tertiary`
+              isFiveClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isFiveClicked ? setIsFiveClick(false) : setIsFiveClick(true)
@@ -161,7 +173,9 @@ export const SelfAssessmentSymptoms = ({
           </button>
           <button
             className={`sa-button flex w-auto mr-1 h-auto rounded-md mb-3 border-2 ${
-              isSixClicked ? `border-primary text-primary` : `text-tertiary`
+              isSixClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isSixClicked ? setIsSixClick(false) : setIsSixClick(true)
@@ -176,7 +190,9 @@ export const SelfAssessmentSymptoms = ({
           </button>
           <button
             className={`sa-button flex w-auto ml-1 h-auto rounded-md mb-3 border-2 ${
-              isSevenClicked ? `border-primary text-primary` : `text-tertiary`
+              isSevenClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isSevenClicked ? setIsSevenClick(false) : setIsSevenClick(true)
@@ -191,7 +207,9 @@ export const SelfAssessmentSymptoms = ({
           </button>
           <button
             className={`sa-button flex w-auto mr-1 h-auto rounded-md mb-3 border-2 ${
-              isEightClicked ? `border-primary text-primary` : `text-tertiary`
+              isEightClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isEightClicked ? setIsEightClick(false) : setIsEightClick(true)
@@ -206,7 +224,9 @@ export const SelfAssessmentSymptoms = ({
           </button>
           <button
             className={`sa-button flex w-auto ml-1 h-auto rounded-md mb-3 border-2 ${
-              isNineClicked ? `border-primary text-primary` : `text-tertiary`
+              isNineClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isNineClicked ? setIsNineClick(false) : setIsNineClick(true)

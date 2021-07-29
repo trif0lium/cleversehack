@@ -1,23 +1,20 @@
-import { observer } from "mobx-react-lite";
-import React, { useMemo } from "react";
+import { observer } from 'mobx-react-lite';
+import React, { useMemo } from 'react';
 import {
-  FaHospitalAlt,
   FaClinicMedical,
+  FaHospitalAlt,
   FaMapMarkedAlt,
   FaPhoneAlt,
-  FaEdit,
-} from "react-icons/fa";
-import { IoIosGlobe } from "react-icons/io";
-import { locationStore } from "../../store/locationStore";
+} from 'react-icons/fa';
+import { IoIosGlobe } from 'react-icons/io';
+import { locationStore } from '../../store/locationStore';
 import {
   FacilityType,
   LocationType,
   MyLocationType,
-  Tag,
-  MOCK_DATA,
-  TAG_MAPPER,
   TAG_COLOR_MAPPER,
-} from "../const";
+  TAG_MAPPER,
+} from '../const';
 
 interface SearchLocationDetailDrawerProps {
   selectedLocation: LocationType;
@@ -47,8 +44,8 @@ const _SearchLocationDetailDrawer = ({
               Math.cos(rlat1) *
                 Math.cos(rlat2) *
                 Math.sin(difflon / 2) *
-                Math.sin(difflon / 2)
-          )
+                Math.sin(difflon / 2),
+          ),
         );
       setDistance(d.toFixed(3));
       return d.toFixed(3);
@@ -63,8 +60,9 @@ const _SearchLocationDetailDrawer = ({
         } bg-white flex flew-col p-5 shadow-lg`}
       >
         <div className="flex">
-          <div>
-            <div className="flex items-center mb-2">
+          {' '}
+          <div className="flex flex-col items-left mb-2">
+            <div className="flex">
               {selectedLocation?.type === FacilityType.HOSPITAL ? (
                 <FaHospitalAlt className="mr-2 w-5 h-5" />
               ) : (
@@ -72,16 +70,36 @@ const _SearchLocationDetailDrawer = ({
               )}
 
               <h3 className="mr-2">{selectedLocation?.name}</h3>
-              {haversine_distance && (
-                <h5 className="mr-2">{`${haversine_distance} km`}</h5>
-              )}
             </div>
-            <h5>{selectedLocation?.address}</h5>
+            <div className="flex text-xs text-tertiary">
+              {haversine_distance && (
+                <p className="mr-2">{`${haversine_distance} km |`}</p>
+              )}
+              <p className="mr-2">{`อัพเดตล่าสุดเมื่อ ${
+                selectedLocation.updatedAt.split('-')[2].split('T')[0]
+              }/${selectedLocation.updatedAt.split('-')[1]}/${
+                selectedLocation.updatedAt.split('-')[0]
+              } เวลา ${selectedLocation.updatedAt
+                .split('T')[1]
+                .slice(0, 5)}`}</p>
+            </div>
           </div>
           <div className="items-center text-center w-auto sm:w-32">
             <h5 className="text-xs sm:text-sm">จำนวนเตียงว่าง</h5>
-            <div className="flex w-auto px-2 h-12 rounded justify-center items-center text-red-500 text-lg font-bold">
-              {`${selectedLocation?.currentCapacity}/${selectedLocation?.maxCapacity}`}
+            <div className="flex justify-center items-center">
+              <div
+                className={`flex w-auto h-12 rounded justify-center items-center ${
+                  selectedLocation?.currentCapacity ===
+                  selectedLocation?.maxCapacity
+                    ? `text-red-500`
+                    : `text-yellow-400`
+                } text-2xl font-bold`}
+              >
+                {`${selectedLocation?.currentCapacity}`}
+              </div>
+              <div className="flex w-auto h-12 rounded justify-center items-center text-gray-400 text-md font-bold">
+                {`/${selectedLocation?.maxCapacity}`}
+              </div>
             </div>
           </div>
         </div>
@@ -104,7 +122,7 @@ const _SearchLocationDetailDrawer = ({
           </div>
         )}
         {/*TODO: redirect */}
-        <a href={"http://www.google.com"}>
+        <a href={'http://www.google.com'}>
           <h5 className="underline mt-4 mb-2">แก้ไข/อัพเดตข้อมูล</h5>
         </a>
         <div className="flex items-center justify-between">

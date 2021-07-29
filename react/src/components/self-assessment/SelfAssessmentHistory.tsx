@@ -46,7 +46,9 @@ export const SelfAssessmentHistory = ({
         <div className="flex flex-col">
           <button
             className={`sa-button flex w-full h-auto rounded-md p-3 mb-3 border-2 ${
-              isClicked ? `border-primary text-primary` : `text-tertiary`
+              isClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() => (isClicked ? setIsClick(false) : setIsClick(true))}
           >
@@ -62,7 +64,9 @@ export const SelfAssessmentHistory = ({
           </button>
           <button
             className={`sa-button flex w-full h-auto rounded-md p-3 mb-3 border-2 ${
-              isOneClicked ? `border-primary text-primary` : `text-tertiary`
+              isOneClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isOneClicked ? setIsOneClick(false) : setIsOneClick(true)
@@ -80,7 +84,9 @@ export const SelfAssessmentHistory = ({
           </button>
           <button
             className={`sa-button flex w-full h-auto rounded-md p-3 mb-3 border-2 ${
-              isTwoClicked ? `border-primary text-primary` : `text-tertiary`
+              isTwoClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isTwoClicked ? setIsTwoClick(false) : setIsTwoClick(true)
@@ -100,7 +106,9 @@ export const SelfAssessmentHistory = ({
           </button>
           <button
             className={`sa-button flex w-full h-auto rounded-md p-3 mb-3 border-2 ${
-              isThreeClicked ? `border-primary text-primary` : `text-tertiary`
+              isThreeClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isThreeClicked ? setIsThreeClick(false) : setIsThreeClick(true)
@@ -118,7 +126,9 @@ export const SelfAssessmentHistory = ({
           </button>
           <button
             className={`sa-button flex w-full h-auto rounded-md p-3 mb-3 border-2 ${
-              isFourClicked ? `border-primary text-primary` : `text-tertiary`
+              isFourClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isFourClicked ? setIsFourClick(false) : setIsFourClick(true)
@@ -136,7 +146,9 @@ export const SelfAssessmentHistory = ({
           </button>
           <button
             className={`sa-button flex w-full h-auto rounded-md p-3 mb-3 border-2 ${
-              isFiveClicked ? `border-primary text-primary` : `text-tertiary`
+              isFiveClicked
+                ? `border-primary text-white bg-primary`
+                : `text-tertiary`
             }`}
             onClick={() =>
               isFiveClicked ? setIsFiveClick(false) : setIsFiveClick(true)

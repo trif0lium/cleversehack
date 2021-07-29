@@ -179,9 +179,9 @@ const _SearchLocationMap = ({
             icon={{
               url:
                 location.type === FacilityType.HOSPITAL
-                  ? '/hospital.svg'
-                  : '/medic.svg',
-              scaledSize: new window.google.maps.Size(30, 30),
+                  ? '/hospital-bed-blue.svg'
+                  : '/hospitel-purple.svg',
+              scaledSize: new window.google.maps.Size(35, 35),
             }}
           />
         ))}

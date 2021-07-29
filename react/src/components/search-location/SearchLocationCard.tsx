@@ -22,17 +22,28 @@ const _SearchLocationCard = ({
         } border-b-2 flex flew-col p-5 shadow-sm rounded-md`}
       >
         <div className="flex flex-col">
-          <div className="flex items-center mb-2">
-            {selectedLocation?.type === FacilityType.HOSPITAL ? (
-              <FaHospitalAlt className="mr-2 w-5 h-5" />
-            ) : (
-              <FaClinicMedical className="mr-2 w-5 h-5" />
-            )}
+          <div className="flex flex-col items-left mb-2">
+            <div className="flex">
+              {selectedLocation?.type === FacilityType.HOSPITAL ? (
+                <FaHospitalAlt className="mr-2 w-5 h-5" />
+              ) : (
+                <FaClinicMedical className="mr-2 w-5 h-5" />
+              )}
 
-            <h3 className="mr-2">{selectedLocation?.name}</h3>
-            {selectedLocation.relativeDistance && (
-              <h5 className="mr-2">{`${selectedLocation.relativeDistance} km`}</h5>
-            )}
+              <h3 className="mr-2">{selectedLocation?.name}</h3>
+            </div>
+            <div className="flex text-xs text-tertiary">
+              {selectedLocation.relativeDistance && (
+                <p className="mr-2">{`${selectedLocation.relativeDistance} km |`}</p>
+              )}
+              <p className="mr-2">{`อัพเดตล่าสุดเมื่อ ${
+                selectedLocation.updatedAt.split('-')[2].split('T')[0]
+              }/${selectedLocation.updatedAt.split('-')[1]}/${
+                selectedLocation.updatedAt.split('-')[0]
+              } เวลา ${selectedLocation.updatedAt
+                .split('T')[1]
+                .slice(0, 5)}`}</p>
+            </div>
           </div>
           <h5>{selectedLocation?.address}</h5>
           <div className="flex mt-2">
@@ -45,10 +56,22 @@ const _SearchLocationCard = ({
             ))}
           </div>
         </div>
-        <div className="flex flex-col items-center text-center w-auto sm:w-32">
+        <div className="flex flex-col items-center text-center w-auto  px-2 sm:w-32">
           <h5 className="text-xs sm:text-sm">จำนวนเตียงว่าง</h5>
-          <div className="flex w-auto px-2 h-12 rounded justify-center items-center text-red-500 text-lg font-bold">
-            {`${selectedLocation?.currentCapacity}/${selectedLocation?.maxCapacity}`}
+          <div className="flex">
+            <div
+              className={`flex w-auto h-12 rounded justify-center items-center ${
+                selectedLocation?.currentCapacity ===
+                selectedLocation?.maxCapacity
+                  ? `text-red-500`
+                  : `text-yellow-400`
+              } text-xl font-bold`}
+            >
+              {`${selectedLocation?.currentCapacity}`}
+            </div>
+            <div className="flex w-auto h-12 rounded justify-center items-center text-gray-400 text-md font-bold">
+              {`/${selectedLocation?.maxCapacity}`}
+            </div>
           </div>
         </div>
       </div>
