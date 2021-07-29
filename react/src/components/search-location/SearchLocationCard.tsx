@@ -12,10 +12,12 @@ import {
 
 interface SearchLocationDetailDrawerProps {
   selectedLocation: Hospitel;
+  relativeDistance?: number;
 }
 
 const _SearchLocationCard = ({
   selectedLocation,
+  relativeDistance,
 }: SearchLocationDetailDrawerProps) => {
   return (
     <div
@@ -37,8 +39,8 @@ const _SearchLocationCard = ({
               )}
 
               <h3 className="mr-2">{selectedLocation?.name}</h3>
-              {selectedLocation.relativeDistance && (
-                <h5 className="mr-2">{`${selectedLocation.relativeDistance} km`}</h5>
+              {relativeDistance && (
+                <h5 className="mr-2">{`${relativeDistance} km`}</h5>
               )}
             </div>
             <h5>{selectedLocation?.address}</h5>
