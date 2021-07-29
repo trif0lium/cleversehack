@@ -17,17 +17,7 @@ import {
 } from "./search-location";
 import { observer } from "mobx-react-lite";
 
-interface SearchBarProps {
-  setSortBy: (SearchBar: SearchBarSelectOption) => void;
-  setOptions: (SearchBar: []) => void;
-  setSearchTerm: (SearchBar: string) => void;
-}
-
-const _SearchBar = ({
-  setSearchTerm,
-  setSortBy,
-  setOptions,
-}: SearchBarProps) => {
+const _SearchBar = () => {
   const [selectedSortBy, setSelectedSortBy] = useState<SearchBarSelectOption>(
     SearchBarSelectOption.DISTANCE
   );
