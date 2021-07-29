@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
-import { DetailList } from "../styles/DetailListStyles";
-import { MOCK_DATA } from "../const";
-import { SearchLocationCard } from "./SearchLocationCard";
-import { SearchBarSelectOption } from "./search-location";
-import { observer } from "mobx-react-lite";
-import { useHospitelList } from "../../hooks/useHospitelList";
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import { useHospitelList } from '../../hooks/useHospitelList';
+import { DetailList } from '../styles/DetailListStyles';
+import { SearchBarSelectOption } from './search-location';
+import { SearchLocationCard } from './SearchLocationCard';
 
 interface SearchLocationContentProps {
   searchTerm: string;
@@ -21,7 +20,7 @@ const _SearchLocationDetailList = ({
 
   return (
     <DetailList>
-      <div className="location-detail-list pt-5 md:grid md:grid-cols-2 lg:grid-cols-3 px-5">
+      <div className="location-detail-list py-5 overflow-auto md:grid md:grid-cols-2 px-5">
         {hospitelList.map((location) => (
           <SearchLocationCard key={location.code} selectedLocation={location} />
         ))}

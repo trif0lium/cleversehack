@@ -4,11 +4,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 // import defaultSurveyConfig from "../components/self-assessment/self-assessment";
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
-import {
-  SelfAssessmentHistory,
-  SelfAssessmentResult,
-  SelfAssessmentSymptoms,
-} from '../components/self-assessment/SelfAssessmentContent';
+import { SelfAssessmentHistory } from '../components/self-assessment/SelfAssessmentHistory';
+import { SelfAssessmentResult } from '../components/self-assessment/SelfAssessmentResult';
+import { SelfAssessmentSymptoms } from '../components/self-assessment/SelfAssessmentSymptoms';
 import { SelfAssessmentWrap } from '../components/styles/SelfAssessmentStyles';
 
 enum SelfAssessmentStep {
@@ -35,7 +33,7 @@ const SelfAssessment = () => {
     const historyResult = historyCheck.filter((history) => history === true);
     const symptomsResult = symptomsCheck.filter((symptom) => symptom === true);
     return [historyResult.length, symptomsResult.length];
-  }, [historyCheck, historyCheck]);
+  }, [historyCheck, symptomsCheck]);
 
   const renderBody = (step: SelfAssessmentStep) => {
     switch (step) {
@@ -72,16 +70,16 @@ const SelfAssessment = () => {
         </button>
       </div>
       <SelfAssessmentWrap>
-        <div className="self-assessment-content overscroll-y-auto">
+        <div className="self-assessment-content overflow-y-auto">
           {renderBody(step)}
           <div className="flex w-full">
             {step == SelfAssessmentStep.RESULT ? (
               <button
                 className={`sa-button flex w-full rounded-lg p-3 mb-3 text-white bg-primary font-bold justify-center
             `}
-                onClick={() => history.push('/menu')}
+                onClick={() => history.push('/where-to-test-covid-19')}
               >
-                กลับสู่เมนูหลัก
+                ค้นหาจุดตรวจโควิด
               </button>
             ) : (
               <button

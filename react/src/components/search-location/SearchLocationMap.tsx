@@ -1,27 +1,26 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   GoogleMap,
-  useLoadScript,
-  Marker,
   InfoWindow,
+  Marker,
+  useLoadScript,
 } from '@react-google-maps/api';
-import mapStyles from '../styles/MapStyles';
+import { observer } from 'mobx-react-lite';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { FaClinicMedical, FaHospitalAlt } from 'react-icons/fa';
 import { MdMyLocation } from 'react-icons/md';
-import { FaHospitalAlt, FaClinicMedical } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
+import { useHospitelList } from '../../hooks/useHospitelList';
+import { locationStore } from '../../store/locationStore';
 import {
   FacilityType,
   LocationType,
   MyLocationType,
-  MOCK_DATA,
   TAG_COLOR_MAPPER,
 } from '../const';
-import { SearchLocationDetailDrawer } from './SearchLocationDetailDrawer';
-import { dataStore } from '../../store/dataStore';
-import { locationStore } from '../../store/locationStore';
+import mapStyles from '../styles/MapStyles';
+import { Spinner } from '../styles/Styles';
 import { SearchBarSelectOption } from './search-location';
-import { useHospitelList } from '../../hooks/useHospitelList';
-import { observer } from 'mobx-react-lite';
+import { SearchLocationDetailDrawer } from './SearchLocationDetailDrawer';
 
 const mapContainerStyle = {
   height: 'calc(100vh - 60px)',
@@ -106,7 +105,15 @@ const _SearchLocationMap = ({
   }, [selectedLocation]);
 
   if (loadError) return <h3>"Error"</h3>;
-  if (!isLoaded) return <h3>"Loading..."</h3>;
+  if (!isLoaded)
+    return (
+      <div
+        className="flex w-full bg-white items-center justify-center"
+        style={{ height: '100vh' }}
+      >
+        <Spinner />
+      </div>
+    );
 
   return (
     <div>
