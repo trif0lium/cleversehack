@@ -31,9 +31,7 @@ const _SearchBar = () => {
         <div className="flex flex-col sm:flex-row w-full mb-3 sm:mb-0">
           <div className="flex sm:mt-4 w-full sm:mr-3">
             <input
-              className="search-text h-10 w-full sm:max-w-96 border-2 border-gray-200 rounded p-2 px-4 my-3
-				text-tertiary leading-tight focus:outline-none  
-				focus:border-primary"
+              className="search-text h-10 w-full sm:max-w-96 border-2 border-gray-200 rounded p-2 px-4 my-3 text-tertiary leading-tight focus:outline-none focus:border-primary"
               id="search-bar"
               type="text"
               value={keyword}
