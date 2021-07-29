@@ -20,6 +20,7 @@ import {
 import { SearchLocationDetailDrawer } from "./SearchLocationDetailDrawer";
 import { dataStore } from "../../store/dataStore";
 import { locationStore } from "../../store/locationStore";
+import { SearchBarSelectOption } from "./search-location";
 
 const mapContainerStyle = {
   height: "calc(100vh - 60px)",
@@ -36,11 +37,17 @@ const center = {
 };
 
 interface SearchLocationMapProps {
+  searchTerm: string;
+  sortBy: SearchBarSelectOption;
+  options: [];
   isVisibleSearchBar: boolean;
   setIsVisibleSearchBar: (isVisibleSearchBar: boolean) => void;
 }
 
 export const SearchLocationMap = ({
+  searchTerm,
+  sortBy,
+  options,
   isVisibleSearchBar,
   setIsVisibleSearchBar,
 }: SearchLocationMapProps) => {

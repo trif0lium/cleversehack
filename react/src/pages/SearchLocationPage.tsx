@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdAdd } from "react-icons/md";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useHistory } from "react-router-dom";
-import { SearchLocationMenu } from "../components/search-location/search-location";
+import {
+  SearchBarSelectOption,
+  SearchLocationMenu,
+} from "../components/search-location/search-location";
 import { SearchBar } from "../components/search-location/SearchBar";
 import { SearchLocationContent } from "../components/search-location/SearchLocationContent";
 import { SearchLocationMenuTab } from "../components/search-location/SearchLocationMenuTab";
@@ -12,6 +15,11 @@ import { searchBarStore } from "../store/searchBarStore";
 const SearchLocation = () => {
   const [menu, setMenu] = useState<SearchLocationMenu>(SearchLocationMenu.MAP);
   const [isVisibleSearchBar, setIsVisibleSearchBar] = useState(false);
+  const [sortBy, setSortBy] = useState<SearchBarSelectOption>(
+    SearchBarSelectOption.DISTANCE
+  );
+  const [options, setOptions] = useState<any>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const history = useHistory();
 
@@ -44,7 +52,13 @@ const SearchLocation = () => {
             </button>
           </div>
         </div>
-        {isVisibleSearchBar && <SearchBar />}
+        {isVisibleSearchBar && (
+          <SearchBar
+            setSearchTerm={setSearchTerm}
+            setSortBy={setSortBy}
+            setOptions={setOptions}
+          />
+        )}
 
         <div className="flex bg-base justify-center">
           <SearchLocationMenuTab menu={menu} setMenu={setMenu} />
@@ -52,6 +66,9 @@ const SearchLocation = () => {
       </div>
       <SearchLocationContent
         menu={menu}
+        searchTerm={searchTerm}
+        sortBy={sortBy}
+        options={options}
         isVisibleSearchBar={isVisibleSearchBar}
         setIsVisibleSearchBar={setIsVisibleSearchBar}
       />
