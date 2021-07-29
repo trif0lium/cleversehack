@@ -1,29 +1,27 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { searchBarStore } from "../../store/searchBarStore";
-import { Form } from "../styles/Styles";
-import Select from "react-select";
+import React, { useEffect, useState } from 'react';
+import { Form } from '../styles/Styles';
+import Select from 'react-select';
 
 import {
-  SearchBarCheckBoxOption,
   SearchBarSelectOption,
-  SEARCH_BAR_CHECK_BOX_OPTION,
   SEARCH_BAR_SELECT_OPTION,
-} from "./search-location";
-import { observer } from "mobx-react-lite";
+} from './search-location';
+import { observer } from 'mobx-react-lite';
+import { useDebounce } from '../../hooks/useDebounce';
+import { searchStore } from '../../store/searchStore';
 
 const _SearchBar = () => {
   const [selectedSortBy, setSelectedSortBy] = useState<SearchBarSelectOption>(
-    SearchBarSelectOption.DISTANCE
+    SearchBarSelectOption.DISTANCE,
   );
   const [selectedOptions, setSelectedOptions] = useState<any>([]);
   const [isFiltering, setIsFiltering] = useState<boolean>(false);
-  const [keyword, setKeyword] = useState<string>("");
+
+  const [keyword, setKeyword] = useState<string>('');
+  const debouncedSearch = useDebounce(keyword, 300);
+  useEffect(() => {
+    searchStore.setSearch(debouncedSearch);
+  }, [debouncedSearch]);
 
   return (
     <>
@@ -59,15 +57,15 @@ const _SearchBar = () => {
                 options={sortBy}
                 className="basic-multi-select min-w-full"
                 classNamePrefix="select"
-                noOptionsMessage={(obj) => "ไม่มีตัวเลือก"}
+                noOptionsMessage={(obj) => 'ไม่มีตัวเลือก'}
                 theme={(theme) => ({
                   ...theme,
                   borderWidth: 1,
                   colors: {
                     ...theme.colors,
-                    primary50: "#E5F9F9",
-                    primary25: "#F3F3F3",
-                    primary: "#1A7676",
+                    primary50: '#E5F9F9',
+                    primary25: '#F3F3F3',
+                    primary: '#1A7676',
                   },
                 })}
                 onChange={(e) => {
@@ -87,16 +85,16 @@ const _SearchBar = () => {
                 options={options}
                 className="basic-multi-select min-w-full"
                 classNamePrefix="select"
-                noOptionsMessage={(obj) => "ไม่มีตัวเลือก"}
+                noOptionsMessage={(obj) => 'ไม่มีตัวเลือก'}
                 isClearable={true}
                 theme={(theme) => ({
                   ...theme,
                   borderWidth: 1,
                   colors: {
                     ...theme.colors,
-                    primary50: "#E5F9F9",
-                    primary25: "#F3F3F3",
-                    primary: "#1A7676",
+                    primary50: '#E5F9F9',
+                    primary25: '#F3F3F3',
+                    primary: '#1A7676',
                   },
                 })}
                 onChange={(e) => {
@@ -146,10 +144,10 @@ const _SearchBar = () => {
           <button
             className="text-tertiary text-xs underline mt-2 mb-3 sm:mb-1 sm:mt-0"
             onClick={() => {
-              setSearchTerm("");
+              setSearchTerm('');
               setSortBy(SearchBarSelectOption.DISTANCE);
               setOptions([]);
-              setKeyword("");
+              setKeyword('');
               setSelectedSortBy(SearchBarSelectOption.DISTANCE);
               setSelectedOptions([]);
               setIsFiltering(false);
@@ -164,10 +162,10 @@ const _SearchBar = () => {
           <button
             className="reset-button flex h-10 rounded p-3 items-center justify-center text-white font-bold"
             onClick={() => {
-              setSearchTerm("");
+              setSearchTerm('');
               setSortBy(SearchBarSelectOption.DISTANCE);
               setOptions([]);
-              setKeyword("");
+              setKeyword('');
               setSelectedSortBy(SearchBarSelectOption.DISTANCE);
               setSelectedOptions([]);
               setIsFiltering(false);
