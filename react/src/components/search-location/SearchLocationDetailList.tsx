@@ -23,7 +23,7 @@ const _SearchLocationDetailList = ({
     <DetailList>
       <div className="location-detail-list pt-5 md:grid md:grid-cols-2 lg:grid-cols-3 px-5">
         {hospitelList.map((location) => (
-          <SearchLocationCard selectedLocation={location} />
+          <SearchLocationCard key={location.code} selectedLocation={location} />
         ))}
       </div>
     </DetailList>
