@@ -15,6 +15,7 @@ import {
   SEARCH_BAR_CHECK_BOX_OPTION,
   SEARCH_BAR_SELECT_OPTION,
 } from "./search-location";
+import { observer } from "mobx-react-lite";
 
 interface SearchBarProps {
   setSortBy: (SearchBar: SearchBarSelectOption) => void;
@@ -22,7 +23,7 @@ interface SearchBarProps {
   setSearchTerm: (SearchBar: string) => void;
 }
 
-export const SearchBar = ({
+const _SearchBar = ({
   setSearchTerm,
   setSortBy,
   setOptions,
@@ -219,3 +220,5 @@ export const SearchBar = ({
     </>
   );
 };
+
+export const SearchBar = observer(_SearchBar);
