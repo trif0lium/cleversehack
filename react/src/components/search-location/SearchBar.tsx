@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { searchBarStore } from "../../store/searchBarStore";
 import { Form } from "../styles/Styles";
 import Select from "react-select";
@@ -10,16 +16,23 @@ import {
   SEARCH_BAR_SELECT_OPTION,
 } from "./search-location";
 
-export const SearchBar = () => {
+interface SearchBarProps {
+  setSortBy: (SearchBar: SearchBarSelectOption) => void;
+  setOptions: (SearchBar: []) => void;
+  setSearchTerm: (SearchBar: string) => void;
+}
+
+export const SearchBar = ({
+  setSearchTerm,
+  setSortBy,
+  setOptions,
+}: SearchBarProps) => {
   const [selectedSortBy, setSelectedSortBy] = useState<SearchBarSelectOption>(
     SearchBarSelectOption.DISTANCE
   );
   const [selectedOptions, setSelectedOptions] = useState<any>([]);
   const [isFiltering, setIsFiltering] = useState<boolean>(false);
   const [keyword, setKeyword] = useState<string>("");
-
-  const { searchTerm, setSearchTerm, setSortBy, setCheckBoxOptions } =
-    searchBarStore;
 
   const options = useMemo(() => {
     const obj: any[] = [];
@@ -63,7 +76,6 @@ export const SearchBar = () => {
               value={keyword}
               placeholder="ชื่อสถานที่หรือบริเวณ..."
               onChange={(e) => {
-                setSearchTerm(e.target.value);
                 setKeyword(e.target.value);
               }}
             ></input>
@@ -98,7 +110,6 @@ export const SearchBar = () => {
                   },
                 })}
                 onChange={(e) => {
-                  setSortBy(e?.value || "");
                   setSelectedSortBy(e?.value || selectedSortBy);
                 }}
               />
@@ -128,7 +139,6 @@ export const SearchBar = () => {
                   },
                 })}
                 onChange={(e) => {
-                  setCheckBoxOptions(e);
                   setSelectedOptions(e);
                 }}
               />
@@ -162,13 +172,22 @@ export const SearchBar = () => {
           </div>
         </div>
         <div className="flex flex-col sm:flex-col-reverse w-auto sm:w-40 mb-2 justify-center">
-          <button className="search-button flex h-10 rounded p-3 items-center justify-center text-white font-bold">
+          <button
+            className="search-button flex h-10 rounded p-3 items-center justify-center text-white font-bold"
+            onClick={() => {
+              setSearchTerm(keyword);
+              setSortBy(selectedSortBy);
+              setOptions(selectedOptions);
+            }}
+          >
             ค้นหา
           </button>
           <button
             className="text-tertiary text-xs underline mt-2 mb-3 sm:mb-1 sm:mt-0"
             onClick={() => {
               setSearchTerm("");
+              setSortBy(SearchBarSelectOption.DISTANCE);
+              setOptions([]);
               setKeyword("");
               setSelectedSortBy(SearchBarSelectOption.DISTANCE);
               setSelectedOptions([]);
@@ -185,6 +204,8 @@ export const SearchBar = () => {
             className="reset-button flex h-10 rounded p-3 items-center justify-center text-white font-bold"
             onClick={() => {
               setSearchTerm("");
+              setSortBy(SearchBarSelectOption.DISTANCE);
+              setOptions([]);
               setKeyword("");
               setSelectedSortBy(SearchBarSelectOption.DISTANCE);
               setSelectedOptions([]);
