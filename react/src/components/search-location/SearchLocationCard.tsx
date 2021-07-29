@@ -1,49 +1,22 @@
-import React, { useMemo } from "react";
-import { FaHospitalAlt, FaClinicMedical } from "react-icons/fa";
-import { locationStore } from "../../store/locationStore";
+import { observer } from 'mobx-react-lite';
+import React, { useMemo } from 'react';
+import { FaHospitalAlt, FaClinicMedical } from 'react-icons/fa';
+import { Hospitel } from '../../store/dataStore';
+import { locationStore } from '../../store/locationStore';
 import {
   FacilityType,
-  LocationType,
-  MyLocationType,
   MOCK_DATA,
   TAG_MAPPER,
   TAG_COLOR_MAPPER,
-} from "../const";
+} from '../const';
 
 interface SearchLocationDetailDrawerProps {
-  selectedLocation: LocationType;
-  myLocation?: MyLocationType;
+  selectedLocation: Hospitel;
 }
 
-export const SearchLocationCard = ({
+const _SearchLocationCard = ({
   selectedLocation,
 }: SearchLocationDetailDrawerProps) => {
-  const { myLocation } = locationStore;
-  const haversine_distance = useMemo(() => {
-    if (myLocation) {
-      var R = 3958.8; // Radius of the Earth in miles
-      var rlat1 = selectedLocation.latitude * (Math.PI / 180); // Convert degrees to radians
-      var rlat2 = myLocation.lat * (Math.PI / 180); // Convert degrees to radians
-      var difflat = rlat2 - rlat1; // Radian difference (latitudes)
-      var difflon =
-        (myLocation.lng - selectedLocation.longitude) * (Math.PI / 180); // Radian difference (longitudes)
-
-      var d =
-        2 *
-        R *
-        Math.asin(
-          Math.sqrt(
-            Math.sin(difflat / 2) * Math.sin(difflat / 2) +
-              Math.cos(rlat1) *
-                Math.cos(rlat2) *
-                Math.sin(difflon / 2) *
-                Math.sin(difflon / 2)
-          )
-        );
-      return d.toFixed(3);
-    }
-  }, [selectedLocation, myLocation]);
-
   return (
     <div
       className="w-auto flex-shrink flex-wrap mb-1 sm:mr-5"
@@ -64,8 +37,8 @@ export const SearchLocationCard = ({
               )}
 
               <h3 className="mr-2">{selectedLocation?.name}</h3>
-              {haversine_distance && (
-                <h5 className="mr-2">{`${haversine_distance} km`}</h5>
+              {selectedLocation.relativeDistance && (
+                <h5 className="mr-2">{`${selectedLocation.relativeDistance} km`}</h5>
               )}
             </div>
             <h5>{selectedLocation?.address}</h5>
@@ -90,3 +63,5 @@ export const SearchLocationCard = ({
     </div>
   );
 };
+
+export const SearchLocationCard = observer(_SearchLocationCard);

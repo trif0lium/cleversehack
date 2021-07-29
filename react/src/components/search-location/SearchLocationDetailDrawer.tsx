@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import React, { useMemo } from "react";
 import {
   FaHospitalAlt,
@@ -23,7 +24,7 @@ interface SearchLocationDetailDrawerProps {
   myLocation?: MyLocationType;
 }
 
-export const SearchLocationDetailDrawer = ({
+const _SearchLocationDetailDrawer = ({
   selectedLocation,
 }: SearchLocationDetailDrawerProps) => {
   const { myLocation, setDistance } = locationStore;
@@ -128,3 +129,5 @@ export const SearchLocationDetailDrawer = ({
     </div>
   );
 };
+
+export const SearchLocationDetailDrawer = observer(_SearchLocationDetailDrawer);

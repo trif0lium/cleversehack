@@ -1,11 +1,11 @@
-import { action, makeAutoObservable } from "mobx";
-import axios from "axios";
-import { io, Socket } from "socket.io-client";
-import { FacilityType, Tag } from "../components/const";
+import { action, makeAutoObservable } from 'mobx';
+import axios from 'axios';
+import { io, Socket } from 'socket.io-client';
+import { FacilityType, Tag } from '../components/const';
 
-const API_URL = "cleversehack-api-dot-everyday-development.et.r.appspot.com";
+const API_URL = 'cleversehack-api-dot-everyday-development.et.r.appspot.com';
 
-interface Hospitel {
+export interface Hospitel {
   code: string;
   tags: Tag[];
   name: string;
@@ -22,10 +22,11 @@ interface Hospitel {
   type: FacilityType;
   updatedAt: string;
   timestamp: number;
+  relativeDistance?: number;
 }
 
 class DataStore {
-  websocket: Socket = io(`wss://${API_URL}`, { transports: ["websocket"] });
+  websocket: Socket = io(`wss://${API_URL}`, { transports: ['websocket'] });
   websocketReady: boolean = false;
 
   hospitelList: Hospitel[] = [];
@@ -36,16 +37,16 @@ class DataStore {
   }
 
   async init() {
-    this.websocket.on("connect", () => {
+    this.websocket.on('connect', () => {
       this.setWebsocketReady(this.websocket.connected);
       if (this.websocket.connected) {
         this.subscribeCapacityUpdate();
-        this.websocket.on("hospitel:capacity-update", (data) => {
+        this.websocket.on('hospitel:capacity-update', (data) => {
           this.setCurrentCapacity(
             data.hospitelCode,
             data.currentCapacity,
             data.maxCapacity,
-            data.timestamp
+            data.timestamp,
           );
         });
       }
@@ -54,7 +55,7 @@ class DataStore {
     try {
       this.setHospitelListLoading(true);
       const { data } = await axios.get<Hospitel[]>(
-        `https://${API_URL}/hospitel`
+        `https://${API_URL}/hospitel`,
       );
       this.setHospitelList(data);
       this.setHospitelListLoading(false);
@@ -84,9 +85,15 @@ class DataStore {
   subscribeCapacityUpdate() {
     if (this.websocketReady && !this.hospitelListLoading) {
       this.hospitelList.forEach((h) => {
-        this.websocket.emit("hospitel:subscribe", h.code);
+        this.websocket.emit('hospitel:subscribe', h.code);
       });
     }
+  }
+
+  @action
+  setRelativeDistance(hospitelCode: string, relativeDistance?: number) {
+    const hospitel = this.hospitelList.find((h) => h.code === hospitelCode);
+    if (hospitel) hospitel.relativeDistance = relativeDistance;
   }
 
   @action
@@ -94,7 +101,7 @@ class DataStore {
     hospitelCode: string,
     currentCapacity: number,
     maxCapacity: number,
-    timestamp: number
+    timestamp: number,
   ) {
     const hospitel = this.hospitelList.find((h) => h.code === hospitelCode);
     if (
