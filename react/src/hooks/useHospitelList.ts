@@ -1,8 +1,12 @@
 import { useMemo, useState } from "react";
 import { dataStore } from "../store/dataStore";
 import { isEmpty, orderBy, sortBy } from "lodash";
+import { usePosition } from "use-position";
+import { getDistance } from "geolib";
 
 export function useHospitelList() {
+  const { latitude, longitude, error } = usePosition(true);
+
   const _hospitelList = useMemo(() => dataStore.hospitelList, [
     dataStore.hospitelList,
   ]);
