@@ -91,6 +91,12 @@ class DataStore {
   }
 
   @action
+  setRelativeDistance(hospitelCode: string, relativeDistance?: number) {
+    const hospitel = this.hospitelList.find((h) => h.code === hospitelCode);
+    if (hospitel) hospitel.relativeDistance = relativeDistance;
+  }
+
+  @action
   setCurrentCapacity(
     hospitelCode: string,
     currentCapacity: number,
