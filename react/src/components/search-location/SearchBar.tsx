@@ -3,7 +3,9 @@ import { Form } from '../styles/Styles';
 import Select from 'react-select';
 
 import {
+  SearchBarCheckBoxOption,
   SearchBarSelectOption,
+  SEARCH_BAR_CHECK_BOX_OPTION,
   SEARCH_BAR_SELECT_OPTION,
 } from './search-location';
 import { observer } from 'mobx-react-lite';
@@ -14,6 +16,12 @@ const _SearchBar = () => {
   const [selectedSortBy, setSelectedSortBy] = useState<SearchBarSelectOption>(
     SearchBarSelectOption.DISTANCE,
   );
+
+  const filterOptions = useMemo(() => {
+    return Object.values(SearchBarCheckBoxOption).map((key) => {
+      return { value: key, label: SEARCH_BAR_CHECK_BOX_OPTION[key] };
+    });
+  }, []);
 
   const sortOptions = useMemo(() => {
     return Object.values(SearchBarSelectOption).map((key) => {
@@ -93,7 +101,7 @@ const _SearchBar = () => {
                 isMulti
                 name="options"
                 value={selectedOptions}
-                options={options}
+                options={filterOptions}
                 className="basic-multi-select min-w-full"
                 classNamePrefix="select"
                 noOptionsMessage={(obj) => 'ไม่มีตัวเลือก'}
