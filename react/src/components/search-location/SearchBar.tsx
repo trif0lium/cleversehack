@@ -47,7 +47,24 @@ const _SearchBar = () => {
   }, [selectedSortOption]);
 
   const [selectedFilterOptions, setSelectedFilterOptions] = useState<any>([]);
-  useEffect(() => {}, [selectedFilterOptions]);
+  useEffect(() => {
+    const _filters = selectedFilterOptions
+      .map((f: { value: string }) => {
+        if (f.value === SearchBarCheckBoxOption.HOSPITEL)
+          return 'ONLY_HOSPITEL';
+
+        if (f.value === SearchBarCheckBoxOption.FIELD_HOSPITAL)
+          return 'ONLY_HOSPITAL';
+
+        if (f.value === SearchBarCheckBoxOption.AVAILABILITY)
+          return 'ONLY_AVAILABLE';
+
+        return undefined;
+      })
+      .filter((f: any) => f);
+
+    searchStore.setFilters(_filters);
+  }, [selectedFilterOptions]);
 
   const [keyword, setKeyword] = useState<string>('');
   const debouncedSearch = useDebounce(keyword, 300);
