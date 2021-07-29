@@ -75,7 +75,7 @@ const _SearchBar = () => {
   const reset = useCallback(() => {
     setKeyword('');
     setSelectedSortOption(SearchBarSelectOption.DISTANCE);
-    selectedFilterOptions([]);
+    setSelectedFilterOptions([]);
     searchStore.reset();
   }, []);
 
