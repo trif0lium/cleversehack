@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { dataStore } from "../store/dataStore";
+import { isEmpty, orderBy, sortBy } from "lodash";
 
 export function useHospitelList() {
   const _hospitelList = useMemo(() => dataStore.hospitelList, [
@@ -34,13 +35,14 @@ export function useHospitelList() {
       }
     }
 
-    if (search) {
+    if (!isEmpty(search)) {
       list = list.filter((l) => l.name.includes(search));
       return list;
     }
 
     if (sort) {
-      return list;
+      const direction = sort.direction === "ASC" ? "asc" : "desc";
+      return orderBy(list, [sort.field], [direction]);
     }
 
     return list;
