@@ -136,14 +136,7 @@ const _SearchBar = () => {
           </div>
         </div>
         <div className="flex flex-col sm:flex-col-reverse w-auto sm:w-40 mb-2 justify-center">
-          <button
-            className="search-button flex h-10 rounded p-3 items-center justify-center text-white font-bold"
-            onClick={() => {
-              setSearchTerm(keyword);
-              setSortBy(selectedSortBy);
-              setOptions(selectedOptions);
-            }}
-          >
+          <button className="search-button flex h-10 rounded p-3 items-center justify-center text-white font-bold">
             ค้นหา
           </button>
           <button
