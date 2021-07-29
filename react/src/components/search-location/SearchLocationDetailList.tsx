@@ -1,14 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { DetailList } from "../styles/DetailListStyles";
-import {
-  FacilityType,
-  LocationType,
-  MyLocationType,
-  MOCK_DATA,
-  TAG_COLOR_MAPPER,
-} from "../const";
+import { MOCK_DATA } from "../const";
 import { SearchLocationCard } from "./SearchLocationCard";
-import { searchBarStore } from "../../store/searchBarStore";
 import { SearchBarSelectOption } from "./search-location";
 
 interface SearchLocationContentProps {
@@ -22,7 +15,6 @@ export const SearchLocationDetailList = ({
   sortBy,
   options,
 }: SearchLocationContentProps) => {
-  // const { searchTerm, sortBy, checkBoxOptions } = searchBarStore;
   useEffect(() => {
     console.log("hhey", searchTerm, sortBy, options);
   }, [searchTerm, sortBy, options]);
