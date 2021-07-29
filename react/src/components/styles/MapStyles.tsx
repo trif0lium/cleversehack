@@ -46,13 +46,13 @@ type MapTypeStyleElementType =
 
 interface MapTypeStyler {
   color?: string;
-  gamma?: number | string;
+  gamma?: number;
   hue?: string;
   invert_lightness?: boolean;
-  lightness?: number | string;
-  saturation?: number | string;
+  lightness?: number;
+  saturation?: number;
   visibility?: string;
-  weight?: number | string;
+  weight?: number;
 }
 
 interface MapTypeStyle {
@@ -67,7 +67,7 @@ const MapStyles: MapTypeStyle[] = [
     elementType: "geometry.fill",
     stylers: [
       {
-        weight: "2.00",
+        weight: 2.0,
       },
     ],
   },
