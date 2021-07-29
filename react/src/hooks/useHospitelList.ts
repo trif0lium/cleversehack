@@ -23,7 +23,15 @@ export function useHospitelList() {
   } | null>(null);
 
   const hospitelList = useMemo(() => {
-    let list = _hospitelList;
+    let list = _hospitelList.map((h) => {
+      if (latitude && longitude) {
+        h.relativeDistance = getDistance(
+          { latitude: Number(latitude), longitude: Number(longitude) },
+          { latitude: h.latitude, longitude: h.longitude }
+        );
+      }
+      return h;
+    });
 
     if (filters.length > 0) {
       if (filters.includes("ONLY_HOSPITEL")) {
@@ -50,7 +58,7 @@ export function useHospitelList() {
     }
 
     return list;
-  }, [_hospitelList, search, filters, sort]);
+  }, [_hospitelList, search, filters, sort, latitude, longitude]);
 
   return {
     hospitelList,
