@@ -1,4 +1,5 @@
-import { action, makeAutoObservable } from 'mobx';
+import { isEmpty } from 'lodash';
+import { action, computed, makeAutoObservable } from 'mobx';
 
 class SearchStore {
   constructor() {
@@ -29,6 +30,16 @@ class SearchStore {
     this.setSearch('');
     this.setFilters([]);
     this.setSort(null);
+  }
+
+  @computed
+  get isFiltering(): boolean {
+    return this.filters.length > 0;
+  }
+
+  @computed
+  get isSearching(): boolean {
+    return !isEmpty(this.search);
   }
 }
 
