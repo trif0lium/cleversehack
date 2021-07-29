@@ -6,6 +6,7 @@ const API_URL = "cleversehack-api-dot-everyday-development.et.r.appspot.com";
 
 interface _Hospitel extends Hospitel {
   timestamp: number;
+  relativeDistance?: number;
 }
 
 class DataStore {
