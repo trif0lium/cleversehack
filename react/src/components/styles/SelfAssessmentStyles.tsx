@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const media = {
   desktop: `@media(min-width: 640px)`,
@@ -14,6 +14,8 @@ export const SelfAssessmentWrap = styled.div`
   align-items: center;
 
   .self-assessment-content {
+    height: 100vh;
+
     ${media.desktop} {
       width: 640px;
     }

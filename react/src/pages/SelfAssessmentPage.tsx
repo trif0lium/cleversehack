@@ -1,42 +1,60 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from 'react';
 // import SelfAssessmentComponent from "../components/self-assessment/SelfAssessmentComponent";
 // import SelfAssessmentContent from "../components/self-assessment/SelfAssessmentContent";
 // import defaultSurveyConfig from "../components/self-assessment/self-assessment";
-import { IoMdArrowRoundBack } from "react-icons/io";
-import { useHistory } from "react-router-dom";
+import { IoMdArrowRoundBack } from 'react-icons/io';
+import { useHistory } from 'react-router-dom';
 import {
   SelfAssessmentHistory,
   SelfAssessmentResult,
   SelfAssessmentSymptoms,
-} from "../components/self-assessment/SelfAssessmentContent";
-import { SelfAssessmentWrap } from "../components/styles/SelfAssessmentStyles";
+} from '../components/self-assessment/SelfAssessmentContent';
+import { SelfAssessmentWrap } from '../components/styles/SelfAssessmentStyles';
 
 enum SelfAssessmentStep {
-  HISTORY = "history",
-  SYMPTOMS = "symptoms",
-  RESULT = "result",
+  HISTORY = 'history',
+  SYMPTOMS = 'symptoms',
+  RESULT = 'result',
 }
 
 const SelfAssessment = () => {
   const [step, setStep] = useState<SelfAssessmentStep>(
-    SelfAssessmentStep.HISTORY
+    SelfAssessmentStep.HISTORY,
   );
+  const [historyCheck, setHistoryCheck] = useState<boolean[]>([]);
+  const [symptomsCheck, setSymptomsCheck] = useState<boolean[]>([]);
+  const [assessment, setAssessment] = useState<number[]>([0, 0]);
 
   const history = useHistory();
 
   useEffect(() => {
     renderBody(step);
-    console.log("ju,", step);
   }, [step]);
+
+  const result = useMemo(() => {
+    const historyResult = historyCheck.filter((history) => history === true);
+    const symptomsResult = symptomsCheck.filter((symptom) => symptom === true);
+    return [historyResult.length, symptomsResult.length];
+  }, [historyCheck, historyCheck]);
 
   const renderBody = (step: SelfAssessmentStep) => {
     switch (step) {
       case SelfAssessmentStep.HISTORY:
-        return <SelfAssessmentHistory />;
+        return (
+          <SelfAssessmentHistory
+            historyCheck={historyCheck}
+            setHistoryCheck={setHistoryCheck}
+          />
+        );
       case SelfAssessmentStep.SYMPTOMS:
-        return <SelfAssessmentSymptoms />;
+        return (
+          <SelfAssessmentSymptoms
+            symptomsCheck={symptomsCheck}
+            setSymptomsCheck={setSymptomsCheck}
+          />
+        );
       case SelfAssessmentStep.RESULT:
-        return <SelfAssessmentResult />;
+        return <SelfAssessmentResult result={result} />;
       default:
         break;
     }
@@ -47,25 +65,37 @@ const SelfAssessment = () => {
       <div className="self-assessment bg-white h-10 w-full absolute top-0 shadow-lg">
         <button
           className="back-button flex p-2 text-tertiary text-sm"
-          onClick={() => history.push("/menu")}
+          onClick={() => history.push('/menu')}
         >
           <IoMdArrowRoundBack className="option-button-icon h-5 w-5 mr-2" />
           <p className="truncate">เมนูหลัก</p>
         </button>
       </div>
       <SelfAssessmentWrap>
-        <div className="self-assessment-content">
+        <div className="self-assessment-content overscroll-y-auto">
           {renderBody(step)}
           <div className="flex w-full">
-            <button
-              className={`sa-button flex w-full rounded-md p-3 mb-3 text-white bg-primary font-bold justify-center
+            {step == SelfAssessmentStep.RESULT ? (
+              <button
+                className={`sa-button flex w-full rounded-lg p-3 mb-3 text-white bg-primary font-bold justify-center
             `}
-              onClick={() => {
-                setStep(SelfAssessmentStep.SYMPTOMS);
-              }}
-            >
-              ถัดไป
-            </button>
+                onClick={() => history.push('/menu')}
+              >
+                กลับสู่เมนูหลัก
+              </button>
+            ) : (
+              <button
+                className={`sa-button flex w-full rounded-lg p-3 mb-3 text-white bg-primary font-bold justify-center
+          `}
+                onClick={() => {
+                  step == SelfAssessmentStep.HISTORY
+                    ? setStep(SelfAssessmentStep.SYMPTOMS)
+                    : setStep(SelfAssessmentStep.RESULT);
+                }}
+              >
+                ถัดไป
+              </button>
+            )}
           </div>
         </div>
       </SelfAssessmentWrap>

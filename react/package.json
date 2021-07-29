@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "svgr": "svgr -d src/Icons/ assets/"
   },
   "dependencies": {
     "@reach/combobox": "^0.15.3",
