@@ -25,34 +25,6 @@ const _SearchBar = () => {
   const [isFiltering, setIsFiltering] = useState<boolean>(false);
   const [keyword, setKeyword] = useState<string>("");
 
-  const options = useMemo(() => {
-    const obj: any[] = [];
-    Object.values(SearchBarCheckBoxOption).map((key) => {
-      obj.push({ value: key, label: SEARCH_BAR_CHECK_BOX_OPTION[key] });
-    });
-    return obj;
-  }, []);
-
-  const sortBy = useMemo(() => {
-    const obj: any[] = [];
-    Object.values(SearchBarSelectOption).map((key) => {
-      obj.push({ value: key, label: SEARCH_BAR_SELECT_OPTION[key] });
-    });
-    return obj;
-  }, []);
-
-  useEffect(() => {
-    if (
-      selectedSortBy === SearchBarSelectOption.DISTANCE &&
-      (selectedOptions.length === 0 || selectedOptions === null) &&
-      keyword === ""
-    ) {
-      setIsFiltering(false);
-    } else {
-      setIsFiltering(true);
-    }
-  }, [selectedSortBy, selectedOptions, keyword]);
-
   return (
     <>
       <div className="search-bar flex flex-col sm:flex-row bg-white shadow-inner w-full justify-between px-3">
