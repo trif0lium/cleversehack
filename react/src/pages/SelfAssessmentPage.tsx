@@ -6,6 +6,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 import {
   SelfAssessmentHistory,
+  SelfAssessmentResult,
   SelfAssessmentSymptoms,
 } from "../components/self-assessment/SelfAssessmentContent";
 import { SelfAssessmentWrap } from "../components/styles/SelfAssessmentStyles";
@@ -34,8 +35,8 @@ const SelfAssessment = () => {
         return <SelfAssessmentHistory />;
       case SelfAssessmentStep.SYMPTOMS:
         return <SelfAssessmentSymptoms />;
-      // case SelfAssessmentStep.RESULT:
-      // return <SelfAssessmentResult />;
+      case SelfAssessmentStep.RESULT:
+        return <SelfAssessmentResult />;
       default:
         break;
     }
