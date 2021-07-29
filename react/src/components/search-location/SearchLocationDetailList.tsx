@@ -3,6 +3,7 @@ import { DetailList } from "../styles/DetailListStyles";
 import { MOCK_DATA } from "../const";
 import { SearchLocationCard } from "./SearchLocationCard";
 import { SearchBarSelectOption } from "./search-location";
+import { observer } from "mobx-react-lite";
 
 interface SearchLocationContentProps {
   searchTerm: string;
@@ -10,7 +11,7 @@ interface SearchLocationContentProps {
   options: [];
 }
 
-export const SearchLocationDetailList = ({
+const _SearchLocationDetailList = ({
   searchTerm,
   sortBy,
   options,
@@ -33,3 +34,5 @@ export const SearchLocationDetailList = ({
     </DetailList>
   );
 };
+
+export const SearchLocationDetailList = observer(_SearchLocationDetailList);
