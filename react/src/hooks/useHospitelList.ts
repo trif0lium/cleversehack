@@ -29,6 +29,8 @@ export function useHospitelList() {
           { latitude: Number(latitude), longitude: Number(longitude) },
           { latitude: h.latitude, longitude: h.longitude }
         );
+      } else {
+        h.relativeDistance = undefined;
       }
       return h;
     });
