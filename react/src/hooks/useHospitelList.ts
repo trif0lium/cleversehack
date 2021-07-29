@@ -16,11 +16,10 @@ export function useHospitelList() {
   const search = useMemo(() => searchStore.search, [searchStore.search]);
   const sort = useMemo(() => searchStore.sort, [searchStore.sort]);
 
-  const relativeDistanceList = useMemo(() => {
-    const list: Record<string, number | undefined> = {};
-    _hospitelList.forEach((h) => {
+  const hospitelList = useMemo(() => {
+    let list = _hospitelList.map((h) => {
       if (latitude && longitude) {
-        list[h.code] = Number(
+        h.relativeDistance = Number(
           convertDistance(
             getDistance(
               { latitude: Number(latitude), longitude: Number(longitude) },
@@ -33,14 +32,10 @@ export function useHospitelList() {
           }),
         );
       } else {
-        list[h.code] = undefined;
+        h.relativeDistance = undefined;
       }
+      return h;
     });
-    return list;
-  }, [_hospitelList, latitude, longitude]);
-
-  const hospitelList = useMemo(() => {
-    let list = _hospitelList;
 
     if (filters.length > 0) {
       if (filters.includes('ONLY_HOSPITEL')) {
@@ -70,6 +65,5 @@ export function useHospitelList() {
 
   return {
     hospitelList,
-    relativeDistanceList,
   };
 }
