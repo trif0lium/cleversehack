@@ -13,6 +13,11 @@ import { useDebounce } from '../../hooks/useDebounce';
 import { searchStore } from '../../store/searchStore';
 
 const _SearchBar = () => {
+  useEffect(() => {
+    searchStore.setSort({ field: 'relativeDistance', direction: 'asc' });
+    searchStore.setFilters([]);
+  }, []);
+
   const filterOptions = useMemo(() => {
     return Object.values(SearchBarCheckBoxOption).map((key) => {
       return { value: key, label: SEARCH_BAR_CHECK_BOX_OPTION[key] };
@@ -42,6 +47,7 @@ const _SearchBar = () => {
   }, [selectedSortOption]);
 
   const [selectedFilterOptions, setSelectedFilterOptions] = useState<any>([]);
+  useEffect(() => {}, [selectedFilterOptions]);
 
   const [keyword, setKeyword] = useState<string>('');
   const debouncedSearch = useDebounce(keyword, 300);
