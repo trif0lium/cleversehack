@@ -13,10 +13,10 @@ export const SearchLocationDetailList = () => {
   return (
     <DetailList>
       <div className="location-detail-list pt-5 md:grid md:grid-cols-2 lg:grid-cols-3 px-5">
-        {/* {MOCK_DATA.map((location) => (
+        {MOCK_DATA.map((location) => (
           <SearchLocationCard selectedLocation={location} />
-        ))} */}
-        {MOCK_DATA.filter((val) => {})}
+        ))}
+        {/* {MOCK_DATA.filter((val) => {})} */}
       </div>
     </DetailList>
   );

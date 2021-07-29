@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { searchBarStore } from "../../store/searchBarStore";
 import { Form } from "../styles/Styles";
 import Select from "react-select";
@@ -17,13 +11,15 @@ import {
 } from "./search-location";
 
 export const SearchBar = () => {
-  const [checkBox, setCheckBox] = useState<string[]>([]);
+  const [selectedSortBy, setSelectedSortBy] = useState<SearchBarSelectOption>(
+    SearchBarSelectOption.DISTANCE
+  );
+  const [selectedOptions, setSelectedOptions] = useState<any>([]);
+  const [isFiltering, setIsFiltering] = useState<boolean>(false);
+  const [keyword, setKeyword] = useState<string>("");
 
-  const { setSearchTerm, setSortBy, setCheckBoxOptions } = searchBarStore;
-
-  useEffect(() => {
-    setCheckBoxOptions(checkBox);
-  }, [checkBox]);
+  const { searchTerm, setSearchTerm, setSortBy, setCheckBoxOptions } =
+    searchBarStore;
 
   const options = useMemo(() => {
     const obj: any[] = [];
@@ -41,71 +37,103 @@ export const SearchBar = () => {
     return obj;
   }, []);
 
+  useEffect(() => {
+    if (
+      selectedSortBy === SearchBarSelectOption.DISTANCE &&
+      (selectedOptions.length === 0 || selectedOptions === null) &&
+      keyword === ""
+    ) {
+      setIsFiltering(false);
+    } else {
+      setIsFiltering(true);
+    }
+  }, [selectedSortBy, selectedOptions, keyword]);
+
   return (
-    <div className="search-bar flex flex-col sm:flex-row bg-white shadow-inner w-full justify-between">
-      <div className="flex flex-col sm:flex-row w-full">
-        <div className="flex sm:mt-4">
-          <input
-            className="search-text w-full h-10 sm:w-48 lg:w-72 sm:max-w-96 border-2 border-gray-200 rounded py-2 px-4 m-3
+    <>
+      <div className="search-bar flex flex-col sm:flex-row bg-white shadow-inner w-full justify-between px-3">
+        <div className="flex flex-col sm:flex-row w-full mb-3 sm:mb-0">
+          <div className="flex sm:mt-4 w-full sm:mr-3">
+            <input
+              className="search-text h-10 w-full sm:max-w-96 border-2 border-gray-200 rounded p-2 px-4 my-3
 				text-tertiary leading-tight focus:outline-none  
 				focus:border-primary"
-            id="search-bar"
-            type="text"
-            placeholder="ชื่อสถานที่หรือบริเวณ..."
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-            }}
-          ></input>
-        </div>
-        <div className="flex flex-col px-3 w-full">
-          <h5 className="my-1">เรียงตาม</h5>
-
-          {/* <select
-              name="sortBy"
-              id="sortBy-select"
-              className="mb-3 mx-3 block h-10 w-40 py-2 px-3 text-tertiary border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+              id="search-bar"
+              type="text"
+              value={keyword}
+              placeholder="ชื่อสถานที่หรือบริเวณ..."
               onChange={(e) => {
-                console.log(e.target.value);
-                setSortBy(e.target.value);
-                e.preventDefault();
+                setSearchTerm(e.target.value);
+                setKeyword(e.target.value);
               }}
-            >
-              {Object.values(SearchBarSelectOption).map((key) => (
-                <option value={key} key={key}>
-                  {SEARCH_BAR_SELECT_OPTION[key]}
-                </option>
-              ))}
-            </select> */}
-          <Form className="flex flex-col sm:flex-wrap sm:flex-row mb-3 text-tertiary text-sm">
-            <Select
-              placeholder="เลือก..."
-              defaultValue={{
-                value: SearchBarSelectOption.DISTANCE,
-                label: SEARCH_BAR_SELECT_OPTION[SearchBarSelectOption.DISTANCE],
-              }}
-              name="options"
-              options={sortBy}
-              className="basic-multi-select min-w-full"
-              classNamePrefix="select"
-              noOptionsMessage={(obj) => "ไม่มีตัวเลือก"}
-            />
-          </Form>
-        </div>
-        <div className="flex flex-col px-3 w-full">
-          <h5 className="my-1">ตัวเลือกการกรอง</h5>
-          <Form className="flex flex-col sm:flex-wrap sm:flex-row mb-3 text-tertiary text-sm">
-            <Select
-              placeholder="เลือก..."
-              isMulti
-              name="options"
-              options={options}
-              className="basic-multi-select min-w-full"
-              classNamePrefix="select"
-              noOptionsMessage={(obj) => "ไม่มีตัวเลือก"}
-              isClearable={true}
-            />
+            ></input>
+          </div>
+          <div className="flex flex-col w-full sm:mr-3">
+            <h5 className="my-1">เรียงตาม</h5>
+            <Form className="flex flex-col sm:flex-wrap sm:flex-row mb-3 text-tertiary text-sm">
+              <Select
+                placeholder="เลือก..."
+                defaultValue={{
+                  value: SearchBarSelectOption.DISTANCE,
+                  label:
+                    SEARCH_BAR_SELECT_OPTION[SearchBarSelectOption.DISTANCE],
+                }}
+                value={{
+                  value: selectedSortBy,
+                  label: SEARCH_BAR_SELECT_OPTION[selectedSortBy],
+                }}
+                name="options"
+                options={sortBy}
+                className="basic-multi-select min-w-full"
+                classNamePrefix="select"
+                noOptionsMessage={(obj) => "ไม่มีตัวเลือก"}
+                theme={(theme) => ({
+                  ...theme,
+                  borderWidth: 1,
+                  colors: {
+                    ...theme.colors,
+                    primary50: "#E5F9F9",
+                    primary25: "#F3F3F3",
+                    primary: "#1A7676",
+                  },
+                })}
+                onChange={(e) => {
+                  setSortBy(e?.value || "");
+                  setSelectedSortBy(e?.value || selectedSortBy);
+                }}
+              />
+            </Form>
+          </div>
+          <div className="flex flex-col w-full sm:mr-3">
+            <h5 className="my-1">ตัวเลือกการกรอง</h5>
+            <Form className="flex flex-col sm:flex-wrap sm:flex-row mb-3 text-tertiary text-sm">
+              <Select
+                placeholder="เลือก..."
+                isMulti
+                name="options"
+                value={selectedOptions}
+                options={options}
+                className="basic-multi-select min-w-full"
+                classNamePrefix="select"
+                noOptionsMessage={(obj) => "ไม่มีตัวเลือก"}
+                isClearable={true}
+                theme={(theme) => ({
+                  ...theme,
+                  borderWidth: 1,
+                  colors: {
+                    ...theme.colors,
+                    primary50: "#E5F9F9",
+                    primary25: "#F3F3F3",
+                    primary: "#1A7676",
+                  },
+                })}
+                onChange={(e) => {
+                  setCheckBoxOptions(e);
+                  setSelectedOptions(e);
+                }}
+              />
 
-            {/* {Object.values(SearchBarCheckBoxOption).map((key) => (
+              {/* {Object.values(SearchBarCheckBoxOption).map((key) => (
               <div
                 onClick={() => {
                   console.log("onselect1", checkBox);
@@ -130,24 +158,43 @@ export const SearchBar = () => {
                 </label>
               </div>
             ))} */}
-          </Form>
+            </Form>
+          </div>
+        </div>
+        <div className="flex flex-col sm:flex-col-reverse w-auto sm:w-40 mb-2 justify-center">
+          <button className="search-button flex h-10 rounded p-3 items-center justify-center text-white font-bold">
+            ค้นหา
+          </button>
+          <button
+            className="text-tertiary text-xs underline mt-2 mb-3 sm:mb-1 sm:mt-0"
+            onClick={() => {
+              setSearchTerm("");
+              setKeyword("");
+              setSelectedSortBy(SearchBarSelectOption.DISTANCE);
+              setSelectedOptions([]);
+              setIsFiltering(false);
+            }}
+          >
+            เคลียร์ตัวเลือกการค้นหา
+          </button>
         </div>
       </div>
-      <div className="flex flex-col m-3 w-auto sm:w-40">
-        <button className="search-button flex h-10 rounded p-3 items-center justify-center text-white font-bold">
-          ค้นหา
-        </button>
-        <button
-          className="mt-2 text-tertiary text-xs underline"
-          onClick={() => {
-            setSearchTerm("");
-            setSortBy("");
-            setCheckBoxOptions([]);
-          }}
-        >
-          เคลียร์ตัวเลือกการค้นหา
-        </button>
-      </div>
-    </div>
+      {isFiltering && (
+        <div className="flex w-full items-center justify-center">
+          <button
+            className="reset-button flex h-10 rounded p-3 items-center justify-center text-white font-bold"
+            onClick={() => {
+              setSearchTerm("");
+              setKeyword("");
+              setSelectedSortBy(SearchBarSelectOption.DISTANCE);
+              setSelectedOptions([]);
+              setIsFiltering(false);
+            }}
+          >
+            เคลียร์ตัวเลือกการค้นหา
+          </button>
+        </div>
+      )}
+    </>
   );
 };

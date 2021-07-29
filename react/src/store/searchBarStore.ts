@@ -4,21 +4,23 @@ import {
   SearchBarCheckBoxOption,
   SearchBarSelectOption,
 } from "../components/search-location/search-location";
-
+import { OptionsType } from "react-select/src/types";
 class SearchBarStore {
   searchTerm: string = "";
   sortBy: string = SearchBarSelectOption.DISTANCE;
-  checkBoxOptions!: string[];
+  checkBoxOptions?: OptionsType<any>;
+  isFiltering: boolean = false;
 
   constructor() {
     makeAutoObservable(this, {
       searchTerm: observable,
       sortBy: observable,
       checkBoxOptions: observable,
+      isFiltering: observable,
       setSearchTerm: action,
       setSortBy: action,
       setCheckBoxOptions: action,
-      addCheckBoxOption: action,
+      setIsFiltering: action,
     });
   }
 
@@ -33,22 +35,16 @@ class SearchBarStore {
   };
 
   @action
-  setCheckBoxOptions = (checkBoxOptions: string[]) => {
+  setCheckBoxOptions = (checkBoxOptions: OptionsType<any>) => {
+    console.log("check1", this.checkBoxOptions);
+
     this.checkBoxOptions = checkBoxOptions;
+    console.log("check2", this.checkBoxOptions);
   };
 
   @action
-  addCheckBoxOption = (checkBoxOption: string) => {
-    if (this.checkBoxOptions.includes(checkBoxOption)) {
-      // var index = this.checkBoxOptions.indexOf(checkBoxOption);
-      var filteredOptions = this.checkBoxOptions.filter(
-        (e) => e !== checkBoxOption
-      );
-      this.checkBoxOptions = filteredOptions;
-    } else {
-      this.checkBoxOptions.push(checkBoxOption);
-    }
-    console.log("op:", this.checkBoxOptions);
+  setIsFiltering = (isFiltering: boolean) => {
+    this.isFiltering = isFiltering;
   };
 }
 

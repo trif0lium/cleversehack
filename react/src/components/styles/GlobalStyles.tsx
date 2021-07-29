@@ -121,7 +121,7 @@ const GlobalStyles = createGlobalStyle`
     left: 0px;
   }
   .search-text {
-    border-width: 1px;
+    border-width: 2px;
   }
   .search-button {
     border: 1px solid #1A7676;
@@ -133,6 +133,23 @@ const GlobalStyles = createGlobalStyle`
       font-weight: bold;
     }
   }
+
+  .reset-button {
+    background-color: #1A7676;
+     color: white;
+     position: absolute;
+    bottom: 1rem;
+    border: none;
+    z-index: 10;
+     &:hover {
+      transform: scale(1.02);
+      
+     
+      font-weight: bold;
+    }
+  }
+
+
   
   .back-button {
     border-radius: 4px;
