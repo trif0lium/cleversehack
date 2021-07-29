@@ -13,10 +13,6 @@ import { useDebounce } from '../../hooks/useDebounce';
 import { searchStore } from '../../store/searchStore';
 
 const _SearchBar = () => {
-  const [selectedSortBy, setSelectedSortBy] = useState<SearchBarSelectOption>(
-    SearchBarSelectOption.DISTANCE,
-  );
-
   const filterOptions = useMemo(() => {
     return Object.values(SearchBarCheckBoxOption).map((key) => {
       return { value: key, label: SEARCH_BAR_CHECK_BOX_OPTION[key] };
@@ -29,7 +25,11 @@ const _SearchBar = () => {
     });
   }, []);
 
-  const [selectedOptions, setSelectedOptions] = useState<any>([]);
+  const [
+    selectedSortOption,
+    setSelectedSortOption,
+  ] = useState<SearchBarSelectOption>(SearchBarSelectOption.DISTANCE);
+  const [selectedFilterOptions, setSelectedFilterOptions] = useState<any>([]);
 
   const [keyword, setKeyword] = useState<string>('');
   const debouncedSearch = useDebounce(keyword, 300);
@@ -69,8 +69,8 @@ const _SearchBar = () => {
                     SEARCH_BAR_SELECT_OPTION[SearchBarSelectOption.DISTANCE],
                 }}
                 value={{
-                  value: selectedSortBy,
-                  label: SEARCH_BAR_SELECT_OPTION[selectedSortBy],
+                  value: selectedSortOption,
+                  label: SEARCH_BAR_SELECT_OPTION[selectedSortOption],
                 }}
                 name="options"
                 options={sortOptions}
@@ -88,7 +88,7 @@ const _SearchBar = () => {
                   },
                 })}
                 onChange={(e) => {
-                  setSelectedSortBy(e?.value || selectedSortBy);
+                  setSelectedSortOption(e?.value || selectedSortOption);
                 }}
               />
             </Form>
@@ -100,7 +100,7 @@ const _SearchBar = () => {
                 placeholder="เลือก..."
                 isMulti
                 name="options"
-                value={selectedOptions}
+                value={selectedFilterOptions}
                 options={filterOptions}
                 className="basic-multi-select min-w-full"
                 classNamePrefix="select"
@@ -117,7 +117,7 @@ const _SearchBar = () => {
                   },
                 })}
                 onChange={(e) => {
-                  setSelectedOptions(e);
+                  setSelectedFilterOptions(e);
                 }}
               />
 
