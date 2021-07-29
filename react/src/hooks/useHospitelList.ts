@@ -12,9 +12,9 @@ export function useHospitelList() {
     dataStore.hospitelList,
   ]);
 
-  const filters = useMemo(() => searchStore.filters, []);
-  const search = useMemo(() => searchStore.search, []);
-  const sort = useMemo(() => searchStore.sort, []);
+  const filters = useMemo(() => searchStore.filters, [searchStore.filters]);
+  const search = useMemo(() => searchStore.search, [searchStore.search]);
+  const sort = useMemo(() => searchStore.sort, [searchStore.sort]);
 
   const hospitelList = useMemo(() => {
     let list = _hospitelList.map((h) => {
