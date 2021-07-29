@@ -1,5 +1,5 @@
-import { breakpoints } from "./breakpoints";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
+import { breakpoints } from './breakpoints';
 
 const rotate360 = keyframes`
   from {
@@ -7,6 +7,41 @@ const rotate360 = keyframes`
   }
   to {
     transform: rotate(360deg);
+  }
+`;
+
+export const Button = styled.div`
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 2em;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0;
+  margin: 0;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: #3d3935;
+    transition: transform 0.25s ease-out;
+  }
+
+  &::before {
+    top: 0;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    margin-left: -2px;
+  }
+
+  &::after {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    margin-top: -2px;
   }
 `;
 
@@ -113,7 +148,7 @@ export const Form = styled.form`
     display: block;
     transform-origin: left top;
     border-radius: 0.25rem;
-    content: "";
+    content: '';
     transition: opacity 0.28s ease, height 0s linear 0.28s;
     opacity: 0;
     will-change: opacity, height;
@@ -182,7 +217,7 @@ export const Dropdown = styled.label`
   .custom-select-trigger:after {
     position: absolute;
     display: block;
-    content: "";
+    content: '';
     width: 10px;
     height: 10px;
     top: 50%;
@@ -227,7 +262,7 @@ export const Dropdown = styled.label`
   .custom-options:before {
     position: absolute;
     display: block;
-    content: "";
+    content: '';
     bottom: 100%;
     right: 25px;
     width: 7px;

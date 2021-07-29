@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components";
-
+import { createGlobalStyle } from 'styled-components';
+import bg from './bg/bg.gif';
 const media = {
   desktop: `@media(min-width: 1024px)`,
   tabletHorizontal: `@media(min-width: 720px)`,
@@ -25,6 +25,8 @@ const GlobalStyles = createGlobalStyle`
     background-repeat: no-repeat;
     background-attachment: fixed; 
     background-color: #1A7676;
+    //  background-color: black;
+    // background-image: url(${bg})
   }
   h1 {
     position: absolute;

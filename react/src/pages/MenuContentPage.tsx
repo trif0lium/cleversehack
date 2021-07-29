@@ -1,8 +1,10 @@
-import React, { ReactElement } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { MenuIcon } from "../components/const";
-import MenuCard from "../components/menu/MenuCard";
-import { ContentWrap } from "../components/styles/ContentStyles";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { MenuIcon } from '../components/const';
+import MenuCard from '../components/menu/MenuCard';
+import { ContentWrap } from '../components/styles/ContentStyles';
+import { Button } from '../components/styles/Styles';
+import logo from './logos/4.gif';
 
 const MenuContent = () => {
   const history = useHistory();
@@ -10,13 +12,14 @@ const MenuContent = () => {
   return (
     <ContentWrap
       style={{
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-        transform: "translate(-50%, -50%)",
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
       }}
     >
-      <h2 className="text-white">One Stop Covid</h2>
+      <img src={logo} className="w-60 h-60" />
+      {/* <h2 className="text-white">One Stop Covid</h2> */}
       <div className="boxWrap">
         <MenuCard
           topic="ค้นหาสถานที่ดูแลผู้ติดเชื้อ"
@@ -44,6 +47,7 @@ const MenuContent = () => {
           }}
         />
       </div>
+      <Button></Button>
     </ContentWrap>
   );
 };
