@@ -144,13 +144,7 @@ const _SearchBar = () => {
           <button
             className="text-tertiary text-xs underline mt-2 mb-3 sm:mb-1 sm:mt-0"
             onClick={() => {
-              setSearchTerm('');
-              setSortBy(SearchBarSelectOption.DISTANCE);
-              setOptions([]);
-              setKeyword('');
-              setSelectedSortBy(SearchBarSelectOption.DISTANCE);
-              setSelectedOptions([]);
-              setIsFiltering(false);
+              searchStore.reset();
             }}
           >
             เคลียร์ตัวเลือกการค้นหา
@@ -162,13 +156,7 @@ const _SearchBar = () => {
           <button
             className="reset-button flex h-10 rounded p-3 items-center justify-center text-white font-bold"
             onClick={() => {
-              setSearchTerm('');
-              setSortBy(SearchBarSelectOption.DISTANCE);
-              setOptions([]);
-              setKeyword('');
-              setSelectedSortBy(SearchBarSelectOption.DISTANCE);
-              setSelectedOptions([]);
-              setIsFiltering(false);
+              searchStore.reset();
             }}
           >
             เคลียร์ตัวเลือกการค้นหา
