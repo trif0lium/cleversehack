@@ -5,7 +5,6 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
-import { getGeocode, getLatLng } from "use-places-autocomplete";
 import mapStyles from "../styles/MapStyles";
 import { MdMyLocation } from "react-icons/md";
 import { FaHospitalAlt, FaClinicMedical } from "react-icons/fa";
@@ -47,7 +46,7 @@ interface SearchLocationMapProps {
 export const SearchLocationMap = ({
   searchTerm,
   sortBy,
-  options,
+  options: searchOptions,
   isVisibleSearchBar,
   setIsVisibleSearchBar,
 }: SearchLocationMapProps) => {
@@ -67,8 +66,6 @@ export const SearchLocationMap = ({
   const [isGeoLocLoading, setIsGeoLocLoading] = useState(false);
 
   const { setMyLocation } = locationStore;
-  const { hospitelList, hospitelListLoading } = dataStore;
-  console.log("data:", hospitelList);
 
   const history = useHistory();
 
@@ -114,7 +111,7 @@ export const SearchLocationMap = ({
         <SearchLocationDetailDrawer selectedLocation={selectedLocation} />
       )}
       {!isVisibleSearchBar && (
-        <button
+        <div
           className="locate flex"
           onClick={() => {
             setIsGeoLocLoading(true);
@@ -145,7 +142,7 @@ export const SearchLocationMap = ({
             <p className="m-4 text-lg text-secondary">กำลังค้นหา...</p>
           )}
           <MdMyLocation className="h-8 w-8 my-4 text-white bg-primary shadow-lg p-1 rounded" />
-        </button>
+        </div>
       )}
 
       <GoogleMap

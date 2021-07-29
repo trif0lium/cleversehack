@@ -187,7 +187,7 @@ const GlobalStyles = createGlobalStyle`
     border: none;
     z-index: 10;
   }
-
+  
   .search-drawer {
     width: 100%;
   display: flex;
