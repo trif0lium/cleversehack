@@ -29,6 +29,18 @@ const _SearchBar = () => {
     selectedSortOption,
     setSelectedSortOption,
   ] = useState<SearchBarSelectOption>(SearchBarSelectOption.DISTANCE);
+  useEffect(() => {
+    searchStore.setSort({
+      field: {
+        [SearchBarSelectOption.DISTANCE]: 'relativeDistance',
+        [SearchBarSelectOption.TYPE]: 'type',
+        [SearchBarSelectOption.AREA]: 'type',
+        [SearchBarSelectOption.LOCATION]: 'type',
+      }[selectedSortOption],
+      direction: 'asc',
+    });
+  }, [selectedSortOption]);
+
   const [selectedFilterOptions, setSelectedFilterOptions] = useState<any>([]);
 
   const [keyword, setKeyword] = useState<string>('');
