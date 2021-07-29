@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { FaHospitalAlt, FaClinicMedical } from "react-icons/fa";
+import { locationStore } from "../../store/locationStore";
 import {
   FacilityType,
   LocationType,
@@ -14,10 +15,10 @@ interface SearchLocationDetailDrawerProps {
   myLocation?: MyLocationType;
 }
 
-export const LocationCard = ({
+export const SearchLocationCard = ({
   selectedLocation,
-  myLocation,
 }: SearchLocationDetailDrawerProps) => {
+  const { myLocation } = locationStore;
   const haversine_distance = useMemo(() => {
     if (myLocation) {
       var R = 3958.8; // Radius of the Earth in miles
@@ -42,15 +43,16 @@ export const LocationCard = ({
       return d.toFixed(3);
     }
   }, [selectedLocation, myLocation]);
+
   return (
-    <div className="w-auto flex-shrink flex-wrap">
+    <div className="w-auto flex-shrink flex-wrap mb-1 sm:mr-5">
       <div
-        className={`flex-shrink ${
+        className={`detail-card flex-shrink ${
           selectedLocation ? `h-auto` : `h-0`
-        } bg-white flex flew-col p-5 shadow-lg`}
+        } border-b-2 flex flew-col p-5 shadow-sm rounded-md`}
       >
-        <div className="flex">
-          <div>
+        <div className="flex justify-between">
+          <div className="flex flex-col">
             <div className="flex items-center mb-2">
               {selectedLocation?.type === FacilityType.HOSPITAL ? (
                 <FaHospitalAlt className="mr-2 w-5 h-5" />
@@ -64,22 +66,22 @@ export const LocationCard = ({
               )}
             </div>
             <h5>{selectedLocation?.address}</h5>
+            <div className="flex mt-2">
+              {selectedLocation?.tags.map((tag) => (
+                <span
+                  className={`tag-drawer px-2 text-white text-xs ${TAG_COLOR_MAPPER[tag]}`}
+                >
+                  {TAG_MAPPER[tag]}
+                </span>
+              ))}
+            </div>
           </div>
-          <div className="items-center text-center w-auto sm:w-32">
+          <div className="flex flex-col items-center text-center w-auto sm:w-32">
             <h5 className="text-xs sm:text-sm">จำนวนเตียงว่าง</h5>
             <div className="flex w-auto px-2 h-12 rounded justify-center items-center text-red-500 text-lg font-bold">
               {`${selectedLocation?.currentCapacity}/${selectedLocation?.maxCapacity}`}
             </div>
           </div>
-        </div>
-        <div className="flex mt-2">
-          {selectedLocation?.tags.map((tag) => (
-            <span
-              className={`tag-drawer px-2 text-white text-xs ${TAG_COLOR_MAPPER[tag]}`}
-            >
-              {TAG_MAPPER[tag]}
-            </span>
-          ))}
         </div>
       </div>
     </div>

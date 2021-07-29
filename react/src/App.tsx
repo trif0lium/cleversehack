@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,7 +13,7 @@ import SearchLocation from "./pages/SearchLocationPage";
 import SearchLocationDetail from "./pages/SearchLocationDetailPage";
 import { dataStore } from "./store/dataStore";
 
-const App = (): ReactElement => {
+const App = () => {
   useEffect(() => {
     dataStore.init();
   }, []);
@@ -32,7 +32,7 @@ const App = (): ReactElement => {
           <Route path="/search-location">
             <SearchLocation />
           </Route>
-          <Route exact path="/search-location/:locationId">
+          <Route exact path="/search-location/:locationCode">
             <SearchLocationDetail />
           </Route>
           <Route

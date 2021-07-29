@@ -15,7 +15,7 @@ const SearchLocationDetail = () => {
   const history = useHistory();
   const params = useParams();
 
-  const { locationId } = params as any;
+  const { locationCode } = params as any;
 
   return (
     <>
@@ -36,11 +36,6 @@ const SearchLocationDetail = () => {
               className={`option-button flex items-center mr-3 pr-1 ${
                 isVisibleSearchBar ? `font-bold text-primary` : `text-tertiary`
               }`}
-              onClick={() =>
-                isVisibleSearchBar
-                  ? setIsVisibleSearchBar(false)
-                  : setIsVisibleSearchBar(true)
-              }
             >
               <FaSearch className="icon h-3 w-3 mr-2 ml-1" /> ค้นหา
             </button>
@@ -52,7 +47,11 @@ const SearchLocationDetail = () => {
           <SearchLocationMenuTab menu={menu} setMenu={setMenu} />
         </div>
       </div>
-      <SearchLocationContent menu={menu} />
+      <SearchLocationContent
+        menu={menu}
+        isVisibleSearchBar={isVisibleSearchBar}
+        setIsVisibleSearchBar={setIsVisibleSearchBar}
+      />
     </>
   );
 };

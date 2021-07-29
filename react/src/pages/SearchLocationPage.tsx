@@ -7,6 +7,7 @@ import { SearchLocationMenu } from "../components/search-location/search-locatio
 import { SearchBar } from "../components/search-location/SearchBar";
 import { SearchLocationContent } from "../components/search-location/SearchLocationContent";
 import { SearchLocationMenuTab } from "../components/search-location/SearchLocationMenuTab";
+import { searchBarStore } from "../store/searchBarStore";
 
 const SearchLocation = () => {
   const [menu, setMenu] = useState<SearchLocationMenu>(SearchLocationMenu.MAP);
@@ -52,6 +53,7 @@ const SearchLocation = () => {
       <SearchLocationContent
         menu={menu}
         isVisibleSearchBar={isVisibleSearchBar}
+        setIsVisibleSearchBar={setIsVisibleSearchBar}
       />
     </>
   );
