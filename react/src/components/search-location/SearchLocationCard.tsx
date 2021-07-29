@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import React, { useMemo } from "react";
 import { FaHospitalAlt, FaClinicMedical } from "react-icons/fa";
 import { locationStore } from "../../store/locationStore";
@@ -15,7 +16,7 @@ interface SearchLocationDetailDrawerProps {
   myLocation?: MyLocationType;
 }
 
-export const SearchLocationCard = ({
+const _SearchLocationCard = ({
   selectedLocation,
 }: SearchLocationDetailDrawerProps) => {
   const { myLocation } = locationStore;
@@ -90,3 +91,5 @@ export const SearchLocationCard = ({
     </div>
   );
 };
+
+export const SearchLocationCard = observer(_SearchLocationCard);
