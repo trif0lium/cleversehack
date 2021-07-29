@@ -1,31 +1,31 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   GoogleMap,
   useLoadScript,
   Marker,
   InfoWindow,
-} from "@react-google-maps/api";
-import mapStyles from "../styles/MapStyles";
-import { MdMyLocation } from "react-icons/md";
-import { FaHospitalAlt, FaClinicMedical } from "react-icons/fa";
-import { useHistory } from "react-router-dom";
+} from '@react-google-maps/api';
+import mapStyles from '../styles/MapStyles';
+import { MdMyLocation } from 'react-icons/md';
+import { FaHospitalAlt, FaClinicMedical } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 import {
   FacilityType,
   LocationType,
   MyLocationType,
   MOCK_DATA,
   TAG_COLOR_MAPPER,
-} from "../const";
-import { SearchLocationDetailDrawer } from "./SearchLocationDetailDrawer";
-import { dataStore } from "../../store/dataStore";
-import { locationStore } from "../../store/locationStore";
-import { SearchBarSelectOption } from "./search-location";
-import { useHospitelList } from "../../hooks/useHospitelList";
-import { observer } from "mobx-react-lite";
+} from '../const';
+import { SearchLocationDetailDrawer } from './SearchLocationDetailDrawer';
+import { dataStore } from '../../store/dataStore';
+import { locationStore } from '../../store/locationStore';
+import { SearchBarSelectOption } from './search-location';
+import { useHospitelList } from '../../hooks/useHospitelList';
+import { observer } from 'mobx-react-lite';
 
 const mapContainerStyle = {
-  height: "calc(100vh - 60px)",
-  width: "100vw",
+  height: 'calc(100vh - 60px)',
+  width: '100vw',
 };
 const options = {
   styles: mapStyles,
@@ -53,15 +53,13 @@ const _SearchLocationMap = ({
   setIsVisibleSearchBar,
 }: SearchLocationMapProps) => {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyBoONR0q9T6-FkrslzfPXrQ4lqtZ7aI0a4",
+    googleMapsApiKey: 'AIzaSyBoONR0q9T6-FkrslzfPXrQ4lqtZ7aI0a4',
     // googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries: ["places"],
+    libraries: ['places'],
   });
   const [selectedLocation, setSelectedLocation] = useState<LocationType>();
-  const [
-    selectedMyLocation,
-    setSelectedMyLocation,
-  ] = useState<MyLocationType>();
+  const [selectedMyLocation, setSelectedMyLocation] =
+    useState<MyLocationType>();
   const [
     isSearchLocationDetailDrawerVisible,
     setIsSearchLocationDetailDrawerVisible,
@@ -128,18 +126,18 @@ const _SearchLocationMap = ({
                 });
                 setIsGeoLocLoading(false);
                 setSelectedMyLocation({
-                  code: "my_current_location",
+                  code: 'my_current_location',
                   lat: position.coords.latitude,
                   lng: position.coords.longitude,
                 });
                 setMyLocation({
-                  code: "my_current_location",
+                  code: 'my_current_location',
                   lat: position.coords.latitude,
                   lng: position.coords.longitude,
                 });
                 history.push(`/search-location`);
               },
-              () => null
+              () => null,
             );
           }}
         >
@@ -153,6 +151,7 @@ const _SearchLocationMap = ({
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
+        options={options}
         zoom={8}
         center={center}
         onClick={onMapClick}
@@ -173,8 +172,8 @@ const _SearchLocationMap = ({
             icon={{
               url:
                 location.type === FacilityType.HOSPITAL
-                  ? "/hospital.svg"
-                  : "/medic.svg",
+                  ? '/hospital.svg'
+                  : '/medic.svg',
               scaledSize: new window.google.maps.Size(30, 30),
             }}
           />
