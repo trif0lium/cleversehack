@@ -40,7 +40,7 @@ const MenuContent = () => {
           description="ทำแบบสอบถามเพื่อกรองอาการป่วยเบื้องต้น"
           icon={MenuIcon.SELF_ASSESSMENT}
           onClick={() => {
-            history.push(`/search-location`);
+            history.push(`/self-assessment`);
           }}
         />
       </div>

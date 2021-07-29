@@ -12,6 +12,7 @@ import MenuContent from "./pages/MenuContentPage";
 import SearchLocation from "./pages/SearchLocationPage";
 import SearchLocationDetail from "./pages/SearchLocationDetailPage";
 import { dataStore } from "./store/dataStore";
+import SelfAssessment from "./pages/SelfAssessmentPage";
 
 const App = () => {
   useEffect(() => {
@@ -42,6 +43,9 @@ const App = () => {
               return null;
             }}
           />
+          <Route exact path="/self-assessment">
+            <SelfAssessment />
+          </Route>
         </Switch>
       </BrowserRouter>
     </>

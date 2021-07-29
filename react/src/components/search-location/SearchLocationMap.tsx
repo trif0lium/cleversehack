@@ -111,7 +111,7 @@ export const SearchLocationMap = ({
         <SearchLocationDetailDrawer selectedLocation={selectedLocation} />
       )}
       {!isVisibleSearchBar && (
-        <div
+        <button
           className="locate flex"
           onClick={() => {
             setIsGeoLocLoading(true);
@@ -139,10 +139,10 @@ export const SearchLocationMap = ({
           }}
         >
           {isGeoLocLoading && (
-            <p className="m-4 text-lg text-secondary">กำลังค้นหา...</p>
+            <p className="m-4 text-md text-secondary">กำลังค้นหา...</p>
           )}
           <MdMyLocation className="h-8 w-8 my-4 text-white bg-primary shadow-lg p-1 rounded" />
-        </div>
+        </button>
       )}
 
       <GoogleMap

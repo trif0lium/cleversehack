@@ -224,6 +224,10 @@ const GlobalStyles = createGlobalStyle`
       font-weight: bold;
     }
 
+  .self-assessment-content {
+      height: 100vh;
+  }
+    
   }
 `;
 
