@@ -1,13 +1,13 @@
-import { action, makeAutoObservable } from "mobx";
+import { action, makeAutoObservable } from 'mobx';
 
-export class SearchStore {
+class SearchStore {
   constructor() {
     makeAutoObservable(this);
   }
 
-  search: string = "";
-  filters: Array<"ONLY_HOSPITEL" | "ONLY_HOSPITAL" | "ONLY_AVAILABLE"> = [];
-  sort: { field: string; direction: "asc" | "desc" } | null = null;
+  search: string = '';
+  filters: Array<'ONLY_HOSPITEL' | 'ONLY_HOSPITAL' | 'ONLY_AVAILABLE'> = [];
+  sort: { field: string; direction: 'asc' | 'desc' } | null = null;
 
   @action
   setSearch(s: string) {
@@ -15,19 +15,21 @@ export class SearchStore {
   }
 
   @action
-  setFilters(f: Array<"ONLY_HOSPITEL" | "ONLY_HOSPITAL" | "ONLY_AVAILABLE">) {
+  setFilters(f: Array<'ONLY_HOSPITEL' | 'ONLY_HOSPITAL' | 'ONLY_AVAILABLE'>) {
     this.filters = f;
   }
 
   @action
-  setSort(s: { field: string; direction: "asc" | "desc" } | null) {
+  setSort(s: { field: string; direction: 'asc' | 'desc' } | null) {
     this.sort = s;
   }
 
   @action
   reset() {
-    this.setSearch("");
+    this.setSearch('');
     this.setFilters([]);
     this.setSort(null);
   }
 }
+
+export const searchStore = new SearchStore();
