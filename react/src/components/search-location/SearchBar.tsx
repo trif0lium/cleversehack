@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Form } from '../styles/Styles';
 import Select from 'react-select';
 
@@ -22,6 +22,11 @@ const _SearchBar = () => {
   useEffect(() => {
     searchStore.setSearch(debouncedSearch);
   }, [debouncedSearch]);
+
+  const reset = useCallback(() => {
+    setKeyword('');
+    searchStore.reset();
+  }, []);
 
   return (
     <>
