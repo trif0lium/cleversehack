@@ -45,7 +45,10 @@ export const SearchLocationCard = ({
   }, [selectedLocation, myLocation]);
 
   return (
-    <div className="w-auto flex-shrink flex-wrap mb-1 sm:mr-5">
+    <div
+      className="w-auto flex-shrink flex-wrap mb-1 sm:mr-5"
+      onClick={() => {}}
+    >
       <div
         className={`detail-card flex-shrink ${
           selectedLocation ? `h-auto` : `h-0`

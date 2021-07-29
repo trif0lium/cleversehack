@@ -18,6 +18,7 @@ export const SearchLocationDetailList = ({
   useEffect(() => {
     console.log("hhey", searchTerm, sortBy, options);
   }, [searchTerm, sortBy, options]);
+
   useEffect(() => {
     console.log("hhey1", searchTerm, sortBy, options);
   }, []);
