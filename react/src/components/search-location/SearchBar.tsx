@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Form } from '../styles/Styles';
 import Select from 'react-select';
 
@@ -14,6 +14,13 @@ const _SearchBar = () => {
   const [selectedSortBy, setSelectedSortBy] = useState<SearchBarSelectOption>(
     SearchBarSelectOption.DISTANCE,
   );
+
+  const sortOptions = useMemo(() => {
+    return Object.values(SearchBarSelectOption).map((key) => {
+      return { value: key, label: SEARCH_BAR_SELECT_OPTION[key] };
+    });
+  }, []);
+
   const [selectedOptions, setSelectedOptions] = useState<any>([]);
 
   const [keyword, setKeyword] = useState<string>('');
@@ -58,7 +65,7 @@ const _SearchBar = () => {
                   label: SEARCH_BAR_SELECT_OPTION[selectedSortBy],
                 }}
                 name="options"
-                options={sortBy}
+                options={sortOptions}
                 className="basic-multi-select min-w-full"
                 classNamePrefix="select"
                 noOptionsMessage={(obj) => 'ไม่มีตัวเลือก'}
