@@ -74,6 +74,8 @@ const _SearchBar = () => {
 
   const reset = useCallback(() => {
     setKeyword('');
+    setSelectedSortOption(SearchBarSelectOption.DISTANCE);
+    selectedFilterOptions([]);
     searchStore.reset();
   }, []);
 
@@ -191,7 +193,7 @@ const _SearchBar = () => {
           <button
             className="text-tertiary text-xs underline mt-2 mb-3 sm:mb-1 sm:mt-0"
             onClick={() => {
-              searchStore.reset();
+              reset();
             }}
           >
             เคลียร์ตัวเลือกการค้นหา
@@ -203,7 +205,7 @@ const _SearchBar = () => {
           <button
             className="reset-button flex h-10 rounded p-3 items-center justify-center text-white font-bold"
             onClick={() => {
-              searchStore.reset();
+              reset();
             }}
           >
             เคลียร์ตัวเลือกการค้นหา
