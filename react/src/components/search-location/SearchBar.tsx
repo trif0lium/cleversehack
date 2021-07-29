@@ -1,66 +1,85 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { searchBarStore } from "../../store/searchBarStore";
-import { Form } from "../styles/Styles";
-import Select from "react-select";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Form } from '../styles/Styles';
+import Select from 'react-select';
 
 import {
   SearchBarCheckBoxOption,
   SearchBarSelectOption,
   SEARCH_BAR_CHECK_BOX_OPTION,
   SEARCH_BAR_SELECT_OPTION,
-} from "./search-location";
+} from './search-location';
+import { observer } from 'mobx-react-lite';
+import { useDebounce } from '../../hooks/useDebounce';
+import { searchStore } from '../../store/searchStore';
 
-interface SearchBarProps {
-  setSortBy: (SearchBar: SearchBarSelectOption) => void;
-  setOptions: (SearchBar: []) => void;
-  setSearchTerm: (SearchBar: string) => void;
-}
-
-export const SearchBar = ({
-  setSearchTerm,
-  setSortBy,
-  setOptions,
-}: SearchBarProps) => {
-  const [selectedSortBy, setSelectedSortBy] = useState<SearchBarSelectOption>(
-    SearchBarSelectOption.DISTANCE
-  );
-  const [selectedOptions, setSelectedOptions] = useState<any>([]);
-  const [isFiltering, setIsFiltering] = useState<boolean>(false);
-  const [keyword, setKeyword] = useState<string>("");
-
-  const options = useMemo(() => {
-    const obj: any[] = [];
-    Object.values(SearchBarCheckBoxOption).map((key) => {
-      obj.push({ value: key, label: SEARCH_BAR_CHECK_BOX_OPTION[key] });
-    });
-    return obj;
-  }, []);
-
-  const sortBy = useMemo(() => {
-    const obj: any[] = [];
-    Object.values(SearchBarSelectOption).map((key) => {
-      obj.push({ value: key, label: SEARCH_BAR_SELECT_OPTION[key] });
-    });
-    return obj;
-  }, []);
-
+const _SearchBar = () => {
   useEffect(() => {
-    if (
-      selectedSortBy === SearchBarSelectOption.DISTANCE &&
-      (selectedOptions.length === 0 || selectedOptions === null) &&
-      keyword === ""
-    ) {
-      setIsFiltering(false);
-    } else {
-      setIsFiltering(true);
-    }
-  }, [selectedSortBy, selectedOptions, keyword]);
+    if (!searchStore.sort)
+      searchStore.setSort({ field: 'relativeDistance', direction: 'asc' });
+
+    if (searchStore.filters.length === 0) searchStore.setFilters([]);
+  }, []);
+
+  const filterOptions = useMemo(() => {
+    return Object.values(SearchBarCheckBoxOption).map((key) => {
+      return { value: key, label: SEARCH_BAR_CHECK_BOX_OPTION[key] };
+    });
+  }, []);
+
+  const sortOptions = useMemo(() => {
+    return Object.values(SearchBarSelectOption).map((key) => {
+      return { value: key, label: SEARCH_BAR_SELECT_OPTION[key] };
+    });
+  }, []);
+
+  const [
+    selectedSortOption,
+    setSelectedSortOption,
+  ] = useState<SearchBarSelectOption>(SearchBarSelectOption.DISTANCE);
+  useEffect(() => {
+    searchStore.setSort({
+      field: {
+        [SearchBarSelectOption.DISTANCE]: 'relativeDistance',
+        [SearchBarSelectOption.TYPE]: 'type',
+        [SearchBarSelectOption.AREA]: 'type',
+        [SearchBarSelectOption.LOCATION]: 'type',
+      }[selectedSortOption],
+      direction: 'asc',
+    });
+  }, [selectedSortOption]);
+
+  const [selectedFilterOptions, setSelectedFilterOptions] = useState<any>([]);
+  useEffect(() => {
+    const _filters = selectedFilterOptions
+      .map((f: { value: string }) => {
+        if (f.value === SearchBarCheckBoxOption.HOSPITEL)
+          return 'ONLY_HOSPITEL';
+
+        if (f.value === SearchBarCheckBoxOption.FIELD_HOSPITAL)
+          return 'ONLY_HOSPITAL';
+
+        if (f.value === SearchBarCheckBoxOption.AVAILABILITY)
+          return 'ONLY_AVAILABLE';
+
+        return undefined;
+      })
+      .filter((f: any) => f);
+
+    searchStore.setFilters(_filters);
+  }, [selectedFilterOptions]);
+
+  const [keyword, setKeyword] = useState<string>('');
+  const debouncedSearch = useDebounce(keyword, 300);
+  useEffect(() => {
+    searchStore.setSearch(debouncedSearch);
+  }, [debouncedSearch]);
+
+  const reset = useCallback(() => {
+    setKeyword('');
+    setSelectedSortOption(SearchBarSelectOption.DISTANCE);
+    setSelectedFilterOptions([]);
+    searchStore.reset();
+  }, []);
 
   return (
     <>
@@ -68,9 +87,7 @@ export const SearchBar = ({
         <div className="flex flex-col sm:flex-row w-full mb-3 sm:mb-0">
           <div className="flex sm:mt-4 w-full sm:mr-3">
             <input
-              className="search-text h-10 w-full sm:max-w-96 border-2 border-gray-200 rounded p-2 px-4 my-3
-				text-tertiary leading-tight focus:outline-none  
-				focus:border-primary"
+              className="search-text h-10 w-full sm:max-w-96 border-2 border-gray-200 rounded p-2 px-4 my-3 text-tertiary leading-tight focus:outline-none focus:border-primary"
               id="search-bar"
               type="text"
               value={keyword}
@@ -91,26 +108,26 @@ export const SearchBar = ({
                     SEARCH_BAR_SELECT_OPTION[SearchBarSelectOption.DISTANCE],
                 }}
                 value={{
-                  value: selectedSortBy,
-                  label: SEARCH_BAR_SELECT_OPTION[selectedSortBy],
+                  value: selectedSortOption,
+                  label: SEARCH_BAR_SELECT_OPTION[selectedSortOption],
                 }}
                 name="options"
-                options={sortBy}
+                options={sortOptions}
                 className="basic-multi-select min-w-full"
                 classNamePrefix="select"
-                noOptionsMessage={(obj) => "ไม่มีตัวเลือก"}
+                noOptionsMessage={(obj) => 'ไม่มีตัวเลือก'}
                 theme={(theme) => ({
                   ...theme,
                   borderWidth: 1,
                   colors: {
                     ...theme.colors,
-                    primary50: "#E5F9F9",
-                    primary25: "#F3F3F3",
-                    primary: "#1A7676",
+                    primary50: '#E5F9F9',
+                    primary25: '#F3F3F3',
+                    primary: '#1A7676',
                   },
                 })}
                 onChange={(e) => {
-                  setSelectedSortBy(e?.value || selectedSortBy);
+                  setSelectedSortOption(e?.value || selectedSortOption);
                 }}
               />
             </Form>
@@ -122,24 +139,24 @@ export const SearchBar = ({
                 placeholder="เลือก..."
                 isMulti
                 name="options"
-                value={selectedOptions}
-                options={options}
+                value={selectedFilterOptions}
+                options={filterOptions}
                 className="basic-multi-select min-w-full"
                 classNamePrefix="select"
-                noOptionsMessage={(obj) => "ไม่มีตัวเลือก"}
+                noOptionsMessage={(obj) => 'ไม่มีตัวเลือก'}
                 isClearable={true}
                 theme={(theme) => ({
                   ...theme,
                   borderWidth: 1,
                   colors: {
                     ...theme.colors,
-                    primary50: "#E5F9F9",
-                    primary25: "#F3F3F3",
-                    primary: "#1A7676",
+                    primary50: '#E5F9F9',
+                    primary25: '#F3F3F3',
+                    primary: '#1A7676',
                   },
                 })}
                 onChange={(e) => {
-                  setSelectedOptions(e);
+                  setSelectedFilterOptions(e);
                 }}
               />
 
@@ -172,44 +189,25 @@ export const SearchBar = ({
           </div>
         </div>
         <div className="flex flex-col sm:flex-col-reverse w-auto sm:w-40 mb-2 justify-center">
-          <button
-            className="search-button flex h-10 rounded p-3 items-center justify-center text-white font-bold"
-            onClick={() => {
-              setSearchTerm(keyword);
-              setSortBy(selectedSortBy);
-              setOptions(selectedOptions);
-            }}
-          >
+          <button className="search-button flex h-10 rounded p-3 items-center justify-center text-white font-bold">
             ค้นหา
           </button>
           <button
             className="text-tertiary text-xs underline mt-2 mb-3 sm:mb-1 sm:mt-0"
             onClick={() => {
-              setSearchTerm("");
-              setSortBy(SearchBarSelectOption.DISTANCE);
-              setOptions([]);
-              setKeyword("");
-              setSelectedSortBy(SearchBarSelectOption.DISTANCE);
-              setSelectedOptions([]);
-              setIsFiltering(false);
+              reset();
             }}
           >
             เคลียร์ตัวเลือกการค้นหา
           </button>
         </div>
       </div>
-      {isFiltering && (
+      {searchStore.isFiltering && (
         <div className="flex w-full items-center justify-center">
           <button
             className="reset-button flex h-10 rounded p-3 items-center justify-center text-white font-bold"
             onClick={() => {
-              setSearchTerm("");
-              setSortBy(SearchBarSelectOption.DISTANCE);
-              setOptions([]);
-              setKeyword("");
-              setSelectedSortBy(SearchBarSelectOption.DISTANCE);
-              setSelectedOptions([]);
-              setIsFiltering(false);
+              reset();
             }}
           >
             เคลียร์ตัวเลือกการค้นหา
@@ -219,3 +217,5 @@ export const SearchBar = ({
     </>
   );
 };
+
+export const SearchBar = observer(_SearchBar);
