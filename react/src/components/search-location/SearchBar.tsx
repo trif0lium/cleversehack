@@ -15,7 +15,6 @@ const _SearchBar = () => {
     SearchBarSelectOption.DISTANCE,
   );
   const [selectedOptions, setSelectedOptions] = useState<any>([]);
-  const [isFiltering, setIsFiltering] = useState<boolean>(false);
 
   const [keyword, setKeyword] = useState<string>('');
   const debouncedSearch = useDebounce(keyword, 300);
@@ -149,7 +148,7 @@ const _SearchBar = () => {
           </button>
         </div>
       </div>
-      {isFiltering && (
+      {searchStore.isFiltering && (
         <div className="flex w-full items-center justify-center">
           <button
             className="reset-button flex h-10 rounded p-3 items-center justify-center text-white font-bold"
