@@ -36,13 +36,6 @@ const _SearchLocationCard = ({
               {selectedLocation.relativeDistance && (
                 <p className="mr-2">{`${selectedLocation.relativeDistance} km |`}</p>
               )}
-              <p className="mr-2">{`อัพเดตล่าสุดเมื่อ ${
-                selectedLocation.updatedAt.split('-')[2].split('T')[0]
-              }/${selectedLocation.updatedAt.split('-')[1]}/${
-                selectedLocation.updatedAt.split('-')[0]
-              } เวลา ${selectedLocation.updatedAt
-                .split('T')[1]
-                .slice(0, 5)}`}</p>
             </div>
           </div>
           <h5>{selectedLocation?.address}</h5>
