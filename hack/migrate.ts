@@ -94,7 +94,11 @@ fs.createReadStream(args["--csv-file"]!)
 
     const limit = pLimit(5);
     const requests = out.map((data) => {
-      return limit(() => axios.post(`${API_URL}/hospitel`, data));
+      return limit(async () => {
+        try {
+          await axios.post(`${API_URL}/hospitel`, data);
+        } catch (_) {}
+      });
     });
 
     await Promise.all(requests);
