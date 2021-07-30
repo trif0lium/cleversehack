@@ -17,7 +17,7 @@ const API_URL =
   while (true) {
     const samples = sampleSize(
       hospitels,
-      random(Number(0.25 * hospitels.length), Number(0.75 * hospitels.length))
+      random(Number(1), Number(0.5 * hospitels.length))
     );
 
     const limit = pLimit(5);
