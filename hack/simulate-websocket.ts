@@ -12,23 +12,25 @@ const API_URL =
       maxCapacity: number;
       currentCapacity: number;
     }[]
-  >(`${API_URL}/hospitels`);
+  >(`${API_URL}/hospitel`);
 
-  const samples = sampleSize(
-    hospitels,
-    random(Number(0.25 * hospitels.length), Number(0.75 * hospitels.length))
-  );
+  while (true) {
+    const samples = sampleSize(
+      hospitels,
+      random(Number(0.25 * hospitels.length), Number(0.75 * hospitels.length))
+    );
 
-  const limit = pLimit(5);
-  const requests = samples.map((s) =>
-    limit(async () => {
-      try {
-        await axios.patch(`${API_URL}/hospitels/${s.code}`, {
-          direction: ["INC", "DEC"][random(0, 1, false)],
-          n: random(1, 5, false),
-        });
-      } catch (_) {}
-    })
-  );
-  await Promise.all(requests);
+    const limit = pLimit(5);
+    const requests = samples.map((s) =>
+      limit(async () => {
+        try {
+          await axios.patch(`${API_URL}/hospitels/${s.code}`, {
+            direction: ["INC", "DEC"][random(0, 1, false)],
+            n: random(1, 5, false),
+          });
+        } catch (_) {}
+      })
+    );
+    await Promise.all(requests);
+  }
 })();
