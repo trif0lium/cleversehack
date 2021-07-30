@@ -235,7 +235,23 @@ const _SearchLocationMap = ({
                 </div>
               </div>
 
-              <div className="flex w-auto px-2 h-12 bg-red-500 rounded justify-center items-center text-white text-lg font-bold">
+              <div
+                className={`flex w-auto px-2 h-12 ${
+                  ((selectedLocation.maxCapacity -
+                    selectedLocation.currentCapacity) *
+                    100) /
+                    selectedLocation.maxCapacity <
+                  20
+                    ? 'bg-red-500'
+                    : ((selectedLocation.maxCapacity -
+                        selectedLocation.currentCapacity) *
+                        100) /
+                        selectedLocation.maxCapacity <
+                      50
+                    ? 'bg-yellow-400'
+                    : 'bg-green-600'
+                } rounded justify-center items-center text-white text-lg font-bold`}
+              >
                 {`${
                   selectedLocation.maxCapacity -
                   selectedLocation.currentCapacity

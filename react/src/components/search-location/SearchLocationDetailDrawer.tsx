@@ -7,6 +7,7 @@ import {
   FaPhoneAlt,
 } from 'react-icons/fa';
 import { IoIosGlobe } from 'react-icons/io';
+import { useAvailableCapacity } from '../../hooks/useAvailableCapacity';
 import { useRelativeTime } from '../../hooks/useRelativeTime';
 import { locationStore } from '../../store/locationStore';
 import {
@@ -27,6 +28,10 @@ const _SearchLocationDetailDrawer = ({
 }: SearchLocationDetailDrawerProps) => {
   const { myLocation, setDistance } = locationStore;
   const { relativeTime } = useRelativeTime(selectedLocation.timestamp);
+  const { availableCapacity, availableCapacityPercent } = useAvailableCapacity(
+    selectedLocation.currentCapacity,
+    selectedLocation.maxCapacity,
+  );
 
   const haversine_distance = useMemo(() => {
     if (myLocation) {
@@ -85,10 +90,11 @@ const _SearchLocationDetailDrawer = ({
             <div className="flex justify-center items-center">
               <div
                 className={`flex w-auto h-12 rounded justify-center items-center ${
-                  selectedLocation?.currentCapacity ===
-                  selectedLocation?.maxCapacity
-                    ? `text-red-500`
-                    : `text-yellow-400`
+                  availableCapacityPercent < 20
+                    ? 'text-red-500'
+                    : availableCapacityPercent < 50
+                    ? 'text-yellow-400'
+                    : 'text-green-600'
                 } text-2xl font-bold`}
               >
                 {`${
