@@ -168,7 +168,9 @@ const _SearchLocationMap = ({
           <Marker
             visible={true}
             clickable={true}
-            onMouseOver={() => {}}
+            onMouseOver={() => {
+              setIsInfoWindowVisible(true);
+            }}
             key={location.code}
             position={{ lat: location.latitude, lng: location.longitude }}
             onClick={() => {
@@ -179,7 +181,11 @@ const _SearchLocationMap = ({
             icon={{
               url:
                 location.type === FacilityType.HOSPITAL
-                  ? '/hospital-bed-blue.svg'
+                  ? location?.currentCapacity === location?.maxCapacity
+                    ? '/hospital-bed-red.svg'
+                    : '/hospital-bed-blue.svg'
+                  : location?.currentCapacity === location?.maxCapacity
+                  ? '/hospitel-red.svg'
                   : '/hospitel-purple.svg',
               scaledSize: new window.google.maps.Size(35, 35),
             }}

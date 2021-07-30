@@ -33,12 +33,11 @@ const MenuContent = () => {
         {/* <h2 className="text-white">One Stop Covid</h2> */}
         <div className="menu boxWrap">
           <MenuCard
-            topic="ค้นหาสถานที่ดูแลผู้ติดเชื้อ"
-            description="สำรวจสถานที่ดูแล เช่น โรงพยาบาลสนาม หรือ Hospitel
-        ผู้ติดเชื้อบนแผนที่หรือรายการที่มี"
-            icon={MenuIcon.HOSPITEL}
+            topic="ตรวจสอบอาการเบื้องต้น"
+            description="ทำแบบสอบถามเพื่อกรองอาการป่วยเบื้องต้น"
+            icon={MenuIcon.SELF_ASSESSMENT}
             onClick={() => {
-              history.push(`/search-location`);
+              history.push(`/self-assessment`);
             }}
           />
           <MenuCard
@@ -50,11 +49,12 @@ const MenuContent = () => {
             }}
           />
           <MenuCard
-            topic="ตรวจสอบอาการเบื้องต้น"
-            description="ทำแบบสอบถามเพื่อกรองอาการป่วยเบื้องต้น"
-            icon={MenuIcon.SELF_ASSESSMENT}
+            topic="ค้นหาสถานที่ดูแลผู้ติดเชื้อ"
+            description="สำรวจสถานที่ดูแล เช่น โรงพยาบาลสนาม หรือ Hospitel
+        ผู้ติดเชื้อบนแผนที่หรือรายการที่มี"
+            icon={MenuIcon.HOSPITEL}
             onClick={() => {
-              history.push(`/self-assessment`);
+              history.push(`/search-location`);
             }}
           />
         </div>

@@ -60,7 +60,6 @@ const _SearchLocationDetailDrawer = ({
         } bg-white flex flew-col p-5 shadow-lg`}
       >
         <div className="flex">
-          {' '}
           <div className="flex flex-col items-left mb-2">
             <div className="flex">
               {selectedLocation?.type === FacilityType.HOSPITAL ? (
@@ -83,6 +82,7 @@ const _SearchLocationDetailDrawer = ({
                 .split('T')[1]
                 .slice(0, 5)}`}</p>
             </div>
+            <h5 className="mt-2">{selectedLocation?.address}</h5>
           </div>
           <div className="items-center text-center w-auto sm:w-32">
             <h5 className="text-xs sm:text-sm">จำนวนเตียงว่าง</h5>
