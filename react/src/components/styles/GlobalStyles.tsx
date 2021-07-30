@@ -66,7 +66,7 @@ const GlobalStyles = createGlobalStyle`
   to { opacity: 0; }
 }
 .logo {
-  animation: logofadeinout 5s linear forwards;
+  animation: logofadeinout 4s linear forwards;
 }
 
 @keyframes logofadeinout {
@@ -75,7 +75,7 @@ to { opacity: 1; }
 }
 
 .menu {
-  animation: menufadeinout 2s linear forwards;
+  animation: menufadeinout 1s linear forwards;
 }
 
 @keyframes menufadeinout {

@@ -61,7 +61,7 @@ export const Spinner = styled.div`
 
 export const Wheel = styled.div`
   .wheel {
-    animation: ${rotate360} 1s linear infinite;
+    animation: ${rotate360} 5s linear infinite;
     transform: translateZ(0);
 
     background: transparent;

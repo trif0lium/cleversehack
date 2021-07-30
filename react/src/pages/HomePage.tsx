@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ContentWrap } from '../components/styles/ContentStyles';
 import { Wheel } from '../components/styles/Styles';
@@ -6,6 +6,12 @@ import intro from './logos/covid.svg';
 
 const Home = () => {
   const history = useHistory();
+
+  useEffect(() => {
+    setTimeout(() => {
+      history.push(`/menu`);
+    }, 3000);
+  }, []);
   return (
     <ContentWrap
       style={{
@@ -13,11 +19,6 @@ const Home = () => {
         left: '50%',
         top: '50%',
         transform: 'translate(-50%, -50%)',
-      }}
-      onMouseOver={() => {
-        setTimeout(() => {
-          history.push(`/menu`);
-        }, 3000);
       }}
     >
       <div

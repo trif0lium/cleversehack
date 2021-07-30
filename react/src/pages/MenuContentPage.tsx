@@ -3,7 +3,10 @@ import { useHistory } from 'react-router-dom';
 import { MenuIcon } from '../components/const';
 import MenuCard from '../components/menu/MenuCard';
 import { ContentWrap } from '../components/styles/ContentStyles';
+import { Wheel } from '../components/styles/Styles';
 import logo from './logos/4.gif';
+import intro from './logos/covid.svg';
+import one from './logos/one.gif';
 
 const MenuContent = () => {
   const [showMessage, setShowMessage] = useState<boolean>(false);
@@ -19,7 +22,14 @@ const MenuContent = () => {
           transform: 'translate(-50%, -50%)',
         }}
       >
-        <img src={logo} className="logo w-60 h-60" />
+        {true ? (
+          <Wheel className="logo flex flex-col items-center">
+            <img src={intro} className="wheel w-40 h-40" />
+            <img src={one} className="h-28" />
+          </Wheel>
+        ) : (
+          <img src={logo} className="logo w-60 h-60" />
+        )}
         {/* <h2 className="text-white">One Stop Covid</h2> */}
         <div className="menu boxWrap">
           <MenuCard

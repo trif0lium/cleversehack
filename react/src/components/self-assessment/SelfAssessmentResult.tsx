@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { Wheel } from '../styles/Styles';
 import blue from './icons/blue.svg';
 import red from './icons/dark-red.svg';
 import green from './icons/green.svg';
@@ -54,11 +55,13 @@ export const SelfAssessmentResult = ({ result }: SelfAssessmentResultProps) => {
           </p>
           <div className="flex flex-col mt-6">
             <div className="flex items-center w-full justify-center mb-3">
-              <img
-                className="w-56 h-56"
-                src={first ? green : second ? blue : third ? purple : red}
-                alt="green"
-              />
+              <Wheel>
+                <img
+                  className="wheel w-56 h-56"
+                  src={first ? green : second ? blue : third ? purple : red}
+                  alt="green"
+                />
+              </Wheel>
             </div>
             <p className="text-lg font-bold text-center">
               {first
