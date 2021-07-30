@@ -27,4 +27,4 @@ const useInterval = (callback: TimerHandler, delay: Delay) => {
   }, [delay]);
 };
 
-export default useInterval;
+export { useInterval };
