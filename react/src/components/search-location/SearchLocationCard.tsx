@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { FaClinicMedical, FaHospitalAlt } from 'react-icons/fa';
+import { useRelativeTime } from '../../hooks/useRelativeTime';
 import { Hospitel } from '../../store/dataStore';
 import { FacilityType, TAG_COLOR_MAPPER, TAG_MAPPER } from '../const';
 
@@ -11,6 +12,7 @@ interface SearchLocationDetailDrawerProps {
 const _SearchLocationCard = ({
   selectedLocation,
 }: SearchLocationDetailDrawerProps) => {
+  const { relativeTime } = useRelativeTime(selectedLocation.timestamp);
   return (
     <div
       className="w-auto flex-shrink flex-wrap mb-1 sm:mr-5"
@@ -36,6 +38,7 @@ const _SearchLocationCard = ({
               {selectedLocation.relativeDistance && (
                 <p className="mr-2">{`${selectedLocation.relativeDistance} km |`}</p>
               )}
+              <p className="mr-2">{relativeTime}</p>
             </div>
           </div>
           <h5>{selectedLocation?.address}</h5>
