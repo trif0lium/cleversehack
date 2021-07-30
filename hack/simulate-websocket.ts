@@ -24,7 +24,7 @@ const API_URL =
     const requests = samples.map((s) =>
       limit(async () => {
         try {
-          await axios.patch(`${API_URL}/hospitels/${s.code}`, {
+          await axios.patch(`${API_URL}/hospitel/${s.code}`, {
             direction: ["INC", "DEC"][random(0, 1, false)],
             n: random(1, 5, false),
           });
