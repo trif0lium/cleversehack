@@ -2,20 +2,9 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useHospitelList } from '../../hooks/useHospitelList';
 import { DetailList } from '../styles/DetailListStyles';
-import { SearchBarSelectOption } from './search-location';
 import { SearchLocationCard } from './SearchLocationCard';
 
-interface SearchLocationContentProps {
-  searchTerm: string;
-  sortBy: SearchBarSelectOption;
-  options: [];
-}
-
-const _SearchLocationDetailList = ({
-  searchTerm,
-  sortBy,
-  options,
-}: SearchLocationContentProps) => {
+const _SearchLocationDetailList = () => {
   const { hospitelList } = useHospitelList();
 
   return (

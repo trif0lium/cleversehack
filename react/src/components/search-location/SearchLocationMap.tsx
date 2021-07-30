@@ -19,7 +19,6 @@ import {
 } from '../const';
 import mapStyles from '../styles/MapStyles';
 import { Spinner } from '../styles/Styles';
-import { SearchBarSelectOption } from './search-location';
 import { SearchLocationDetailDrawer } from './SearchLocationDetailDrawer';
 
 const mapContainerStyle = {
@@ -37,17 +36,11 @@ const center = {
 };
 
 interface SearchLocationMapProps {
-  searchTerm: string;
-  sortBy: SearchBarSelectOption;
-  options: [];
   isVisibleSearchBar: boolean;
   setIsVisibleSearchBar: (isVisibleSearchBar: boolean) => void;
 }
 
 const _SearchLocationMap = ({
-  searchTerm,
-  sortBy,
-  options: searchOptions,
   isVisibleSearchBar,
   setIsVisibleSearchBar,
 }: SearchLocationMapProps) => {
