@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { FaClinicMedical, FaHospitalAlt } from 'react-icons/fa';
+import { useAvailableCapacity } from '../../hooks/useAvailableCapacity';
 import { useRelativeTime } from '../../hooks/useRelativeTime';
 import { Hospitel } from '../../store/dataStore';
 import { FacilityType, TAG_COLOR_MAPPER, TAG_MAPPER } from '../const';
@@ -13,6 +14,10 @@ const _SearchLocationCard = ({
   selectedLocation,
 }: SearchLocationDetailDrawerProps) => {
   const { relativeTime } = useRelativeTime(selectedLocation.timestamp);
+  const { availableCapacity, availableCapacityPercent } = useAvailableCapacity(
+    selectedLocation.currentCapacity,
+    selectedLocation.maxCapacity,
+  );
   return (
     <div
       className="w-auto flex-shrink flex-wrap mb-1 sm:mr-5"
@@ -59,16 +64,14 @@ const _SearchLocationCard = ({
             <div className="flex justify-end">
               <div
                 className={`flex w-auto h-12 rounded justify-center items-center ${
-                  selectedLocation?.currentCapacity ===
-                  selectedLocation?.maxCapacity
-                    ? `text-red-500`
-                    : `text-yellow-400`
+                  availableCapacityPercent < 20
+                    ? 'text-red-500'
+                    : availableCapacityPercent < 50
+                    ? 'text-yellow-400'
+                    : 'text-green-600'
                 } text-xl font-bold`}
               >
-                {`${
-                  selectedLocation?.maxCapacity -
-                  selectedLocation?.currentCapacity
-                }`}
+                {`${availableCapacity}`}
               </div>
               <div className="flex w-auto h-12 rounded justify-center items-center text-gray-400 text-md font-bold">
                 {`/${selectedLocation?.maxCapacity}`}
