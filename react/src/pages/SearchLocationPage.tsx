@@ -61,9 +61,6 @@ const SearchLocation = () => {
       </div>
       <SearchLocationContent
         menu={menu}
-        searchTerm={searchTerm}
-        sortBy={sortBy}
-        options={options}
         isVisibleSearchBar={isVisibleSearchBar}
         setIsVisibleSearchBar={setIsVisibleSearchBar}
       />
