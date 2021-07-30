@@ -55,7 +55,7 @@ const _SearchLocationCard = ({
         </div>
         <div className="flex flex-col justify-between w-auto items-end px-2 sm:w-32">
           <div className="flex flex-col items-right text-right">
-            <h5 className="text-xs sm:text-sm ">จำนวนเตียงว่าง</h5>
+            <h5 className="text-xs sm:text-sm ">จำนวนเตียงที่ว่าง</h5>
             <div className="flex justify-end">
               <div
                 className={`flex w-auto h-12 rounded justify-center items-center ${
