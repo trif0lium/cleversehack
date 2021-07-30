@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const media = {
   desktop: `@media(min-width: 640px)`,
@@ -29,7 +29,7 @@ export const ContentWrap = styled.div`
       
       &:hover {
         transform: scale(1.02);
-        background-color: #E5F9F9;
+        background-color: #F3F3F3;
       }
     }
     .cont {
@@ -44,7 +44,7 @@ export const ContentWrap = styled.div`
       
       &:hover {
         transform: scale(1.02);
-        background-color: #E5F9F9;
+        background-color: #F3F3F3;
       }
       ${media.desktop} {
         width: 640px;

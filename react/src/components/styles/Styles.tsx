@@ -59,6 +59,15 @@ export const Spinner = styled.div`
   border-radius: 50%;
 `;
 
+export const Wheel = styled.div`
+  .wheel {
+    animation: ${rotate360} 1s linear infinite;
+    transform: translateZ(0);
+
+    background: transparent;
+  }
+`;
+
 export const Form = styled.form`
   @media (min-width: ${breakpoints.tablet}) {
   }

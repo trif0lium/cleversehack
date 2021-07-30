@@ -57,6 +57,31 @@ const GlobalStyles = createGlobalStyle`
     color: #576675;
   }
 
+.intro {
+   animation: fadeinout 2s linear forwards;
+}
+
+@keyframes fadeinout {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+.logo {
+  animation: logofadeinout 5s linear forwards;
+}
+
+@keyframes logofadeinout {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+.menu {
+  animation: menufadeinout 2s linear forwards;
+}
+
+@keyframes menufadeinout {
+from { opacity: 0; }
+to { opacity: 1; }
+}
   .gm-style-iw-t {  
     .gm-style .gm-style-iw-c {
         transform: translate(-50%,-100%);
