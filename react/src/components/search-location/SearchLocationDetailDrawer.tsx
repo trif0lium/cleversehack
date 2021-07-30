@@ -7,6 +7,7 @@ import {
   FaPhoneAlt,
 } from 'react-icons/fa';
 import { IoIosGlobe } from 'react-icons/io';
+import { useRelativeTime } from '../../hooks/useRelativeTime';
 import { locationStore } from '../../store/locationStore';
 import {
   FacilityType,
@@ -25,6 +26,7 @@ const _SearchLocationDetailDrawer = ({
   selectedLocation,
 }: SearchLocationDetailDrawerProps) => {
   const { myLocation, setDistance } = locationStore;
+  const { relativeTime } = useRelativeTime(selectedLocation.timestamp);
 
   const haversine_distance = useMemo(() => {
     if (myLocation) {
@@ -74,13 +76,7 @@ const _SearchLocationDetailDrawer = ({
               {haversine_distance && (
                 <p className="mr-2">{`${haversine_distance} km |`}</p>
               )}
-              <p className="mr-2">{`อัพเดตล่าสุดเมื่อ ${
-                selectedLocation.updatedAt.split('-')[2].split('T')[0]
-              }/${selectedLocation.updatedAt.split('-')[1]}/${
-                selectedLocation.updatedAt.split('-')[0]
-              } เวลา ${selectedLocation.updatedAt
-                .split('T')[1]
-                .slice(0, 5)}`}</p>
+              <p className="mr-2">{relativeTime}</p>
             </div>
             <h5 className="mt-2">{selectedLocation?.address}</h5>
           </div>
