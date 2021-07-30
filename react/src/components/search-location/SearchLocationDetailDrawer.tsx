@@ -75,13 +75,6 @@ const _SearchLocationDetailDrawer = ({
               {haversine_distance && (
                 <p className="mr-2">{`${haversine_distance} km |`}</p>
               )}
-              <p className="mr-2">{`อัพเดตล่าสุดเมื่อ ${
-                selectedLocation.updatedAt.split('-')[2].split('T')[0]
-              }/${selectedLocation.updatedAt.split('-')[1]}/${
-                selectedLocation.updatedAt.split('-')[0]
-              } เวลา ${selectedLocation.updatedAt
-                .split('T')[1]
-                .slice(0, 5)}`}</p>
             </div>
           </div>
           <div className="items-center text-center w-auto sm:w-32">
