@@ -11,7 +11,7 @@ export function useRelativeTime(timestamp: number) {
     setRelativeTime(
       DateTime.fromMillis(timestamp).toRelative({ locale: 'th-TH' }) ?? '',
     );
-  }, []);
+  }, [timestamp]);
 
   useInterval(() => {
     setRelativeTime(
