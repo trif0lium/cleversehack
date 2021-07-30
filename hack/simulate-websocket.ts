@@ -24,9 +24,14 @@ const API_URL =
     const requests = samples.map((s) =>
       limit(async () => {
         try {
+          const currentCapacity = random(
+            Number(s.maxCapacity / 2),
+            s.maxCapacity
+          );
+
           await axios.patch(`${API_URL}/hospitel/${s.code}`, {
-            direction: ["INC", "DEC"][random(0, 1, false)],
-            n: random(1, 5, false),
+            direction: "SET",
+            currentCapacity,
           });
         } catch (_) {}
       })
