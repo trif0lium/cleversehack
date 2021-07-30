@@ -14,7 +14,10 @@ const API_URL =
     }[]
   >(`${API_URL}/hospitels`);
 
-  const samples = sampleSize(hospitels, random(5, hospitels.length));
+  const samples = sampleSize(
+    hospitels,
+    random(Number(0.25 * hospitels.length), Number(0.75 * hospitels.length))
+  );
 
   const limit = pLimit(5);
   const requests = samples.map((s) =>
