@@ -8,6 +8,6 @@ export function useRelativeTime(timestamp: number) {
     setRelativeTime(
       DateTime.fromMillis(timestamp).toRelative({ locale: 'th-TH' }) ?? '',
     );
-  }, 1000);
+  }, 5000);
   return { relativeTime };
 }
