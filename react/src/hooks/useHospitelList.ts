@@ -6,7 +6,7 @@ import { convertDistance, getDistance } from 'geolib';
 import { searchStore } from '../store/searchStore';
 
 export function useHospitelList() {
-  const { latitude, longitude, error } = usePosition(true);
+  const { latitude, longitude } = usePosition(true);
 
   const _hospitelList = useMemo(() => dataStore.hospitelList, [
     dataStore.hospitelList,
