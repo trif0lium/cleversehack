@@ -13,7 +13,7 @@ import {
   trimStart,
 } from "lodash";
 
-const args = arg({ "--csv-file": String });
+const args = arg({ "--csv-file": String, "--hospital": Boolean });
 if (!args["--csv-file"])
   throw new Error("missing required argument: --csv-file");
 
@@ -83,7 +83,7 @@ fs.createReadStream(args["--csv-file"]!)
         address: result.address as string,
         phoneNumber: result.phoneNumber as string,
         website: result.website as string,
-        type: "HOSPITEL",
+        type: args["--hospital"] ? "HOSPITAL" : "HOSPITEL",
         tags: [
           result.R === "TRUE" && "R",
           result.Y === "TRUE" && "Y",
