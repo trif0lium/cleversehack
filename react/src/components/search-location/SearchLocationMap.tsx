@@ -169,6 +169,7 @@ const _SearchLocationMap = ({
             visible={true}
             clickable={true}
             onMouseOver={() => {
+              // setSelectedLocation(location);
               setIsInfoWindowVisible(true);
             }}
             key={location.code}

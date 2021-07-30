@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const media = {
   desktop: `@media(min-width: 640px)`,
@@ -6,6 +6,8 @@ const media = {
 };
 
 export const DetailList = styled.div`
+  background-color: white;
+
   .location-detail-list {
     background-color: white;
     height: 100vh;

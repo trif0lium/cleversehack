@@ -52,23 +52,26 @@ const _SearchLocationCard = ({
             ))}
           </div>
         </div>
-        <div className="flex flex-col items-center text-center w-auto  px-2 sm:w-32">
-          <h5 className="text-xs sm:text-sm">จำนวนเตียงว่าง</h5>
-          <div className="flex">
-            <div
-              className={`flex w-auto h-12 rounded justify-center items-center ${
-                selectedLocation?.currentCapacity ===
-                selectedLocation?.maxCapacity
-                  ? `text-red-500`
-                  : `text-yellow-400`
-              } text-xl font-bold`}
-            >
-              {`${selectedLocation?.currentCapacity}`}
-            </div>
-            <div className="flex w-auto h-12 rounded justify-center items-center text-gray-400 text-md font-bold">
-              {`/${selectedLocation?.maxCapacity}`}
+        <div className="flex flex-col items-center justify-between text-center w-auto  px-2 sm:w-32">
+          <div className="flex flex-col ">
+            <h5 className="text-xs sm:text-sm">จำนวนเตียงว่าง</h5>
+            <div className="flex">
+              <div
+                className={`flex w-auto h-12 rounded justify-center items-center ${
+                  selectedLocation?.currentCapacity ===
+                  selectedLocation?.maxCapacity
+                    ? `text-red-500`
+                    : `text-yellow-400`
+                } text-xl font-bold`}
+              >
+                {`${selectedLocation?.currentCapacity}`}
+              </div>
+              <div className="flex w-auto h-12 rounded justify-center items-center text-gray-400 text-md font-bold">
+                {`/${selectedLocation?.maxCapacity}`}
+              </div>
             </div>
           </div>
+          <a className="flex underline text-xs text-tertiary">ดูข้อมูล</a>
         </div>
       </div>
     </div>
