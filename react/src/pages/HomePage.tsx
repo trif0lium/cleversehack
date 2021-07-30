@@ -1,32 +1,37 @@
-import React, { ReactElement } from "react";
-import { useHistory } from "react-router-dom";
-import { ContentWrap } from "../components/styles/ContentStyles";
-import { FaCommentMedical } from "react-icons/fa";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { ContentWrap } from '../components/styles/ContentStyles';
+import { Wheel } from '../components/styles/Styles';
+import intro from './logos/covid.svg';
 
 const Home = () => {
   const history = useHistory();
-
   return (
     <ContentWrap
       style={{
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-        transform: "translate(-50%, -50%)",
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+      onMouseOver={() => {
+        setTimeout(() => {
+          history.push(`/menu`);
+        }, 3000);
       }}
     >
-      <h2 className="text-white">One Stop Covid-19</h2>
-      <div className="boxWrap flex flex-col items-center justify-center">
-        <FaCommentMedical className="h-48 w-56 text-white" />
-        <div
-          className="start-button flex items-center justify-center"
-          onClick={() => {
-            history.push(`/menu`);
-          }}
-        >
-          <h4>เริ่มต้นใช้งาน</h4>
-        </div>
+      <div
+        className="intro flex flex-col w-full absolute bg-primary items-center justify-center"
+        style={{ height: '100vh' }}
+      >
+        <Wheel className="">
+          <img src={intro} className="wheel w-40 h-40 mb-10" />
+        </Wheel>
+
+        {/* <Spinner /> */}
       </div>
+
+      <h4>เริ่มต้นใช้งาน</h4>
     </ContentWrap>
   );
 };
