@@ -108,15 +108,15 @@ const _SearchLocationDetailDrawer = ({
             </span>
           ))}
         </div>
-        {selectedLocation.additionalDetail && (
-          <div className="flex flex-col mt-4 h-20">
-            <h5>รายละเอียด</h5>
 
-            <h5 className="location-description flex-wrap overflow-auto">
-              {selectedLocation.additionalDetail}
-            </h5>
-          </div>
-        )}
+        <div className="flex flex-col mt-4 h-20">
+          <h5>รายละเอียด</h5>
+
+          <h5 className="location-description flex-wrap overflow-auto">
+            {selectedLocation.additionalDetail ?? 'ไม่มีรายละเอียด'}
+          </h5>
+        </div>
+
         {/*TODO: redirect */}
         <a href={'http://www.google.com'}>
           <h5 className="underline mt-4 mb-2">แก้ไข/อัพเดตข้อมูล</h5>

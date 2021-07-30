@@ -23,7 +23,7 @@ const _SearchLocationCard = ({
           selectedLocation ? `h-auto` : `h-0`
         } border-b-2 flex flew-col p-5 shadow-sm rounded-md`}
       >
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
           <div className="flex flex-col items-left mb-2">
             <div className="flex">
               {selectedLocation?.type === FacilityType.HOSPITAL ? (
@@ -36,12 +36,13 @@ const _SearchLocationCard = ({
             </div>
             <div className="flex text-xs text-tertiary">
               {selectedLocation.relativeDistance && (
-                <p className="mr-2">{`${selectedLocation.relativeDistance} km |`}</p>
+                <p className="mr-2 pr-1 border-r-2">{`${selectedLocation.relativeDistance} km`}</p>
               )}
-              <p className="mr-2">{relativeTime}</p>
+
+              <p className="mr-2">{`อัพเดตเมื่อ ${relativeTime}`}</p>
             </div>
           </div>
-          <h5>{selectedLocation?.address}</h5>
+          {/* <h5>{selectedLocation?.address}</h5> */}
           <div className="flex mt-2">
             {selectedLocation?.tags.map((tag) => (
               <span
@@ -52,10 +53,10 @@ const _SearchLocationCard = ({
             ))}
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between text-center w-auto  px-2 sm:w-32">
-          <div className="flex flex-col ">
-            <h5 className="text-xs sm:text-sm">จำนวนเตียงว่าง</h5>
-            <div className="flex">
+        <div className="flex flex-col justify-between w-auto items-end px-2 sm:w-32">
+          <div className="flex flex-col items-right text-right">
+            <h5 className="text-xs sm:text-sm ">จำนวนเตียงว่าง</h5>
+            <div className="flex justify-end">
               <div
                 className={`flex w-auto h-12 rounded justify-center items-center ${
                   selectedLocation?.currentCapacity ===

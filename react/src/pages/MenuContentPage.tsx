@@ -6,7 +6,7 @@ import { ContentWrap } from '../components/styles/ContentStyles';
 import { Wheel } from '../components/styles/Styles';
 import logo from './logos/4.gif';
 import intro from './logos/covid.svg';
-import one from './logos/one.gif';
+import one from './logos/three.gif';
 
 const MenuContent = () => {
   const [showMessage, setShowMessage] = useState<boolean>(false);
@@ -40,14 +40,16 @@ const MenuContent = () => {
               history.push(`/self-assessment`);
             }}
           />
-          <MenuCard
-            topic="ค้นหาสถานที่ตรวจ Covid-19"
-            description="ค้นหาและเแลกเปลี่ยนข้อมูลจุดตรวจโควิด-19 ที่ wheretotestcovid19.com"
-            icon={MenuIcon.WHERE_TO_TEST}
-            onClick={() => {
-              history.push(`/where-to-test-covid-19`);
-            }}
-          />
+          <a href="https://wheretotestcovid19.com/">
+            <MenuCard
+              topic="ค้นหาสถานที่ตรวจ Covid-19"
+              description="ค้นหาและเแลกเปลี่ยนข้อมูลจุดตรวจโควิด-19 ที่ wheretotestcovid19.com"
+              icon={MenuIcon.WHERE_TO_TEST}
+              onClick={() => {
+                // history.push(`/where-to-test-covid-19`);
+              }}
+            />
+          </a>
           <MenuCard
             topic="ค้นหาสถานที่ดูแลผู้ติดเชื้อ"
             description="สำรวจสถานที่ดูแล เช่น โรงพยาบาลสนาม หรือ Hospitel
