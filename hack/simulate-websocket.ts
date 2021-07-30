@@ -25,7 +25,7 @@ const API_URL =
       try {
         await axios.patch(`${API_URL}/hospitels/${s.code}`, {
           direction: ["INC", "DEC"][random(0, 1, false)],
-          n: 1,
+          n: random(1, 5, false),
         });
       } catch (_) {}
     })
