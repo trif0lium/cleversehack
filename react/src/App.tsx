@@ -1,55 +1,55 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import logo from "./logo.svg";
+import React, { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  BrowserRouter,
+} from "react-router-dom";
 import "./App.css";
+import Home from "./pages/HomePage";
+import GlobalStyles from "./components/styles/GlobalStyles";
+import MenuContent from "./pages/MenuContentPage";
+import SearchLocation from "./pages/SearchLocationPage";
+import SearchLocationDetail from "./pages/SearchLocationDetailPage";
+import { dataStore } from "./store/dataStore";
+import SelfAssessment from "./pages/SelfAssessmentPage";
 
-function App() {
-  const [count, setCount] = useState(0);
+const App = () => {
+  useEffect(() => {
+    dataStore.init();
+  }, []);
 
   return (
-    <Router>
-      <Switch>
-        <Route path="/react">
-          <div className="App">
-            <header className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
-              <p>Hello Vite + React!</p>
-              <p>
-                <button
-                  type="button"
-                  onClick={() => setCount((count) => count + 1)}
-                >
-                  count is: {count}
-                </button>
-              </p>
-              <p>
-                Edit <code>App.tsx</code> and save to test HMR updates.
-              </p>
-              <p>
-                <a
-                  className="App-link"
-                  href="https://reactjs.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Learn React
-                </a>
-                {" | "}
-                <a
-                  className="App-link"
-                  href="https://vitejs.dev/guide/features.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Vite Docs
-                </a>
-              </p>
-            </header>
-          </div>
-        </Route>
-      </Switch>
-    </Router>
+    <>
+      <GlobalStyles />
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/menu">
+            <MenuContent />
+          </Route>
+          <Route path="/search-location">
+            <SearchLocation />
+          </Route>
+          <Route exact path="/search-location/:locationCode">
+            <SearchLocationDetail />
+          </Route>
+          <Route
+            path="/where-to-test-covid-19"
+            component={() => {
+              window.location.href = "https://wheretotestcovid19.com/";
+              return null;
+            }}
+          />
+          <Route exact path="/self-assessment">
+            <SelfAssessment />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </>
   );
-}
+};
 
 export default App;
