@@ -1,0 +1,15 @@
+runtime: nodejs
+service: cleversehack-api
+env: flex
+manual_scaling:
+  instances: 1
+env_variables:
+  DATABASE_CONNECTION_NAME: {{ DATABASE_CONNECTION_NAME }}
+  NODE_ENV: production
+  POSTGRES_USER: {{ POSTGRES_USER }}
+  POSTGRES_PASSWORD: {{ POSTGRES_PASSWORD }}
+  POSTGRES_DB: {{ POSTGRES_DB }}
+network:
+  session_affinity: true
+beta_settings:
+  cloud_sql_instances: {{ DATABASE_CONNECTION_NAME }}

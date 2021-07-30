@@ -1,0 +1,30 @@
+name: Deploy to App Engine
+on:
+  push:
+    branches:
+      - api-1.0
+jobs:
+  deploy-appengine:
+    name: Deploy to App Engine
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: "14"
+    - run: brew install sd
+    - run: |
+        cd api
+        yarn
+        yarn build
+        sd -s '{{ DATABASE_CONNECTION_NAME }}' '${{ secrets.DATABASE_CONNECTION_NAME }}' app.yml
+        sd -s '{{ POSTGRES_USER }}' '${{ secrets.POSTGRES_USER }}' app.yml
+        sd -s '{{ POSTGRES_PASSWORD }}' '${{ secrets.POSTGRES_PASSWORD }}' app.yml
+        sd -s '{{ POSTGRES_DB }}' '${{ secrets.POSTGRES_DB }}' app.yml
+    - uses: google-github-actions/deploy-appengine@v0.2.0
+      with:
+        deliverables: api/app.yml
+        project_id: ${{ secrets.GCP_PROJECT }}
+        credentials: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+        promote: true
+        version: v1
