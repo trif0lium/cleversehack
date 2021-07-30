@@ -19,11 +19,11 @@ const _SearchLocationDetailList = ({
   const { hospitelList } = useHospitelList();
 
   return (
-    <DetailList className="p-5">
+    <DetailList className="p-5 overflow-y-scroll">
       <div className="flex flex-col sm:flex-row">
         <h5 className="mr-3">{`ผลการค้นหา: พบ ${hospitelList.length} รายการ`}</h5>
       </div>
-      <div className="location-detail-list overflow-auto md:grid md:grid-cols-2 lg:grid-cols-3">
+      <div className="location-detail-list mb-5 md:grid md:grid-cols-2 lg:grid-cols-3">
         {hospitelList.map((location) => (
           <SearchLocationCard key={location.code} selectedLocation={location} />
         ))}

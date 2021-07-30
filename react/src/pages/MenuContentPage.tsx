@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { MenuIcon } from '../components/const';
 import MenuCard from '../components/menu/MenuCard';
@@ -9,7 +9,6 @@ import intro from './logos/covid.svg';
 import one from './logos/three.gif';
 
 const MenuContent = () => {
-  const [showMessage, setShowMessage] = useState<boolean>(false);
   const history = useHistory();
 
   return (

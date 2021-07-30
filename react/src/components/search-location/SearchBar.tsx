@@ -1,16 +1,15 @@
+import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Form } from '../styles/Styles';
 import Select from 'react-select';
-
+import { useDebounce } from '../../hooks/useDebounce';
+import { searchStore } from '../../store/searchStore';
+import { Form } from '../styles/Styles';
 import {
   SearchBarCheckBoxOption,
   SearchBarSelectOption,
   SEARCH_BAR_CHECK_BOX_OPTION,
   SEARCH_BAR_SELECT_OPTION,
 } from './search-location';
-import { observer } from 'mobx-react-lite';
-import { useDebounce } from '../../hooks/useDebounce';
-import { searchStore } from '../../store/searchStore';
 
 const _SearchBar = () => {
   useEffect(() => {
@@ -32,10 +31,8 @@ const _SearchBar = () => {
     });
   }, []);
 
-  const [
-    selectedSortOption,
-    setSelectedSortOption,
-  ] = useState<SearchBarSelectOption>(SearchBarSelectOption.DISTANCE);
+  const [selectedSortOption, setSelectedSortOption] =
+    useState<SearchBarSelectOption>(SearchBarSelectOption.DISTANCE);
   useEffect(() => {
     searchStore.setSort({
       field: {
@@ -188,18 +185,32 @@ const _SearchBar = () => {
             </Form>
           </div>
         </div>
-        <div className="flex flex-col sm:flex-col-reverse w-auto sm:w-40 mb-2 justify-center">
-          <button className="search-button flex h-10 rounded p-3 items-center justify-center text-white font-bold">
-            ค้นหา
-          </button>
+
+        <div className="flex flex-col sm:flex-col-reverse w-auto sm:w-60 mb-2 justify-center">
           <button
-            className="text-tertiary text-xs underline mt-2 mb-3 sm:mb-1 sm:mt-0"
+            className="search-button flex h-10 w-full mb-3 sm:mb-0 sm:mt-6 rounded p-3 items-center justify-center text-white font-bold"
             onClick={() => {
               reset();
             }}
           >
             เคลียร์ตัวเลือกการค้นหา
           </button>
+          {/* <button
+            className="text-tertiary text-xs underline mt-2 mb-3 sm:mb-1 sm:mt-0"
+            onClick={() => {
+              reset();
+            }}
+          >
+            เคลียร์ตัวเลือกการค้นหา
+          </button> */}
+          {/* <button
+            className="text-white text-sm text-right mt-2 mb-3 sm:mb-1 sm:mt-0"
+            onClick={() => {
+              reset();
+            }}
+          >
+            x
+          </button> */}
         </div>
       </div>
       {searchStore.isFiltering && (

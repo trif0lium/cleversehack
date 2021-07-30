@@ -65,7 +65,10 @@ const _SearchLocationCard = ({
                     : `text-yellow-400`
                 } text-xl font-bold`}
               >
-                {`${selectedLocation?.currentCapacity}`}
+                {`${
+                  selectedLocation?.maxCapacity -
+                  selectedLocation?.currentCapacity
+                }`}
               </div>
               <div className="flex w-auto h-12 rounded justify-center items-center text-gray-400 text-md font-bold">
                 {`/${selectedLocation?.maxCapacity}`}

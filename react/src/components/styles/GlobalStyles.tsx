@@ -242,8 +242,8 @@ to { opacity: 1; }
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #1A7676;
-    color: #1A7676;
+    // border: 1px solid #1A7676;
+    // color: #1A7676;
     &:hover {
       transform: scale(1.02);
       background-color: #1A7676;

@@ -23,7 +23,7 @@ import { SearchBarSelectOption } from './search-location';
 import { SearchLocationDetailDrawer } from './SearchLocationDetailDrawer';
 
 const mapContainerStyle = {
-  height: 'calc(100vh - 60px)',
+  height: 'calc(100vh - 64px)',
   width: '100vw',
 };
 const options = {
@@ -236,7 +236,10 @@ const _SearchLocationMap = ({
               </div>
 
               <div className="flex w-auto px-2 h-12 bg-red-500 rounded justify-center items-center text-white text-lg font-bold">
-                {`${selectedLocation.currentCapacity}/${selectedLocation.maxCapacity}`}
+                {`${
+                  selectedLocation.maxCapacity -
+                  selectedLocation.currentCapacity
+                }/${selectedLocation.maxCapacity}`}
               </div>
             </div>
           </InfoWindow>

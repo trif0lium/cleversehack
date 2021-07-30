@@ -91,7 +91,10 @@ const _SearchLocationDetailDrawer = ({
                     : `text-yellow-400`
                 } text-2xl font-bold`}
               >
-                {`${selectedLocation?.currentCapacity}`}
+                {`${
+                  selectedLocation?.maxCapacity -
+                  selectedLocation?.currentCapacity
+                }`}
               </div>
               <div className="flex w-auto h-12 rounded justify-center items-center text-gray-400 text-md font-bold">
                 {`/${selectedLocation?.maxCapacity}`}
@@ -118,21 +121,58 @@ const _SearchLocationDetailDrawer = ({
         </div>
 
         {/*TODO: redirect */}
-        <a href={'http://www.google.com'}>
+        <a href={'https://forms.gle/zHP4YbmMty9WAhPA9'}>
           <h5 className="underline mt-4 mb-2">แก้ไข/อัพเดตข้อมูล</h5>
         </a>
         <div className="flex items-center justify-between">
-          <button className="drawer-button rounded-md mr-2 w-full">
-            <FaMapMarkedAlt className="w-5 h-5 m-2" />
-            <p className="text-sm pr-2 ">แผนที่</p>
+          <button
+            className={`drawer-button rounded-md mr-1 w-full ${
+              !selectedLocation.googleMapsURL
+                ? `border text-tertiary`
+                : `border-primary text-primary`
+            } `}
+            disabled={!!selectedLocation.googleMapsURL}
+          >
+            <a
+              href={`${selectedLocation.googleMapsURL}`}
+              className="flex items-center justify-between"
+            >
+              <FaMapMarkedAlt className="w-5 h-5 m-2" />
+              <p className="text-sm pr-2 ">แผนที่</p>
+            </a>
           </button>
-          <button className="drawer-button rounded-md mr-2 w-full">
-            <FaPhoneAlt className="w-5 h-5 m-2" />
-            <p className="text-xs xs:text-sm pr-2">โทรติดต่อ</p>
+
+          <button
+            className={`drawer-button rounded-md mr-1 w-full ${
+              !selectedLocation.phoneNumber
+                ? `border text-tertiary`
+                : `border border-primary text-primary`
+            } `}
+            disabled={!selectedLocation.phoneNumber}
+          >
+            <a
+              href={`${selectedLocation.phoneNumber}`}
+              className="flex items-center justify-between"
+            >
+              <FaPhoneAlt className="w-5 h-5 m-2" />
+              <p className="text-xs xs:text-sm pr-2">โทรติดต่อ</p>
+            </a>
           </button>
-          <button className="drawer-button rounded-md w-full">
-            <IoIosGlobe className="w-5 h-5 m-2" />
-            <p className="text-sm pr-2 ">เว็บไซต์</p>
+          <button
+            className={`drawer-button rounded-md mr-1 w-full ${
+              !selectedLocation.website
+                ? `border text-tertiary`
+                : `border border-primary text-primary`
+            } `}
+            disabled={!selectedLocation.website}
+          >
+            <a
+              href={`${selectedLocation.website}`}
+              className="flex items-center justify-between"
+            >
+              <IoIosGlobe className="w-5 h-5 m-2" />
+              <p className="text-sm pr-2 ">เว็บไซต์</p>
+            </a>
           </button>
           {/* <button className="drawer-button rounded-md mr-2">
             <FaEdit className="w-5 h-5 m-2" />

@@ -7,10 +7,12 @@ const media = {
 
 export const DetailList = styled.div`
   background-color: white;
+  height: calc(100vh - 64px);
 
   .location-detail-list {
     background-color: white;
-    height: 100vh;
+    height: calc(100vh - 64px);
+
     width: 100%;
 
     .detail-card {
